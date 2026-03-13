@@ -32,12 +32,10 @@
 
         h1,h2,h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: var(--deep); }
         ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
 
-        /* NAV */
         .nav-glass {
             background: rgba(8,8,8,0.88);
             backdrop-filter: blur(20px);
@@ -65,13 +63,8 @@
         }
 
         .nav-btn:hover { color: #fff; }
+        .nav-btn.active { background: var(--gold); color: #000; }
 
-        .nav-btn.active {
-            background: var(--gold);
-            color: #000;
-        }
-
-        /* TAB SYSTEM */
         .tab-content { display: none; animation: fadeUp 0.5s ease forwards; }
         .tab-content.active { display: block; }
 
@@ -80,7 +73,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* HERO */
         .hero-bg {
             background: radial-gradient(ellipse at 30% 50%, rgba(244,185,66,0.07) 0%, transparent 60%),
                         radial-gradient(ellipse at 80% 20%, rgba(244,185,66,0.04) 0%, transparent 50%),
@@ -101,7 +93,6 @@
             background-clip: text;
         }
 
-        /* CARDS */
         .card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -114,7 +105,6 @@
             transform: translateY(-3px);
         }
 
-        /* BUTTONS */
         .btn-gold {
             background: var(--gold);
             color: #000;
@@ -150,7 +140,6 @@
             border-color: var(--gold);
         }
 
-        /* TWEET EMBED WRAPPER */
         .tweet-wrapper {
             position: relative;
             background: var(--card);
@@ -213,7 +202,6 @@
             flex-shrink: 0;
         }
 
-        /* CATEGORY BADGE */
         .badge {
             display: inline-block;
             padding: 3px 10px;
@@ -228,7 +216,6 @@
         .badge-blue { background: rgba(100,150,255,0.1); color: #7aadff; border: 1px solid rgba(100,150,255,0.2); }
         .badge-green { background: rgba(80,200,120,0.1); color: #6fdc9c; border: 1px solid rgba(80,200,120,0.2); }
 
-        /* SECTION HEADING */
         .section-tag {
             font-family: 'Rajdhani', sans-serif;
             font-size: 11px;
@@ -238,7 +225,6 @@
             color: var(--gold);
         }
 
-        /* TIMELINE */
         .timeline-item {
             border-left: 2px solid rgba(244,185,66,0.2);
             padding-left: 20px;
@@ -256,7 +242,6 @@
             top: 6px;
         }
 
-        /* SOCIAL LINK */
         .social-link {
             display: flex;
             align-items: center;
@@ -274,7 +259,6 @@
             border-color: rgba(244,185,66,0.3);
         }
 
-        /* STAT CARD */
         .stat-card {
             text-align: center;
             padding: 28px 16px;
@@ -293,7 +277,6 @@
             background-clip: text;
         }
 
-        /* MOBILE MENU */
         #mobileMenu {
             transform: translateX(100%);
             transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
@@ -301,7 +284,6 @@
 
         #mobileMenu.open { transform: translateX(0); }
 
-        /* DIVIDER */
         .gold-divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
@@ -309,7 +291,6 @@
             margin: 0;
         }
 
-        /* WELFARE YEAR SECTION */
         .year-header {
             display: flex;
             align-items: center;
@@ -329,7 +310,6 @@
 
         .year-line { flex: 1; height: 1px; background: rgba(244,185,66,0.15); }
 
-        /* EMBED TOGGLE */
         .embed-btn {
             width: 100%;
             padding: 10px;
@@ -365,15 +345,11 @@
             border: none;
         }
 
-        /* FOOTER */
         footer {
             background: rgba(0,0,0,0.6);
             border-top: 1px solid rgba(244,185,66,0.08);
         }
 
-        /* ─── ANIMATIONS ─── */
-
-        /* Scroll-reveal fade-in-up */
         .reveal {
             opacity: 0;
             transform: translateY(36px);
@@ -388,7 +364,6 @@
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
 
-        /* Hero text letter shimmer */
         @keyframes shimmer {
             0%   { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -398,14 +373,12 @@
             animation: shimmer 4s linear infinite;
         }
 
-        /* Floating logo */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50%       { transform: translateY(-14px); }
         }
         .logo-float { animation: float 5s ease-in-out infinite; }
 
-        /* Pulsing gold ring */
         @keyframes ring-pulse {
             0%, 100% { opacity: 0.1; transform: scale(1); }
             50%       { opacity: 0.25; transform: scale(1.06); }
@@ -413,13 +386,9 @@
         .ring-pulse { animation: ring-pulse 3.5s ease-in-out infinite; }
         .ring-pulse-slow { animation: ring-pulse 5s ease-in-out infinite; }
 
-        /* Particle canvas */
         #particles { position:absolute;inset:0;pointer-events:none;z-index:0; }
-
-        /* Hero content above particles */
         .hero-content { position:relative;z-index:1; }
 
-        /* Stat counter glow on appear */
         @keyframes stat-pop {
             0%   { opacity:0; transform:scale(0.7); }
             60%  { transform:scale(1.08); }
@@ -427,7 +396,6 @@
         }
         .stat-animate { animation: stat-pop 0.6s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-        /* Gold shimmer border on card hover */
         .card {
             position: relative;
             overflow: hidden;
@@ -452,10 +420,6 @@
             100% { background-position: -50% -50%; }
         }
 
-        /* Tweet wrapper entrance */
-        .tweet-wrapper {
-            animation: none;
-        }
         .tweet-wrapper.reveal-card {
             opacity: 0;
             transform: translateY(20px) scale(0.97);
@@ -466,7 +430,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Nav logo pulse dot */
         @keyframes dot-blink {
             0%, 100% { opacity: 1; }
             50%       { opacity: 0.3; }
@@ -481,7 +444,6 @@
             margin-left: 4px;
         }
 
-        /* Section heading underline draw */
         @keyframes underline-draw {
             from { width: 0; }
             to   { width: 60px; }
@@ -495,7 +457,6 @@
             margin-top: 8px;
         }
 
-        /* Membership card shimmer bar */
         @keyframes bar-slide {
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(400%); }
@@ -514,14 +475,12 @@
             animation: shimmer 2.5s linear infinite;
         }
 
-        /* OSFC logo panel glow */
         @keyframes panel-glow {
             0%, 100% { box-shadow: 0 0 0px rgba(244,185,66,0); }
             50%       { box-shadow: 0 0 32px rgba(244,185,66,0.12); }
         }
         .osfc-panel { animation: panel-glow 4s ease-in-out infinite; }
 
-        /* btn-gold pulse ring */
         .btn-gold {
             position: relative;
         }
@@ -540,25 +499,16 @@
             transform: scale(1.05);
         }
 
-        /* Timeline dot pulse */
         .timeline-item::before {
             animation: dot-blink 2.5s ease-in-out infinite;
         }
 
-        /* Year pill entrance */
         @keyframes pill-enter {
             from { opacity:0; transform: scale(0.8) rotate(-4deg); }
             to   { opacity:1; transform: scale(1) rotate(0deg); }
         }
         .year-pill { animation: pill-enter 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-        /* Welfare section header */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ─── SPLASH SCREEN ─── */
         #splash {
             position: fixed; inset: 0; z-index: 9999;
             background: #080808;
@@ -601,7 +551,6 @@
         }
         @keyframes splash-progress { from { width:0%; } to { width:100%; } }
 
-        /* ─── SCROLL PROGRESS BAR ─── */
         #scrollProgress {
             position: fixed; top: 0; left: 0;
             height: 2px; width: 0%;
@@ -609,7 +558,6 @@
             z-index: 9998; transition: width 0.08s linear;
         }
 
-        /* ─── BACK TO TOP ─── */
         #backToTop {
             position: fixed; bottom: 30px; right: 26px;
             width: 44px; height: 44px;
@@ -623,7 +571,6 @@
         #backToTop:hover { background: #fff; }
         #backToTop i { color: #000; font-size: 14px; }
 
-        /* ─── CURSOR TRAIL ─── */
         .cursor-spark {
             position: fixed; pointer-events: none; border-radius: 50%; z-index: 9997;
             animation: spark-fade 0.55s ease forwards;
@@ -633,7 +580,6 @@
             100% { opacity: 0; transform: scale(0.1) translateY(-6px); }
         }
 
-        /* ─── WELFARE FILTER ─── */
         .welfare-search-wrap { position: relative; max-width: 360px; margin-bottom: 32px; }
         .welfare-search-wrap i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #444; font-size: 13px; }
         #welfareSearch {
@@ -651,7 +597,6 @@
             font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
         }
 
-        /* ─── COPY TOOLTIP ─── */
         #copyTip {
             position: fixed;
             background: var(--gold); color: #000;
@@ -664,8 +609,6 @@
         }
         #copyTip.show { opacity: 1; transform: translateY(0); }
 
-
-        /* ─── FILMOGRAPHY ─── */
         .film-tab-btn {
             padding: 9px 18px;
             border-radius: 999px;
@@ -692,7 +635,6 @@
         }
         .film-tab-btn i { font-size: 11px; }
 
-        /* ─── FILM CARDS (Actor tab) ─── */
         .film-card {
             display: flex;
             align-items: flex-start;
@@ -750,7 +692,6 @@
             margin-top: 2px;
         }
 
-        /* ─── FILM GRID for producer/distributor ─── */
         .film-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -798,7 +739,6 @@
             font-style: italic;
         }
 
-        /* ─── VOICE / TV CARDS ─── */
         .voice-card, .tv-card {
             display: flex;
             align-items: flex-start;
@@ -813,7 +753,6 @@
             border-color: rgba(244,185,66,0.25);
         }
 
-        /* ─── MUSIC CARDS ─── */
         .music-card {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.04);
@@ -848,7 +787,6 @@
             font-family: 'Inter';
         }
 
-        /* ─── STATUS TAGS ─── */
         .film-status-tag {
             display: inline-block;
             padding: 2px 8px;
@@ -865,7 +803,68 @@
         .tag-cameo    { background: rgba(180,80,255,0.12); color: #c97aff; border: 1px solid rgba(180,80,255,0.2); }
         .tag-guest    { background: rgba(80,200,120,0.1); color: #6fdc9c; border: 1px solid rgba(80,200,120,0.2); }
 
-        /* ─── AWARD CARDS ─── */
+        .upcoming-card {
+            background: linear-gradient(135deg, rgba(100,150,255,0.06), rgba(100,150,255,0.02));
+            border: 1px solid rgba(100,150,255,0.18);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .upcoming-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(100,150,255,0.5), transparent);
+        }
+        .upcoming-card:hover {
+            border-color: rgba(100,150,255,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(100,150,255,0.08);
+        }
+        .upcoming-card-icon {
+            width: 34px; height: 34px;
+            background: rgba(100,150,255,0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            color: #7aadff;
+            font-size: 13px;
+        }
+        .upcoming-card-year {
+            font-family: 'Bebas Neue';
+            font-size: 0.9rem;
+            color: #7aadff;
+            line-height: 1;
+        }
+        .upcoming-card-title {
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            font-size: 15px;
+            color: #e0e0e0;
+            line-height: 1.2;
+            margin-top: 2px;
+        }
+        .upcoming-card-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Rajdhani';
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        .upcoming-card-status.filming { color: var(--gold); }
+        .upcoming-card-status.upcoming { color: #7aadff; }
+
+        /* ── AWARD CARDS ── */
         .award-block {
             margin-bottom: 28px;
             background: var(--card);
@@ -958,7 +957,6 @@
             .award-row-film { min-width: 0; }
         }
 
-        /* ─── AWARD FILTER BUTTONS ─── */
         .award-filter-btn {
             padding: 7px 16px;
             border-radius: 999px;
@@ -976,6 +974,154 @@
         .award-filter-btn:hover { color: #ccc; border-color: rgba(244,185,66,0.2); }
         .award-filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
 
+        /* ── FILM STAT CARDS ── */
+        .film-stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 12px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .film-stat-card:hover {
+            border-color: rgba(244,185,66,0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        .film-stat-bar-line {
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(244,185,66,0.4), transparent);
+        }
+        .fsc-blue .film-stat-bar-line { background: linear-gradient(90deg, transparent, rgba(100,150,255,0.5), transparent); }
+        .fsc-gold { background: linear-gradient(135deg,rgba(244,185,66,0.09),rgba(244,185,66,0.03)); border-color: rgba(244,185,66,0.28)!important; }
+        .fsc-gold-line { background: linear-gradient(90deg, transparent, var(--gold), transparent) !important; opacity: 0.8; }
+        .film-stat-num {
+            font-family: 'Bebas Neue';
+            font-size: 2.5rem;
+            line-height: 1;
+            background: linear-gradient(135deg, #F4B942, #FFDE88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .film-stat-label {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #444;
+            font-weight: 700;
+            margin-top: 5px;
+            line-height: 1.3;
+        }
+        .fsc-blue .film-stat-label { color: #7aadff; }
+        .fsc-gold-lbl { color: var(--gold) !important; }
+        .film-stat-sub { font-size: 9px; color: #333; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px; }
+        .fsc-gold-sub { color: #555 !important; }
+
+        @keyframes film-card-in {
+            from { opacity: 0; transform: translateX(-12px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes grid-card-in {
+            from { opacity: 0; transform: translateY(14px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .film-card { animation: film-card-in 0.35s ease both; }
+        .film-grid-card { animation: grid-card-in 0.4s ease both; }
+
+        @keyframes upcoming-pulse-border {
+            0%, 100% { border-color: rgba(100,150,255,0.18); box-shadow: none; }
+            50%       { border-color: rgba(100,150,255,0.5); box-shadow: 0 0 18px rgba(100,150,255,0.08); }
+        }
+        .upcoming-card { animation: upcoming-pulse-border 3s ease-in-out infinite; }
+
+        @keyframes upcoming-bar-slide {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .upcoming-card::before {
+            background: linear-gradient(90deg, transparent, rgba(100,150,255,0.6), transparent) !important;
+            background-size: 200% auto !important;
+            animation: upcoming-bar-slide 2.5s linear infinite !important;
+        }
+
+        @keyframes award-block-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes award-row-slide {
+            from { opacity: 0; transform: translateX(-8px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes trophy-spin {
+            0%   { transform: rotate(0deg) scale(1); }
+            25%  { transform: rotate(-14deg) scale(1.2); }
+            75%  { transform: rotate(14deg) scale(1.2); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+        .award-block { animation: award-block-in 0.45s ease both; }
+        .award-row   { animation: award-row-slide 0.3s ease both; }
+
+        .award-badge-won i {
+            display: inline-block;
+            animation: trophy-spin 2.8s ease-in-out infinite;
+        }
+
+        @keyframes badge-won-shimmer {
+            0%   { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .award-badge-won {
+            background: linear-gradient(90deg,
+                rgba(80,200,120,0.1) 0%,
+                rgba(111,220,156,0.3) 50%,
+                rgba(80,200,120,0.1) 100%);
+            background-size: 200% auto;
+            animation: badge-won-shimmer 3s linear infinite;
+        }
+
+        @keyframes tab-glow-pulse {
+            0%, 100% { box-shadow: 0 4px 16px rgba(244,185,66,0.2); }
+            50%       { box-shadow: 0 4px 28px rgba(244,185,66,0.45); }
+        }
+        .film-tab-btn.active { animation: tab-glow-pulse 2.5s ease-in-out infinite; }
+        .award-filter-btn.active { animation: tab-glow-pulse 2.5s ease-in-out infinite; }
+
+        .award-block-header:hover .award-block-icon i {
+            animation: trophy-spin 0.55s ease forwards;
+        }
+
+        @keyframes search-glow {
+            0%, 100% { box-shadow: 0 0 0 rgba(244,185,66,0); }
+            50%       { box-shadow: 0 0 14px rgba(244,185,66,0.14); }
+        }
+        #filmSearch:focus { animation: search-glow 2s ease-in-out infinite; }
+
+        .film-card-year { transition: color 0.2s; }
+        .film-card:hover .film-card-year { color: #FFE088; }
+        .film-card-icon { transition: background 0.2s, transform 0.2s; }
+        .film-card:hover .film-card-icon {
+            background: rgba(244,185,66,0.18);
+            transform: scale(1.1);
+        }
+
+        /* Cameo section */
+        .cameo-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            transition: all 0.2s;
+        }
+        .cameo-card:hover {
+            transform: translateX(3px);
+        }
     </style>
 </head>
 <body>
@@ -988,21 +1134,17 @@
     <div class="splash-bar-track"><div class="splash-bar-fill"></div></div>
 </div>
 
-<!-- SCROLL PROGRESS -->
 <div id="scrollProgress"></div>
 
-<!-- BACK TO TOP -->
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
     <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- COPY TOOLTIP -->
 <div id="copyTip">Copied!</div>
 
 <!-- NAVIGATION -->
 <nav class="nav-glass fixed top-0 w-full z-50 py-3">
     <div class="max-w-7xl mx-auto px-5 flex items-center justify-between">
-        <!-- Logo -->
         <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
             <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200"
                  alt="NCSFC Logo"
@@ -1012,8 +1154,6 @@
                 <div style="font-family:'Rajdhani';font-size:9.5px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold)">Suriya Fans Club</div>
             </div>
         </div>
-
-        <!-- Desktop Tabs -->
         <div class="hidden md:flex items-center gap-1 nav-pill px-2 py-1.5 rounded-full">
             <button class="nav-btn active" onclick="switchTab('home')" data-tab="home">Home</button>
             <button class="nav-btn" onclick="switchTab('membership')" data-tab="membership">Membership</button>
@@ -1022,8 +1162,6 @@
             <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
         </div>
-
-        <!-- Mobile hamburger -->
         <button class="md:hidden text-white text-xl" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </div>
 </nav>
@@ -1045,20 +1183,16 @@
     <div class="mt-auto pt-12 text-zinc-600" style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase">Est. 2011 · North Coimbatore</div>
 </div>
 
-<!-- MAIN -->
 <main class="pt-20">
 
-    <!-- ============ HOME ============ -->
+    <!-- HOME -->
     <section id="home" class="tab-content active">
-        <!-- HERO -->
         <div class="hero-bg min-h-screen flex items-center relative">
             <canvas id="particles"></canvas>
-            <!-- Decorative -->
             <div class="absolute inset-0 pointer-events-none">
                 <div class="ring-pulse" style="position:absolute;top:10%;right:5%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,0.06),transparent 70%)"></div>
                 <div class="ring-pulse-slow" style="position:absolute;bottom:15%;left:2%;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,0.04),transparent 70%)"></div>
             </div>
-
             <div class="hero-content max-w-7xl mx-auto px-6 py-20 w-full">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div>
@@ -1076,11 +1210,7 @@
                                 View Activities
                             </button>
                         </div>
-
-
                     </div>
-
-                    <!-- Logo showcase -->
                     <div class="flex justify-center lg:justify-end reveal reveal-delay-2">
                         <div class="logo-float" style="position:relative;width:300px;height:300px">
                             <div class="ring-pulse" style="position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(244,185,66,0.1)"></div>
@@ -1092,7 +1222,6 @@
                     </div>
                 </div>
 
-                <!-- Stats -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20">
                     <div class="stat-card reveal reveal-delay-1" data-counter="2011" data-suffix="">
                         <div class="stat-num" data-target="2011">2011</div>
@@ -1108,7 +1237,6 @@
                     </div>
                 </div>
 
-                <!-- Feature cards -->
                 <div class="grid md:grid-cols-3 gap-5 mt-8">
                     <div class="card p-7 reveal reveal-delay-1">
                         <div style="width:44px;height:44px;background:rgba(244,185,66,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
@@ -1136,7 +1264,7 @@
         </div>
     </section>
 
-    <!-- ============ MEMBERSHIP ============ -->
+    <!-- MEMBERSHIP -->
     <section id="membership" class="tab-content">
         <div class="max-w-3xl mx-auto px-6 py-24">
             <div class="membership-shine reveal" style="background:linear-gradient(145deg,#111,#161616);border:1px solid rgba(244,185,66,0.2);border-radius:28px;overflow:hidden">
@@ -1146,8 +1274,7 @@
                             <i class="fas fa-id-card" style="font-size:2rem;color:var(--gold)"></i>
                         </div>
                         <div style="width:1px;height:60px;background:rgba(244,185,66,0.15)"></div>
-                        <!-- OSFC logo placed here elegantly -->
-                        <div class="logo-float" style="width:72px;height:72px;background:var(--deep);border:1px solid rgba(244,185,66,0.2);border-radius:18px;padding:10px;display:flex;align-items:center;justify-content:center" title="Coimbatore OSFC">
+                        <div class="logo-float" style="width:72px;height:72px;background:var(--deep);border:1px solid rgba(244,185,66,0.2);border-radius:18px;padding:10px;display:flex;align-items:center;justify-content:center">
                             <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w400" alt="NCSFC" style="width:100%;object-fit:contain">
                         </div>
                     </div>
@@ -1164,11 +1291,9 @@
         </div>
     </section>
 
-    <!-- ============ ABOUT ============ -->
+    <!-- ABOUT -->
     <section id="about" class="tab-content">
         <div class="max-w-7xl mx-auto px-6 py-16">
-
-            <!-- NCSFC -->
             <div class="grid lg:grid-cols-2 gap-14 items-center mb-20">
                 <div class="reveal">
                     <div class="section-tag mb-3">Who We Are</div>
@@ -1217,7 +1342,6 @@
 
             <div class="gold-divider mb-20"></div>
 
-            <!-- OSFC -->
             <div class="osfc-panel reveal" style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:clamp(28px,5vw,72px)">
                 <div class="flex flex-col lg:flex-row gap-12 items-center">
                     <div style="flex-shrink:0;width:180px;height:180px;background:var(--deep);border:1px solid var(--border);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:center">
@@ -1239,15 +1363,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- ============ WELFARE ============ -->
+    <!-- WELFARE -->
     <section id="welfare" class="tab-content">
         <div class="max-w-7xl mx-auto px-6 py-16">
-
-            <!-- Heading -->
             <div class="mb-14">
                 <div class="section-tag mb-2">Making a Difference</div>
                 <h2 style="font-size:3.5rem;color:#fff">Welfare Activities</h2>
@@ -1259,7 +1380,6 @@
             </div>
             <div class="no-results-msg" id="noResults">No matching activities found</div>
 
-            <!-- ─── SURIYA BIRTHDAY 2025 ─── -->
             <div class="mb-16">
                 <div class="year-header">
                     <span class="year-pill">2025</span>
@@ -1269,7 +1389,6 @@
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="welfare2025Grid"></div>
             </div>
 
-            <!-- ─── SURIYA BIRTHDAY 2024 ─── -->
             <div class="mb-16">
                 <div class="year-header">
                     <span class="year-pill" style="background:#333;color:#aaa">2024</span>
@@ -1279,7 +1398,6 @@
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="welfare2024Grid"></div>
             </div>
 
-            <!-- ─── MOVIE CELEBRATIONS ─── -->
             <div class="mb-16">
                 <div class="year-header">
                     <span class="year-pill" style="background:rgba(100,150,255,0.15);color:#7aadff;border:1px solid rgba(100,150,255,0.3)">🎬 Films</span>
@@ -1289,7 +1407,6 @@
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="movieGrid"></div>
             </div>
 
-            <!-- ─── OTHER WELFARE ─── -->
             <div>
                 <div class="year-header">
                     <span class="year-pill" style="background:rgba(80,200,120,0.15);color:#6fdc9c;border:1px solid rgba(80,200,120,0.3)">🌿 Other</span>
@@ -1298,15 +1415,12 @@
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="otherGrid"></div>
             </div>
-
         </div>
     </section>
 
-    <!-- ============ FILMOGRAPHY ============ -->
+    <!-- FILMOGRAPHY -->
     <section id="filmography" class="tab-content">
         <div class="max-w-7xl mx-auto px-6 py-16">
-
-            <!-- Heading -->
             <div class="mb-10 reveal">
                 <div class="section-tag mb-2">Career Highlights</div>
                 <h2 style="font-size:3.5rem;color:#fff;line-height:1">Suriya</h2>
@@ -1314,42 +1428,19 @@
                 <span class="section-heading-line"></span>
                 <p style="font-family:'Inter';color:#555;font-size:0.9rem;margin-top:14px">Complete career — films, production, voice work, television, discography & awards.</p>
 
-                <!-- Stats bar -->
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-10">
-                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
-                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">49</div>
-                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Films as Actor</div>
-                    </div>
-                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
-                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">18</div>
-                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">As Producer</div>
-                    </div>
-                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
-                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">28+</div>
-                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Years Active</div>
-                    </div>
-                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
-                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">50+</div>
-                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Awards Won</div>
-                    </div>
-                    <div style="background:linear-gradient(135deg,rgba(244,185,66,0.1),rgba(244,185,66,0.05));border:1px solid rgba(244,185,66,0.3);border-radius:14px;padding:18px 12px;text-align:center">
-                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">1</div>
-                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:4px">National Award</div>
-                    </div>
-                </div>
+                <!-- Stats bar — AWARDS ONLY -->
+                <div id="filmStatsBar" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10"></div>
 
-                <!-- Sub-tabs -->
                 <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px" id="filmTabs">
-                    <button class="film-tab-btn active" onclick="switchFilmTab('actor')"><i class="fas fa-film" style="margin-right:6px"></i>Actor</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('producer')"><i class="fas fa-video" style="margin-right:6px"></i>Producer</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('distributor')"><i class="fas fa-ticket-alt" style="margin-right:6px"></i>Distributor</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('voice')"><i class="fas fa-microphone" style="margin-right:6px"></i>Voice</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('tv')"><i class="fas fa-tv" style="margin-right:6px"></i>Television</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('music')"><i class="fas fa-music" style="margin-right:6px"></i>Discography</button>
-                    <button class="film-tab-btn" onclick="switchFilmTab('awards')" style="border-color:rgba(244,185,66,0.35)"><i class="fas fa-trophy" style="margin-right:6px;color:var(--gold)"></i>Awards</button>
+                    <button class="film-tab-btn active" onclick="switchFilmTab('actor')"><i class="fas fa-film"></i>Actor</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('producer')"><i class="fas fa-video"></i>Producer</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('distributor')"><i class="fas fa-ticket-alt"></i>Distributor</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('voice')"><i class="fas fa-microphone"></i>Voice</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('tv')"><i class="fas fa-tv"></i>Television</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('music')"><i class="fas fa-music"></i>Discography</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('awards')" style="border-color:rgba(244,185,66,0.35)"><i class="fas fa-trophy" style="color:var(--gold)"></i>Awards</button>
                 </div>
 
-                <!-- Search bar (hidden for awards) -->
                 <div id="filmSearchWrap" style="position:relative;max-width:340px;margin-top:18px">
                     <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#444;font-size:12px"></i>
                     <input id="filmSearch" type="text" placeholder="Search..." oninput="filterFilms(this.value)"
@@ -1360,6 +1451,32 @@
 
             <!-- ACTOR -->
             <div id="film-actor" class="film-panel">
+                <!-- Upcoming -->
+                <div id="upcomingSection" class="reveal" style="margin-bottom:28px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                        <div style="width:26px;height:26px;background:rgba(100,150,255,0.12);border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-hourglass-half" style="color:#7aadff;font-size:11px"></i></div>
+                        <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#555">Upcoming & In Production</span>
+                        <div style="flex:1;height:1px;background:rgba(100,150,255,0.1)"></div>
+                    </div>
+                    <div id="upcomingCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
+                </div>
+
+                <!-- Cameo & Guest -->
+                <div id="cameoSection" class="reveal" style="margin-bottom:28px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+                        <div style="width:26px;height:26px;background:rgba(180,80,255,0.12);border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-eye" style="color:#c97aff;font-size:11px"></i></div>
+                        <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#555">Cameo & Guest Appearances</span>
+                        <div style="flex:1;height:1px;background:rgba(180,80,255,0.1)"></div>
+                    </div>
+                    <div id="cameoCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px"></div>
+                </div>
+
+                <!-- Main Filmography -->
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px" class="reveal">
+                    <div style="width:26px;height:26px;background:rgba(244,185,66,0.1);border-radius:7px;display:flex;align-items:center;justify-content:center"><i class="fas fa-film" style="color:var(--gold);font-size:11px"></i></div>
+                    <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#555">Complete Filmography</span>
+                    <div style="flex:1;height:1px;background:rgba(244,185,66,0.08)"></div>
+                </div>
                 <div class="reveal" id="actorCards" style="display:flex;flex-direction:column;gap:8px"></div>
             </div>
 
@@ -1421,11 +1538,10 @@
                     <div id="awardsContainer"></div>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- ============ CONTACT ============ -->
+    <!-- CONTACT -->
     <section id="contact" class="tab-content">
         <div class="max-w-5xl mx-auto px-6 py-20">
             <div class="text-center mb-16">
@@ -1433,15 +1549,10 @@
                 <h2 style="font-size:3.5rem;color:#fff">Connect With Us</h2>
                 <p style="font-family:'Inter';color:#555;font-size:0.95rem;margin-top:8px">Follow us on social media for latest updates</p>
             </div>
-
             <div class="grid md:grid-cols-2 gap-8">
-
-                <!-- NCSFC -->
                 <div class="card p-8">
                     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-                        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200"
-                             alt="NCSFC Logo"
-                             style="width:56px;height:56px;object-fit:contain;background:#000;border-radius:12px;padding:6px;border:1px solid #222">
+                        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200" alt="NCSFC Logo" style="width:56px;height:56px;object-fit:contain;background:#000;border-radius:12px;padding:6px;border:1px solid #222">
                         <div>
                             <h3 style="font-size:1.5rem;color:#fff;line-height:1">Coimbatore SFC</h3>
                             <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700">Official District Unit</p>
@@ -1450,37 +1561,29 @@
                     <div class="flex flex-col gap-3">
                         <a href="https://x.com/CoimbatoreSFC" target="_blank" class="social-link">
                             <div style="display:flex;align-items:center;gap:12px">
-                                <div class="x-icon-badge">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                </div>
+                                <div class="x-icon-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
                                 <span style="font-weight:700;color:#ccc;font-size:14px">Twitter / X</span>
                             </div>
                             <div style="display:flex;align-items:center;gap:8px">
                                 <span style="font-size:11px;color:#444;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">@CoimbatoreSFC</span>
-                                <button onclick="event.preventDefault();copyHandle('@CoimbatoreSFC',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em" title="Copy handle">COPY</button>
+                                <button onclick="event.preventDefault();copyHandle('@CoimbatoreSFC',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
                             </div>
                         </a>
                         <a href="https://www.instagram.com/coimbatore_sfc/?hl=en" target="_blank" class="social-link">
                             <div style="display:flex;align-items:center;gap:12px">
-                                <div class="x-icon-badge" style="background:linear-gradient(45deg,#405DE6,#5851DB,#833AB4,#C13584,#E1306C,#FD1D1D)">
-                                    <i class="fab fa-instagram" style="color:#fff;font-size:14px"></i>
-                                </div>
+                                <div class="x-icon-badge" style="background:linear-gradient(45deg,#405DE6,#5851DB,#833AB4,#C13584,#E1306C,#FD1D1D)"><i class="fab fa-instagram" style="color:#fff;font-size:14px"></i></div>
                                 <span style="font-weight:700;color:#ccc;font-size:14px">Instagram</span>
                             </div>
                             <div style="display:flex;align-items:center;gap:8px">
                                 <span style="font-size:11px;color:#444;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">@coimbatore_sfc</span>
-                                <button onclick="event.preventDefault();copyHandle('@coimbatore_sfc',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em" title="Copy handle">COPY</button>
+                                <button onclick="event.preventDefault();copyHandle('@coimbatore_sfc',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
                             </div>
                         </a>
                     </div>
                 </div>
-
-                <!-- OSFC -->
                 <div class="card p-8">
                     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-                        <img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w200"
-                             alt="OSFC Logo"
-                             style="width:56px;height:56px;object-fit:contain;background:#000;border-radius:12px;padding:6px;border:1px solid #222">
+                        <img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w200" alt="OSFC Logo" style="width:56px;height:56px;object-fit:contain;background:#000;border-radius:12px;padding:6px;border:1px solid #222">
                         <div>
                             <h3 style="font-size:1.5rem;color:#fff;line-height:1">Coimbatore OSFC</h3>
                             <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:700">Digital Media Team</p>
@@ -1489,33 +1592,27 @@
                     <div class="flex flex-col gap-3">
                         <a href="https://x.com/CoimbatoreOSFC" target="_blank" class="social-link">
                             <div style="display:flex;align-items:center;gap:12px">
-                                <div class="x-icon-badge">
-                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                </div>
+                                <div class="x-icon-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
                                 <span style="font-weight:700;color:#ccc;font-size:14px">Twitter / X</span>
                             </div>
                             <div style="display:flex;align-items:center;gap:8px">
                                 <span style="font-size:11px;color:#444;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">@CoimbatoreOSFC</span>
-                                <button onclick="event.preventDefault();copyHandle('@CoimbatoreOSFC',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em" title="Copy handle">COPY</button>
+                                <button onclick="event.preventDefault();copyHandle('@CoimbatoreOSFC',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
                             </div>
                         </a>
                         <a href="https://www.instagram.com/coimbatore_osfc/?hl=en" target="_blank" class="social-link">
                             <div style="display:flex;align-items:center;gap:12px">
-                                <div class="x-icon-badge" style="background:linear-gradient(45deg,#405DE6,#5851DB,#833AB4,#C13584,#E1306C,#FD1D1D)">
-                                    <i class="fab fa-instagram" style="color:#fff;font-size:14px"></i>
-                                </div>
+                                <div class="x-icon-badge" style="background:linear-gradient(45deg,#405DE6,#5851DB,#833AB4,#C13584,#E1306C,#FD1D1D)"><i class="fab fa-instagram" style="color:#fff;font-size:14px"></i></div>
                                 <span style="font-weight:700;color:#ccc;font-size:14px">Instagram</span>
                             </div>
                             <div style="display:flex;align-items:center;gap:8px">
                                 <span style="font-size:11px;color:#444;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">@coimbatore_osfc</span>
-                                <button onclick="event.preventDefault();copyHandle('@coimbatore_osfc',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em" title="Copy handle">COPY</button>
+                                <button onclick="event.preventDefault();copyHandle('@coimbatore_osfc',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:3px 8px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-
-            <!-- Extra note -->
             <div class="text-center mt-12">
                 <p style="font-family:'Inter';color:#444;font-size:13px">Stay connected for live coverage of events, welfare activities, and movie celebrations.</p>
             </div>
@@ -1524,12 +1621,9 @@
 
 </main>
 
-<!-- FOOTER -->
 <footer class="py-12 mt-12">
     <div class="max-w-7xl mx-auto px-6 text-center">
-        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200"
-             alt="NCSFC"
-             style="width:52px;height:52px;object-fit:contain;opacity:0.3;margin:0 auto 16px">
+        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200" alt="NCSFC" style="width:52px;height:52px;object-fit:contain;opacity:0.3;margin:0 auto 16px">
         <p style="font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#333;font-weight:700">Official Fan Club Portal</p>
         <p style="font-size:11px;color:#2a2a2a;margin-top:8px;font-family:'Inter'">© North Coimbatore Suriya Fans Club. #AnbaanaFans.</p>
     </div>
@@ -1566,7 +1660,6 @@ const otherWelfare = [
     { title: "Summer Welfare Works 2026", link: "https://x.com/coimbatoreosfc/status/2031018078046413100", tweetId: "2031018078046413100", acc: "coimbatoreosfc", badge: "badge-green", icon: "fa-sun" }
 ];
 
-/* ─── BUILD CARDS ─── */
 function buildCard(item, idx) {
     const embedId = `embed_${item.tweetId}_${idx}`;
     return `
@@ -1634,8 +1727,7 @@ function loadTwitterScript(cb) {
     document.head.appendChild(s);
 }
 
-
-/* ─── FILMOGRAPHY DATA (from Excel) ─── */
+/* ─── FILMOGRAPHY DATA ─── */
 const actorFilms = [
     { year: 1997, title: "Nerrukku Ner", role: "Suriya", notes: "" },
     { year: 1998, title: "Kaadhale Nimmadhi", role: "Chandru", notes: "" },
@@ -1744,155 +1836,154 @@ const musicCredits = [
     { year: "TBA", film: "Party", song: '"Cha Cha Charey"', notes: "Co-sang with Karthi, Kharesma Ravichandran, Venkat Prabhu & Premgi Amaren" },
 ];
 
-/* ─── AWARDS DATA (from Excel) ─── */
 const awardsData = [
-    {
-        category: "National Film Awards", group: "National",
-        entries: [
-            { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
-            { year: 2020, film: "Soorarai Pottru", award: "Best Feature Film", result: "Won" },
-        ]
-    },
-    {
-        category: "Filmfare Awards South", group: "Filmfare",
-        entries: [
-            { year: 2002, film: "Nandhaa", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2003, film: "Mounam Pesiyadhe", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2004, film: "Pithamagan", award: "Best Supporting Actor – Tamil", result: "Won" },
-            { year: 2004, film: "Kaakha Kaakha", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2005, film: "Perazhagan", award: "Best Actor – Tamil", result: "Won" },
-            { year: 2006, film: "Ghajini", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor – Tamil", result: "Won" },
-            { year: 2010, film: "Ayan", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2011, film: "Singam", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2014, film: "Singam 2", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2017, film: "24", award: "Critics Best Actor – Tamil", result: "Won" },
-            { year: 2022, film: "Soorarai Pottru", award: "Best Film", result: "Nominated" },
-            { year: 2022, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
-            { year: 2022, film: "Jai Bhim", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2022, film: "Jai Bhim", award: "Best Film – Tamil", result: "Won" },
-            { year: 2024, film: "Meiyazhagan", award: "Best Film – Tamil", result: "Nominated" },
-            { year: 2024, film: "Meiyazhagan", award: "Best Film – Critics'", result: "Won" },
-        ]
-    },
-    {
-        category: "Tamil Nadu State Film Awards", group: "Tamil Nadu",
-        entries: [
-            { year: 2001, film: "Nandhaa", award: "Best Actor", result: "Won" },
-            { year: 2005, film: "Ghajini", award: "Best Actor: Special Prize", result: "Won" },
-            { year: 2008, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
-            { year: 2015, film: "Pasanga 2", award: "Best Film: Second Prize", result: "Won" },
-            { year: 2015, film: "36 Vayadhinile", award: "Best Film About Women's Empowerment", result: "Won" },
-            { year: 2018, film: "Kadaikutty Singam", award: "Best Film: Second Prize", result: "Won" },
-            { year: 2019, film: "Ponmagal Vandhal", award: "Best Film About Women's Empowerment", result: "Won" },
-            { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
-            { year: 2020, film: "Soorarai Pottru", award: "Best Film: Second Prize", result: "Won" },
-            { year: 2021, film: "Jai Bhim", award: "Best Film", result: "Won" },
-        ]
-    },
-    {
-        category: "Vijay Awards", group: "Vijay",
-        entries: [
-            { year: 2008, film: "Various films", award: "Icon of the Year", result: "Won" },
-            { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
-            { year: 2010, film: "Ayan, Aadhavan", award: "Entertainer of the Year", result: "Won" },
-            { year: 2010, film: "Agaram Foundation", award: "Best Welfare Provider", result: "Won" },
-            { year: 2011, film: "Ratha Sarithiram", award: "Best Actor", result: "Nominated" },
-            { year: 2011, film: "Singam", award: "Entertainer of the Year", result: "Won" },
-            { year: 2011, film: "Singam", award: "Favourite Hero", result: "Nominated" },
-            { year: 2012, film: "7 Aum Arivu", award: "Favourite Hero", result: "Nominated" },
-            { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
-            { year: 2013, film: "Maattrraan", award: "Favourite Hero", result: "Nominated" },
-            { year: 2014, film: "Singam II", award: "Best Actor", result: "Nominated" },
-            { year: 2015, film: "Anjaan", award: "Best Actor", result: "Nominated" },
-            { year: 2018, film: "Singam 3", award: "Best Actor", result: "Nominated" },
-        ]
-    },
-    {
-        category: "Kalaimamani Awards", group: "Other",
-        entries: [
-            { year: 2005, film: "Various films", award: "Art and Literature", result: "Won" },
-        ]
-    },
-    {
-        category: "Cinema Express Awards", group: "Other",
-        entries: [
-            { year: 1997, film: "Nerrukku Ner", award: "Best New Face Actor", result: "Won" },
-            { year: 2002, film: "Nandhaa", award: "Best Popular Tamil Actor in Lead Role", result: "Won" },
-        ]
-    },
-    {
-        category: "Edison Awards", group: "Other",
-        entries: [
-            { year: 2017, film: "24", award: "Best Protagonist", result: "Won" },
-            { year: 2017, film: "24", award: "Best Antagonist", result: "Won" },
-        ]
-    },
-    {
-        category: "International Tamil Film Awards", group: "Other",
-        entries: [
-            { year: 2004, film: "Kaakha Kaakha", award: "Best Actor", result: "Won" },
-        ]
-    },
-    {
-        category: "South Indian International Movie Awards (SIIMA)", group: "Other",
-        entries: [
-            { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2014, film: "Singam II", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
-            { year: 2021, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
-            { year: 2021, film: "Soorarai Pottru", award: "Best Film – Tamil", result: "Won" },
-        ]
-    },
-    {
-        category: "CineMAA Awards", group: "Other",
-        entries: [
-            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Won" },
-        ]
-    },
-    {
-        category: "Chennai Times Film Awards", group: "Other",
-        entries: [
-            { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
-            { year: 2013, film: "Maattrraan", award: "Best Actor", result: "Nominated" },
-        ]
-    },
-    {
-        category: "Other Awards & Recognition", group: "Other",
-        entries: [
-            { year: 1998, film: "Nerrukku Ner", award: "Dinakaran Best New Face Actor", result: "Won" },
-            { year: 2008, film: "Various films", award: "South Scope Awards – Style Icon of the Year", result: "Won" },
-            { year: 2009, film: "Vaaranam Aayiram", award: "South Scope – Most Stylish Actor", result: "Nominated" },
-            { year: 2010, film: "Aadhavan, Ayan", award: "Amrita Mathrubhumi – Best Actor Tamil", result: "Won" },
-            { year: 2010, film: "Aadhavan", award: "Meera Isaiaruvi – Best Performance in Song", result: "Won" },
-            { year: 2016, film: "36 Vayathinile", award: "Behindwoods Gold Medal – Best Debut Producer", result: "Won" },
-            { year: 2017, film: "24", award: "Zee Cine Awards Telugu – South Sensation", result: "Won" },
-            { year: 2017, film: "24", award: "Kollywood Cinemaaa – Best Villain", result: "Won" },
-            { year: 2020, film: "Soorarai Pottru", award: "Norway Tamil Film Festival – NTFF Kalaichigaram Award", result: "Won" },
-            { year: 2021, film: "Soorarai Pottru", award: "Cinema At Its Best – Best Actor", result: "Won" },
-            { year: 2021, film: "Soorarai Pottru", award: "Indian Film Festival of Melbourne – Best Actor", result: "Won" },
-            { year: 2021, film: "Soorarai Pottru", award: "Blacksheep Digital – Best Film of the Year", result: "Won" },
-            { year: "2021-22", film: "Jai Bhim", award: "Norway Tamil Film Festival – Best Film", result: "Won" },
-            { year: "2021-22", film: "Jai Bhim", award: "Congressional Global Community Oscars – Medal of Excellence", result: "Won" },
-            { year: "2021-22", film: "Jai Bhim", award: "Cinema At Its Best – Best Feature Film", result: "Won" },
-            { year: "2021-22", film: "Jai Bhim", award: "Noida International Film Festival – Best Feature Film", result: "Won" },
-        ]
-    },
+    { category: "National Film Awards", group: "National", entries: [
+        { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
+        { year: 2020, film: "Soorarai Pottru", award: "Best Feature Film", result: "Won" },
+    ]},
+    { category: "Filmfare Awards South", group: "Filmfare", entries: [
+        { year: 2002, film: "Nandhaa", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2003, film: "Mounam Pesiyadhe", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2004, film: "Pithamagan", award: "Best Supporting Actor – Tamil", result: "Won" },
+        { year: 2004, film: "Kaakha Kaakha", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2005, film: "Perazhagan", award: "Best Actor – Tamil", result: "Won" },
+        { year: 2006, film: "Ghajini", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor – Tamil", result: "Won" },
+        { year: 2010, film: "Ayan", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2011, film: "Singam", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2014, film: "Singam 2", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2017, film: "24", award: "Critics Best Actor – Tamil", result: "Won" },
+        { year: 2022, film: "Soorarai Pottru", award: "Best Film", result: "Nominated" },
+        { year: 2022, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
+        { year: 2022, film: "Jai Bhim", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2022, film: "Jai Bhim", award: "Best Film – Tamil", result: "Won" },
+        { year: 2024, film: "Meiyazhagan", award: "Best Film – Tamil", result: "Nominated" },
+        { year: 2024, film: "Meiyazhagan", award: "Best Film – Critics'", result: "Won" },
+    ]},
+    { category: "Tamil Nadu State Film Awards", group: "Tamil Nadu", entries: [
+        { year: 2001, film: "Nandhaa", award: "Best Actor", result: "Won" },
+        { year: 2005, film: "Ghajini", award: "Best Actor: Special Prize", result: "Won" },
+        { year: 2008, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
+        { year: 2015, film: "Pasanga 2", award: "Best Film: Second Prize", result: "Won" },
+        { year: 2015, film: "36 Vayadhinile", award: "Best Film About Women's Empowerment", result: "Won" },
+        { year: 2018, film: "Kadaikutty Singam", award: "Best Film: Second Prize", result: "Won" },
+        { year: 2019, film: "Ponmagal Vandhal", award: "Best Film About Women's Empowerment", result: "Won" },
+        { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
+        { year: 2020, film: "Soorarai Pottru", award: "Best Film: Second Prize", result: "Won" },
+        { year: 2021, film: "Jai Bhim", award: "Best Film", result: "Won" },
+    ]},
+    { category: "Vijay Awards", group: "Vijay", entries: [
+        { year: 2008, film: "Various films", award: "Icon of the Year", result: "Won" },
+        { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
+        { year: 2010, film: "Ayan, Aadhavan", award: "Entertainer of the Year", result: "Won" },
+        { year: 2010, film: "Agaram Foundation", award: "Best Welfare Provider", result: "Won" },
+        { year: 2011, film: "Ratha Sarithiram", award: "Best Actor", result: "Nominated" },
+        { year: 2011, film: "Singam", award: "Entertainer of the Year", result: "Won" },
+        { year: 2011, film: "Singam", award: "Favourite Hero", result: "Nominated" },
+        { year: 2012, film: "7 Aum Arivu", award: "Favourite Hero", result: "Nominated" },
+        { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
+        { year: 2013, film: "Maattrraan", award: "Favourite Hero", result: "Nominated" },
+        { year: 2014, film: "Singam II", award: "Best Actor", result: "Nominated" },
+        { year: 2015, film: "Anjaan", award: "Best Actor", result: "Nominated" },
+        { year: 2018, film: "Singam 3", award: "Best Actor", result: "Nominated" },
+    ]},
+    { category: "Kalaimamani Awards", group: "Other", entries: [
+        { year: 2005, film: "Various films", award: "Art and Literature", result: "Won" },
+    ]},
+    { category: "Cinema Express Awards", group: "Other", entries: [
+        { year: 1997, film: "Nerrukku Ner", award: "Best New Face Actor", result: "Won" },
+        { year: 2002, film: "Nandhaa", award: "Best Popular Tamil Actor in Lead Role", result: "Won" },
+    ]},
+    { category: "Edison Awards", group: "Other", entries: [
+        { year: 2017, film: "24", award: "Best Protagonist", result: "Won" },
+        { year: 2017, film: "24", award: "Best Antagonist", result: "Won" },
+    ]},
+    { category: "International Tamil Film Awards", group: "Other", entries: [
+        { year: 2004, film: "Kaakha Kaakha", award: "Best Actor", result: "Won" },
+    ]},
+    { category: "South Indian International Movie Awards (SIIMA)", group: "Other", entries: [
+        { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2014, film: "Singam II", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
+        { year: 2021, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
+        { year: 2021, film: "Soorarai Pottru", award: "Best Film – Tamil", result: "Won" },
+    ]},
+    { category: "CineMAA Awards", group: "Other", entries: [
+        { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Won" },
+    ]},
+    { category: "Chennai Times Film Awards", group: "Other", entries: [
+        { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
+        { year: 2013, film: "Maattrraan", award: "Best Actor", result: "Nominated" },
+    ]},
+    { category: "Other Awards & Recognition", group: "Other", entries: [
+        { year: 1998, film: "Nerrukku Ner", award: "Dinakaran Best New Face Actor", result: "Won" },
+        { year: 2008, film: "Various films", award: "South Scope Awards – Style Icon of the Year", result: "Won" },
+        { year: 2009, film: "Vaaranam Aayiram", award: "South Scope – Most Stylish Actor", result: "Nominated" },
+        { year: 2010, film: "Aadhavan, Ayan", award: "Amrita Mathrubhumi – Best Actor Tamil", result: "Won" },
+        { year: 2010, film: "Aadhavan", award: "Meera Isaiaruvi – Best Performance in Song", result: "Won" },
+        { year: 2016, film: "36 Vayathinile", award: "Behindwoods Gold Medal – Best Debut Producer", result: "Won" },
+        { year: 2017, film: "24", award: "Zee Cine Awards Telugu – South Sensation", result: "Won" },
+        { year: 2017, film: "24", award: "Kollywood Cinemaaa – Best Villain", result: "Won" },
+        { year: 2020, film: "Soorarai Pottru", award: "Norway Tamil Film Festival – NTFF Kalaichigaram Award", result: "Won" },
+        { year: 2021, film: "Soorarai Pottru", award: "Cinema At Its Best – Best Actor", result: "Won" },
+        { year: 2021, film: "Soorarai Pottru", award: "Indian Film Festival of Melbourne – Best Actor", result: "Won" },
+        { year: 2021, film: "Soorarai Pottru", award: "Blacksheep Digital – Best Film of the Year", result: "Won" },
+        { year: "2021-22", film: "Jai Bhim", award: "Norway Tamil Film Festival – Best Film", result: "Won" },
+        { year: "2021-22", film: "Jai Bhim", award: "Congressional Global Community Oscars – Medal of Excellence", result: "Won" },
+        { year: "2021-22", film: "Jai Bhim", award: "Cinema At Its Best – Best Feature Film", result: "Won" },
+        { year: "2021-22", film: "Jai Bhim", award: "Noida International Film Festival – Best Feature Film", result: "Won" },
+    ]},
 ];
 
-/* ─── HELPERS ─── */
-function noteTag(note) {
-    if (!note) return '';
-    const n = note.toLowerCase();
-    if (n.includes('filming')) return `<span class="film-status-tag tag-filming">Filming</span>`;
-    if (n.includes('upcoming') || n.includes('post-production')) return `<span class="film-status-tag tag-upcoming">Upcoming</span>`;
-    if (n === 'cameo' || n.includes('cameo')) return `<span class="film-status-tag tag-cameo">Cameo</span>`;
-    if (n === 'guest' || n.includes('guest')) return `<span class="film-status-tag tag-guest">Guest</span>`;
-    return note;
+/* ─── FIX 1: STATS BAR — AWARDS ONLY ─── */
+function buildFilmStatsBar() {
+    const bar = document.getElementById('filmStatsBar');
+    if (!bar) return;
+
+    const wonCount = awardsData.reduce((acc, b) => acc + b.entries.filter(e => e.result === 'Won').length, 0);
+    const nomCount = awardsData.reduce((acc, b) => acc + b.entries.filter(e => e.result === 'Nominated').length, 0);
+    const totalCount = wonCount + nomCount;
+    const cerCount  = awardsData.length;
+
+    bar.innerHTML = `
+        <div class="film-stat-card fsc-gold">
+            <div class="film-stat-bar-line fsc-gold-line"></div>
+            <div class="film-stat-num">${wonCount}+</div>
+            <div class="film-stat-label fsc-gold-lbl">Awards Won</div>
+            <div class="film-stat-sub fsc-gold-sub">Across all ceremonies</div>
+        </div>
+        <div class="film-stat-card">
+            <div class="film-stat-bar-line"></div>
+            <div class="film-stat-num">${nomCount}</div>
+            <div class="film-stat-label">Nominations</div>
+            <div class="film-stat-sub">Total</div>
+        </div>
+        <div class="film-stat-card fsc-gold">
+            <div class="film-stat-bar-line fsc-gold-line"></div>
+            <div class="film-stat-num">1</div>
+            <div class="film-stat-label fsc-gold-lbl">National Award</div>
+            <div class="film-stat-sub fsc-gold-sub">Soorarai Pottru</div>
+        </div>
+        <div class="film-stat-card fsc-blue">
+            <div class="film-stat-bar-line" style="background:linear-gradient(90deg,transparent,rgba(100,150,255,0.5),transparent)"></div>
+            <div class="film-stat-num" style="background:linear-gradient(135deg,#7aadff,#aaccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${cerCount}</div>
+            <div class="film-stat-label" style="color:#7aadff">Ceremonies</div>
+            <div class="film-stat-sub">Award shows</div>
+        </div>`;
+
+    bar.querySelectorAll('.film-stat-card').forEach((el, i) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        setTimeout(() => {
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 120 + i * 90);
+    });
 }
 
 function getFilmIcon(title, notes) {
@@ -1900,9 +1991,9 @@ function getFilmIcon(title, notes) {
     if (t.includes('singam')) return 'fa-shield-alt';
     if (t.includes('jai bhim')) return 'fa-balance-scale';
     if (t.includes('soorarai')) return 'fa-plane';
-    if (t.includes('vikram') && t.includes('rolex')) return 'fa-mask';
+    if (t.includes('vikram')) return 'fa-mask';
     if (t.includes('7 aum')) return 'fa-dna';
-    if (t.includes('" 24"') || title === '24') return 'fa-clock';
+    if (title === '24') return 'fa-clock';
     if (t.includes('ghajini')) return 'fa-head-side-brain';
     if (t.includes('kaakha')) return 'fa-user-shield';
     if (t.includes('pithamagan')) return 'fa-skull';
@@ -1915,25 +2006,102 @@ function getFilmIcon(title, notes) {
     if (t.includes('vaaranam')) return 'fa-heart';
     if (t.includes('vel')) return 'fa-khanda';
     if (t.includes('aaru')) return 'fa-fire';
-    if (t.includes('†') || notes.toLowerCase().includes('upcoming') || notes.toLowerCase().includes('filming')) return 'fa-hourglass-half';
-    if (notes && notes.toLowerCase().includes('guest')) return 'fa-star';
-    if (notes && notes.toLowerCase().includes('cameo')) return 'fa-eye';
+    if ((notes||'').toLowerCase().includes('upcoming') || (notes||'').toLowerCase().includes('filming')) return 'fa-hourglass-half';
+    if ((notes||'').toLowerCase().includes('guest')) return 'fa-star';
+    if ((notes||'').toLowerCase().includes('cameo')) return 'fa-eye';
     return 'fa-film';
 }
 
-/* ─── CARD BUILDERS ─── */
+/* ─── FIX 2: BUILD ACTOR TABLE — includes cameo & guest section ─── */
 function buildActorTable() {
-    const container = document.getElementById('actorCards');
+    const container  = document.getElementById('actorCards');
+    const upcomingContainer = document.getElementById('upcomingCards');
+    const upcomingSection   = document.getElementById('upcomingSection');
+    const cameoContainer    = document.getElementById('cameoCards');
+    const cameoSection      = document.getElementById('cameoSection');
     if (!container) return;
-    container.innerHTML = actorFilms.map(f => {
-        const tag = noteTag(f.notes);
-        const noteStr = (f.notes && !['cameo','guest','upcoming','filming','post-production'].some(k => f.notes.toLowerCase().includes(k))) ? f.notes : '';
+
+    const isCameoOrGuest = f => {
+        const n = (f.notes || '').toLowerCase();
+        return n === 'cameo' || n.includes('cameo') || n === 'guest' || n.includes('guest');
+    };
+    const isUpcoming = f => {
+        const n = (f.notes || '').toLowerCase();
+        return n.includes('upcoming') || n.includes('filming') || f.year === 'TBA' || Number(f.year) >= 2026;
+    };
+
+    /* Upcoming */
+    const upcomingFilms = actorFilms.filter(f => isUpcoming(f) && !isCameoOrGuest(f));
+    if (upcomingContainer) {
+        if (upcomingFilms.length > 0) {
+            upcomingContainer.innerHTML = upcomingFilms.map(f => {
+                const isFilming = (f.notes || '').toLowerCase().includes('filming');
+                const statusClass = isFilming ? 'filming' : 'upcoming';
+                const statusIcon  = isFilming ? 'fa-clapperboard' : 'fa-hourglass-half';
+                const statusLabel = isFilming ? 'In Production' : 'Upcoming';
+                return `<div class="upcoming-card">
+                    <div class="upcoming-card-icon"><i class="fas ${getFilmIcon(f.title, f.notes)}"></i></div>
+                    <div style="flex:1;min-width:0">
+                        <div class="upcoming-card-year">${f.year}</div>
+                        <div class="upcoming-card-title">${f.title}</div>
+                        <div style="font-family:'Rajdhani';font-size:12px;color:#555;margin-top:3px">
+                            <i class="fas fa-user" style="font-size:10px;margin-right:4px;color:#3a3a3a"></i>${f.role !== '—' ? f.role : 'TBA'}
+                        </div>
+                        <div class="upcoming-card-status ${statusClass}">
+                            <i class="fas ${statusIcon}" style="font-size:9px"></i> ${statusLabel}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            if (upcomingSection) upcomingSection.style.display = '';
+        } else {
+            if (upcomingSection) upcomingSection.style.display = 'none';
+        }
+    }
+
+    /* Cameo & Guest */
+    const cameoGuestFilms = actorFilms.filter(f => isCameoOrGuest(f));
+    if (cameoContainer) {
+        if (cameoGuestFilms.length > 0) {
+            cameoContainer.innerHTML = cameoGuestFilms.map(f => {
+                const isGuest   = (f.notes || '').toLowerCase().includes('guest');
+                const tagCls    = isGuest ? 'tag-guest' : 'tag-cameo';
+                const tagLabel  = isGuest ? 'Guest' : 'Cameo';
+                const borderClr = isGuest ? 'rgba(80,200,120,0.35)' : 'rgba(180,80,255,0.35)';
+                const iconClr   = isGuest ? '#6fdc9c' : '#c97aff';
+                const bgClr     = isGuest ? 'rgba(80,200,120,0.08)' : 'rgba(180,80,255,0.08)';
+                const icon      = isGuest ? 'fa-star' : 'fa-eye';
+                // strip bare 'cameo'/'guest' from shown notes
+                const extraNote = (f.notes && !['cameo','guest'].includes(f.notes.toLowerCase().trim()) && !['cameo','guest'].some(k => f.notes.toLowerCase().trim() === k))
+                    ? f.notes.replace(/,?\s*(cameo|guest)/gi, '').trim() : '';
+                return `<div class="film-card" style="border-left:2px solid ${borderClr}">
+                    <div class="film-card-year">${f.year}</div>
+                    <div class="film-card-icon" style="background:${bgClr}">
+                        <i class="fas ${icon}" style="color:${iconClr}"></i>
+                    </div>
+                    <div class="film-card-body">
+                        <div class="film-card-title">${f.title} <span class="film-status-tag ${tagCls}">${tagLabel}</span></div>
+                        <div class="film-card-role"><i class="fas fa-user" style="font-size:10px;margin-right:5px;color:#444"></i>${f.role}</div>
+                        ${extraNote ? `<div class="film-card-note">${extraNote}</div>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+            if (cameoSection) cameoSection.style.display = '';
+        } else {
+            if (cameoSection) cameoSection.style.display = 'none';
+        }
+    }
+
+    /* Main filmography — exclude cameo, guest, upcoming */
+    const mainFilms = actorFilms.filter(f => !isCameoOrGuest(f) && !isUpcoming(f));
+    container.innerHTML = mainFilms.map((f, i) => {
+        const noteStr = (f.notes && !['cameo','guest','upcoming','filming','post-production','25th film'].some(k => f.notes.toLowerCase().includes(k))) ? f.notes : (f.notes === '25th film' ? f.notes : '');
         const icon = getFilmIcon(f.title, f.notes);
-        return `<div class="film-card">
+        return `<div class="film-card" style="animation-delay:${Math.min(i * 0.04, 0.8)}s">
             <div class="film-card-year">${f.year}</div>
             <div class="film-card-icon"><i class="fas ${icon}"></i></div>
             <div class="film-card-body">
-                <div class="film-card-title">${f.title}${tag}</div>
+                <div class="film-card-title">${f.title}</div>
                 <div class="film-card-role"><i class="fas fa-user" style="font-size:10px;margin-right:5px;color:#444"></i>${f.role}</div>
                 ${noteStr ? `<div class="film-card-note">${noteStr}</div>` : ''}
             </div>
@@ -1944,8 +2112,8 @@ function buildActorTable() {
 function buildProducerTable() {
     const container = document.getElementById('producerCards');
     if (!container) return;
-    container.innerHTML = producerFilms.map(f => `
-        <div class="film-grid-card">
+    container.innerHTML = producerFilms.map((f, i) => `
+        <div class="film-grid-card" style="animation-delay:${i * 0.05}s">
             <div class="film-grid-card-icon"><i class="fas fa-video"></i></div>
             <div>
                 <div class="film-grid-card-year">${f.year}</div>
@@ -1958,8 +2126,8 @@ function buildProducerTable() {
 function buildDistributorTable() {
     const container = document.getElementById('distributorCards');
     if (!container) return;
-    container.innerHTML = distributorFilms.map(f => `
-        <div class="film-grid-card">
+    container.innerHTML = distributorFilms.map((f, i) => `
+        <div class="film-grid-card" style="animation-delay:${i * 0.08}s">
             <div class="film-grid-card-icon"><i class="fas fa-ticket-alt"></i></div>
             <div>
                 <div class="film-grid-card-year">${f.year}</div>
@@ -2025,19 +2193,13 @@ function buildMusicTable() {
         </div>`).join('');
 }
 
-/* ─── AWARDS BUILDER ─── */
-const awardCategoryIcons = {
-    'National': 'fa-flag',
-    'Filmfare': 'fa-video',
-    'Tamil Nadu': 'fa-landmark',
-    'Vijay': 'fa-star',
-    'Other': 'fa-award',
-};
+const awardCategoryIcons = { 'National': 'fa-flag', 'Filmfare': 'fa-video', 'Tamil Nadu': 'fa-landmark', 'Vijay': 'fa-star', 'Other': 'fa-award' };
 
 function buildAwards(filter) {
     const container = document.getElementById('awardsContainer');
     if (!container) return;
     let html = '';
+    let blockIdx = 0;
     awardsData.forEach(block => {
         let entries = block.entries;
         if (filter === 'won') {
@@ -2048,13 +2210,14 @@ function buildAwards(filter) {
         if (!entries.length) return;
         const wonCount = entries.filter(e => e.result === 'Won').length;
         const icon = awardCategoryIcons[block.group] || 'fa-award';
-        html += `<div class="award-block">
+        const blockDelay = (blockIdx * 0.1).toFixed(2);
+        html += `<div class="award-block" style="animation-delay:${blockDelay}s">
             <div class="award-block-header">
                 <div class="award-block-icon"><i class="fas ${icon}"></i></div>
                 <div class="award-block-title">${block.category}</div>
                 ${wonCount > 0 ? `<span class="award-won-count"><i class="fas fa-trophy" style="font-size:9px;margin-right:4px"></i>${wonCount} Won</span>` : ''}
             </div>
-            ${entries.map(e => `<div class="award-row">
+            ${entries.map((e, ri) => `<div class="award-row" style="animation-delay:${(blockIdx * 0.1 + ri * 0.04).toFixed(2)}s">
                 <div class="award-row-year">${e.year}</div>
                 <div class="award-row-film"><i class="fas fa-film" style="font-size:10px;margin-right:5px;color:#333"></i>${e.film}</div>
                 <div class="award-row-category">${e.award}</div>
@@ -2063,11 +2226,11 @@ function buildAwards(filter) {
                 </span>
             </div>`).join('')}
         </div>`;
+        blockIdx++;
     });
     container.innerHTML = html || '<div style="text-align:center;padding:48px;color:#333;font-family:Rajdhani;font-size:12px;letter-spacing:0.15em;text-transform:uppercase">No matching awards</div>';
 }
 
-/* ─── FILM SEARCH ─── */
 function filterFilms(query) {
     const q = query.trim().toLowerCase();
     const panelMap = { actor: 'actorCards', producer: 'producerCards', distributor: 'distributorCards' };
@@ -2081,16 +2244,28 @@ function filterFilms(query) {
     container.querySelectorAll('.film-card, .film-grid-card').forEach(card => {
         card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
     });
+    if (activeKey === 'actor') {
+        const upcomingContainer = document.getElementById('upcomingCards');
+        if (upcomingContainer) {
+            upcomingContainer.querySelectorAll('.upcoming-card').forEach(card => {
+                card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
+            });
+        }
+        const cameoContainer = document.getElementById('cameoCards');
+        if (cameoContainer) {
+            cameoContainer.querySelectorAll('.film-card').forEach(card => {
+                card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
+            });
+        }
+    }
 }
 
-/* ─── AWARD FILTER ─── */
 function filterAwards(filter, btn) {
     document.querySelectorAll('.award-filter-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
     buildAwards(filter);
 }
 
-/* ─── TAB SWITCHER ─── */
 function switchFilmTab(tab) {
     document.querySelectorAll('.film-panel').forEach(p => p.style.display = 'none');
     document.getElementById('film-' + tab).style.display = 'block';
@@ -2108,10 +2283,7 @@ function switchFilmTab(tab) {
 
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
     });
 }, { threshold: 0.12 });
 
@@ -2119,13 +2291,9 @@ function initReveal() {
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 }
 
-/* ─── TWEET CARD STAGGER REVEAL ─── */
 const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            cardObserver.unobserve(entry.target);
-        }
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); cardObserver.unobserve(entry.target); }
     });
 }, { threshold: 0.08 });
 
@@ -2137,7 +2305,6 @@ function staggerCards() {
     });
 }
 
-/* ─── COUNTER ANIMATION ─── */
 function animateCounter(el, target, suffix) {
     let start = 0;
     const duration = 1200;
@@ -2155,11 +2322,7 @@ const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const el = entry.target.querySelector('[data-target]');
-            if (el) {
-                const target = parseInt(el.dataset.target);
-                const suffix = el.dataset.suffix || '';
-                animateCounter(el, target, suffix);
-            }
+            if (el) animateCounter(el, parseInt(el.dataset.target), el.dataset.suffix || '');
             counterObserver.unobserve(entry.target);
         }
     });
@@ -2169,100 +2332,66 @@ function initCounters() {
     document.querySelectorAll('.stat-card[data-counter]').forEach(el => counterObserver.observe(el));
 }
 
-/* ─── PARTICLE SYSTEM ─── */
 function initParticles() {
     const canvas = document.getElementById('particles');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let W, H, particles = [];
-
-    function resize() {
-        const hero = canvas.parentElement;
-        W = canvas.width = hero.offsetWidth;
-        H = canvas.height = hero.offsetHeight;
-    }
-
+    function resize() { const h = canvas.parentElement; W = canvas.width = h.offsetWidth; H = canvas.height = h.offsetHeight; }
     function createParticles() {
         particles = [];
         const count = Math.floor(W / 18);
         for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * W,
-                y: Math.random() * H,
-                r: Math.random() * 1.5 + 0.3,
-                alpha: Math.random() * 0.4 + 0.05,
-                dx: (Math.random() - 0.5) * 0.3,
-                dy: (Math.random() - 0.5) * 0.3,
-            });
+            particles.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.5+0.3, alpha: Math.random()*0.4+0.05, dx: (Math.random()-0.5)*0.3, dy: (Math.random()-0.5)*0.3 });
         }
     }
-
     function draw() {
-        ctx.clearRect(0, 0, W, H);
+        ctx.clearRect(0,0,W,H);
         particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(244,185,66,${p.alpha})`;
-            ctx.fill();
-            p.x += p.dx; p.y += p.dy;
-            if (p.x < 0 || p.x > W) p.dx *= -1;
-            if (p.y < 0 || p.y > H) p.dy *= -1;
+            ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+            ctx.fillStyle=`rgba(244,185,66,${p.alpha})`; ctx.fill();
+            p.x+=p.dx; p.y+=p.dy;
+            if(p.x<0||p.x>W) p.dx*=-1; if(p.y<0||p.y>H) p.dy*=-1;
         });
         requestAnimationFrame(draw);
     }
-
-    resize();
-    createParticles();
-    draw();
-    window.addEventListener('resize', () => { resize(); createParticles(); });
+    resize(); createParticles(); draw();
+    window.addEventListener('resize',()=>{resize();createParticles();});
 }
 
-/* ─── SPLASH SCREEN ─── */
-function initSplash() {
-    setTimeout(() => {
-        document.getElementById('splash').classList.add('hidden');
-    }, 2200);
-}
+function initSplash() { setTimeout(()=>{ document.getElementById('splash').classList.add('hidden'); }, 2200); }
 
-/* ─── SCROLL PROGRESS BAR ─── */
 function initScrollProgress() {
     const bar = document.getElementById('scrollProgress');
     window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
         const docH = document.documentElement.scrollHeight - window.innerHeight;
-        bar.style.width = (docH > 0 ? (scrollTop / docH) * 100 : 0) + '%';
+        bar.style.width = (docH > 0 ? (window.scrollY/docH)*100 : 0) + '%';
     }, { passive: true });
 }
 
-/* ─── BACK TO TOP ─── */
 function initBackToTop() {
     const btn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-        btn.classList.toggle('visible', window.scrollY > 400);
-    }, { passive: true });
+    window.addEventListener('scroll', () => { btn.classList.toggle('visible', window.scrollY > 400); }, { passive: true });
 }
 
-/* ─── CURSOR TRAIL ─── */
 function initCursorTrail() {
     let last = 0;
     document.addEventListener('mousemove', (e) => {
         const now = Date.now();
         if (now - last < 40) return;
         last = now;
-        const size = Math.random() * 7 + 3;
+        const size = Math.random()*7+3;
         const spark = document.createElement('div');
         spark.className = 'cursor-spark';
         const colors = ['rgba(244,185,66,0.7)','rgba(255,222,136,0.55)','rgba(201,146,26,0.5)'];
-        spark.style.cssText = `left:${e.clientX - size/2}px;top:${e.clientY - size/2}px;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*3)]};`;
+        spark.style.cssText = `left:${e.clientX-size/2}px;top:${e.clientY-size/2}px;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*3)]};`;
         document.body.appendChild(spark);
-        setTimeout(() => spark.remove(), 600);
+        setTimeout(()=>spark.remove(),600);
     });
 }
 
-/* ─── WELFARE SEARCH FILTER ─── */
 function filterWelfare(query) {
     const q = query.trim().toLowerCase();
-    const sections = document.querySelectorAll('#welfare .mb-16, #welfare .grid[id$="Grid"]');
     let totalVisible = 0;
     document.querySelectorAll('#welfare [id$="Grid"]').forEach(grid => {
         let sectionVisible = 0;
@@ -2278,46 +2407,35 @@ function filterWelfare(query) {
     document.getElementById('noResults').style.display = totalVisible === 0 && q ? 'block' : 'none';
 }
 
-/* ─── COPY HANDLE ─── */
 function copyHandle(handle, event) {
-    navigator.clipboard.writeText(handle).catch(() => {
+    navigator.clipboard.writeText(handle).catch(()=>{
         const ta = document.createElement('textarea');
-        ta.value = handle; document.body.appendChild(ta);
-        ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        ta.value = handle; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
     });
     const tip = document.getElementById('copyTip');
     tip.textContent = 'Copied ' + handle;
     tip.style.left = (event.clientX - 50) + 'px';
     tip.style.top  = (event.clientY - 42) + 'px';
     tip.classList.add('show');
-    setTimeout(() => tip.classList.remove('show'), 1600);
+    setTimeout(()=>tip.classList.remove('show'), 1600);
 }
 
-/* ─── TAB SWITCHING ─── */
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     const target = document.getElementById(tabId);
-    if (target) { target.classList.add('active'); }
-
+    if (target) target.classList.add('active');
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.tab === tabId) btn.classList.add('active');
     });
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    setTimeout(() => {
-        initReveal();
-        staggerCards();
-    }, 50);
+    setTimeout(() => { initReveal(); staggerCards(); }, 50);
 }
 
-function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-}
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-/* ─── INIT ─── */
 window.onload = function() {
+    buildFilmStatsBar();
     buildActorTable();
     buildProducerTable();
     buildDistributorTable();
