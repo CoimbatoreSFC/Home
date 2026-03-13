@@ -664,6 +664,318 @@
         }
         #copyTip.show { opacity: 1; transform: translateY(0); }
 
+
+        /* ─── FILMOGRAPHY ─── */
+        .film-tab-btn {
+            padding: 9px 18px;
+            border-radius: 999px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #555;
+            background: var(--card);
+            border: 1px solid rgba(244,185,66,0.08);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .film-tab-btn:hover { color: #ccc; border-color: rgba(244,185,66,0.3); background: rgba(244,185,66,0.04); }
+        .film-tab-btn.active {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            box-shadow: 0 4px 16px rgba(244,185,66,0.2);
+        }
+        .film-tab-btn i { font-size: 11px; }
+
+        /* ─── FILM CARDS (Actor tab) ─── */
+        .film-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .film-card:hover {
+            border-color: rgba(244,185,66,0.25);
+            background: rgba(244,185,66,0.03);
+            transform: translateX(3px);
+        }
+        .film-card-year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.05rem;
+            color: var(--gold);
+            min-width: 42px;
+            line-height: 1;
+            padding-top: 2px;
+            flex-shrink: 0;
+        }
+        .film-card-icon {
+            width: 34px; height: 34px;
+            background: rgba(244,185,66,0.08);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            font-size: 13px;
+            color: var(--gold);
+        }
+        .film-card-body { flex: 1; min-width: 0; }
+        .film-card-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            color: #e8e8e8;
+            line-height: 1.2;
+        }
+        .film-card-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+        }
+        .film-card-note {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            color: #444;
+            font-style: italic;
+            margin-top: 2px;
+        }
+
+        /* ─── FILM GRID for producer/distributor ─── */
+        .film-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+        }
+        .film-grid-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 16px 18px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .film-grid-card:hover {
+            border-color: rgba(244,185,66,0.25);
+            background: rgba(244,185,66,0.03);
+        }
+        .film-grid-card-icon {
+            width: 36px; height: 36px;
+            background: rgba(244,185,66,0.08);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            color: var(--gold);
+            font-size: 14px;
+        }
+        .film-grid-card-year {
+            font-family: 'Bebas Neue';
+            font-size: 0.95rem;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .film-grid-card-title {
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            font-size: 14px;
+            color: #e0e0e0;
+            line-height: 1.2;
+        }
+        .film-grid-card-note {
+            font-size: 11px;
+            color: #444;
+            font-style: italic;
+        }
+
+        /* ─── VOICE / TV CARDS ─── */
+        .voice-card, .tv-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 16px 18px;
+            transition: all 0.2s;
+        }
+        .voice-card:hover, .tv-card:hover {
+            border-color: rgba(244,185,66,0.25);
+        }
+
+        /* ─── MUSIC CARDS ─── */
+        .music-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 18px 20px;
+            transition: all 0.2s;
+            border-left: 3px solid var(--gold);
+        }
+        .music-card:hover {
+            border-color: rgba(244,185,66,0.4);
+            background: rgba(244,185,66,0.03);
+        }
+        .music-card-song {
+            font-family: 'Bebas Neue';
+            font-size: 1.2rem;
+            color: var(--gold);
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+        }
+        .music-card-film {
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            font-size: 13px;
+            color: #e0e0e0;
+            margin-top: 4px;
+        }
+        .music-card-note {
+            font-size: 12px;
+            color: #555;
+            font-style: italic;
+            margin-top: 3px;
+            font-family: 'Inter';
+        }
+
+        /* ─── STATUS TAGS ─── */
+        .film-status-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        .tag-upcoming { background: rgba(100,150,255,0.15); color: #7aadff; border: 1px solid rgba(100,150,255,0.25); }
+        .tag-filming  { background: rgba(244,185,66,0.15); color: var(--gold); border: 1px solid rgba(244,185,66,0.25); }
+        .tag-cameo    { background: rgba(180,80,255,0.12); color: #c97aff; border: 1px solid rgba(180,80,255,0.2); }
+        .tag-guest    { background: rgba(80,200,120,0.1); color: #6fdc9c; border: 1px solid rgba(80,200,120,0.2); }
+
+        /* ─── AWARD CARDS ─── */
+        .award-block {
+            margin-bottom: 28px;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .award-block-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: rgba(244,185,66,0.05);
+            border-bottom: 1px solid rgba(244,185,66,0.08);
+        }
+        .award-block-icon {
+            width: 32px; height: 32px;
+            background: rgba(244,185,66,0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .award-block-title {
+            font-family: 'Bebas Neue';
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: 0.05em;
+            flex: 1;
+        }
+        .award-won-count {
+            font-family: 'Rajdhani';
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            background: rgba(244,185,66,0.1);
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(244,185,66,0.2);
+        }
+        .award-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: background 0.15s;
+        }
+        .award-row:last-child { border-bottom: none; }
+        .award-row:hover { background: rgba(244,185,66,0.03); }
+        .award-row-year {
+            font-family: 'Bebas Neue';
+            font-size: 1rem;
+            color: var(--gold);
+            min-width: 48px;
+            flex-shrink: 0;
+        }
+        .award-row-film {
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            font-size: 13px;
+            color: #ccc;
+            min-width: 160px;
+            flex-shrink: 0;
+        }
+        .award-row-category {
+            font-family: 'Rajdhani';
+            font-size: 13px;
+            color: #555;
+            flex: 1;
+        }
+        .award-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: 'Rajdhani';
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            flex-shrink: 0;
+        }
+        .award-badge-won { background: rgba(80,200,120,0.12); color: #6fdc9c; border: 1px solid rgba(80,200,120,0.2); }
+        .award-badge-nom { background: rgba(140,140,140,0.08); color: #555; border: 1px solid rgba(140,140,140,0.12); }
+        @media (max-width: 640px) {
+            .award-row { flex-wrap: wrap; gap: 6px; }
+            .award-row-film { min-width: 0; }
+        }
+
+        /* ─── AWARD FILTER BUTTONS ─── */
+        .award-filter-btn {
+            padding: 7px 16px;
+            border-radius: 999px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #555;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .award-filter-btn:hover { color: #ccc; border-color: rgba(244,185,66,0.2); }
+        .award-filter-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
+
     </style>
 </head>
 <body>
@@ -707,6 +1019,7 @@
             <button class="nav-btn" onclick="switchTab('membership')" data-tab="membership">Membership</button>
             <button class="nav-btn" onclick="switchTab('about')" data-tab="about">About</button>
             <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Welfare</button>
+            <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
         </div>
 
@@ -726,6 +1039,7 @@
         <button onclick="switchTab('membership');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Membership</button>
         <button onclick="switchTab('about');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">About</button>
         <button onclick="switchTab('welfare');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Welfare</button>
+        <button onclick="switchTab('filmography');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Filmography</button>
         <button onclick="switchTab('contact');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Contact</button>
     </nav>
     <div class="mt-auto pt-12 text-zinc-600" style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase">Est. 2011 · North Coimbatore</div>
@@ -763,23 +1077,7 @@
                             </button>
                         </div>
 
-                        <!-- Android App Download -->
-                        <div class="reveal reveal-delay-4" style="margin-top:20px">
-                            <a href="https://drive.google.com/uc?export=download&id=1aOp6UdCVZdGCMDJdqI0eKsoC3WK82RTA"
-                               download
-                               style="display:inline-flex;align-items:center;gap:12px;padding:14px 24px;background:linear-gradient(135deg,#1a1a1a,#222);border:1px solid rgba(244,185,66,0.35);border-radius:16px;text-decoration:none;transition:all 0.25s;cursor:pointer"
-                               onmouseover="this.style.borderColor='rgba(244,185,66,0.8)';this.style.background='linear-gradient(135deg,#1f1f1f,#2a2a2a)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(244,185,66,0.15)'"
-                               onmouseout="this.style.borderColor='rgba(244,185,66,0.35)';this.style.background='linear-gradient(135deg,#1a1a1a,#222)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
-                                <div style="width:40px;height:40px;background:rgba(244,185,66,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                                    <i class="fab fa-android" style="color:var(--gold);font-size:1.3rem"></i>
-                                </div>
-                                <div style="text-align:left">
-                                    <div style="font-family:'Rajdhani';font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#555;line-height:1">Download Now</div>
-                                    <div style="font-family:'Rajdhani';font-size:15px;font-weight:700;letter-spacing:0.05em;color:#fff;line-height:1.3;margin-top:3px">Our Android App</div>
-                                </div>
-                                <i class="fas fa-download" style="color:var(--gold);font-size:0.85rem;margin-left:6px"></i>
-                            </a>
-                        </div>
+
                     </div>
 
                     <!-- Logo showcase -->
@@ -896,8 +1194,23 @@
                     </div>
                 </div>
                 <div class="reveal reveal-delay-2" style="display:flex;justify-content:center">
-                    <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:48px;display:flex;align-items:center;justify-content:center;width:100%;max-width:380px">
-                        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w500" alt="NCSFC Logo" style="max-width:240px;object-fit:contain">
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 36px;display:flex;flex-direction:column;align-items:center;gap:28px;width:100%;max-width:380px">
+                        <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w500" alt="NCSFC Logo" style="max-width:200px;object-fit:contain">
+                        <div style="width:100%;height:1px;background:rgba(244,185,66,0.1)"></div>
+                        <a href="https://drive.google.com/uc?export=download&id=1aOp6UdCVZdGCMDJdqI0eKsoC3WK82RTA"
+                           download
+                           style="display:inline-flex;align-items:center;gap:12px;padding:14px 20px;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.25);border-radius:14px;text-decoration:none;width:100%;transition:all 0.25s"
+                           onmouseover="this.style.borderColor='rgba(244,185,66,0.7)';this.style.background='rgba(244,185,66,0.12)';this.style.transform='translateY(-2px)'"
+                           onmouseout="this.style.borderColor='rgba(244,185,66,0.25)';this.style.background='rgba(244,185,66,0.06)';this.style.transform='translateY(0)'">
+                            <div style="width:38px;height:38px;background:rgba(244,185,66,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                                <i class="fab fa-android" style="color:var(--gold);font-size:1.2rem"></i>
+                            </div>
+                            <div style="flex:1;text-align:left">
+                                <div style="font-family:'Rajdhani';font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#555;line-height:1">Download Now</div>
+                                <div style="font-family:'Rajdhani';font-size:14px;font-weight:700;color:#fff;line-height:1.3;margin-top:2px">Official Android App</div>
+                            </div>
+                            <i class="fas fa-download" style="color:var(--gold);font-size:0.8rem"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -984,6 +1297,129 @@
                     <div class="year-line"></div>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="otherGrid"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ FILMOGRAPHY ============ -->
+    <section id="filmography" class="tab-content">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+
+            <!-- Heading -->
+            <div class="mb-10 reveal">
+                <div class="section-tag mb-2">Career Highlights</div>
+                <h2 style="font-size:3.5rem;color:#fff;line-height:1">Suriya</h2>
+                <h2 style="font-size:3.5rem;margin-bottom:6px" class="gold-text">Filmography & Awards</h2>
+                <span class="section-heading-line"></span>
+                <p style="font-family:'Inter';color:#555;font-size:0.9rem;margin-top:14px">Complete career — films, production, voice work, television, discography & awards.</p>
+
+                <!-- Stats bar -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-10">
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
+                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">49</div>
+                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Films as Actor</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
+                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">18</div>
+                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">As Producer</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
+                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">28+</div>
+                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Years Active</div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 12px;text-align:center">
+                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">50+</div>
+                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">Awards Won</div>
+                    </div>
+                    <div style="background:linear-gradient(135deg,rgba(244,185,66,0.1),rgba(244,185,66,0.05));border:1px solid rgba(244,185,66,0.3);border-radius:14px;padding:18px 12px;text-align:center">
+                        <div style="font-family:'Bebas Neue';font-size:2.2rem;line-height:1;background:linear-gradient(135deg,#F4B942,#FFDE88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">1</div>
+                        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-top:4px">National Award</div>
+                    </div>
+                </div>
+
+                <!-- Sub-tabs -->
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px" id="filmTabs">
+                    <button class="film-tab-btn active" onclick="switchFilmTab('actor')"><i class="fas fa-film" style="margin-right:6px"></i>Actor</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('producer')"><i class="fas fa-video" style="margin-right:6px"></i>Producer</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('distributor')"><i class="fas fa-ticket-alt" style="margin-right:6px"></i>Distributor</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('voice')"><i class="fas fa-microphone" style="margin-right:6px"></i>Voice</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('tv')"><i class="fas fa-tv" style="margin-right:6px"></i>Television</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('music')"><i class="fas fa-music" style="margin-right:6px"></i>Discography</button>
+                    <button class="film-tab-btn" onclick="switchFilmTab('awards')" style="border-color:rgba(244,185,66,0.35)"><i class="fas fa-trophy" style="margin-right:6px;color:var(--gold)"></i>Awards</button>
+                </div>
+
+                <!-- Search bar (hidden for awards) -->
+                <div id="filmSearchWrap" style="position:relative;max-width:340px;margin-top:18px">
+                    <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#444;font-size:12px"></i>
+                    <input id="filmSearch" type="text" placeholder="Search..." oninput="filterFilms(this.value)"
+                        style="width:100%;padding:9px 14px 9px 34px;background:var(--card);border:1px solid rgba(244,185,66,0.15);border-radius:10px;color:#ccc;font-family:'Rajdhani';font-size:13px;font-weight:600;outline:none;transition:border-color 0.2s"
+                        onfocus="this.style.borderColor='rgba(244,185,66,0.4)'" onblur="this.style.borderColor='rgba(244,185,66,0.15)'">
+                </div>
+            </div>
+
+            <!-- ACTOR -->
+            <div id="film-actor" class="film-panel">
+                <div class="reveal" id="actorCards" style="display:flex;flex-direction:column;gap:8px"></div>
+            </div>
+
+            <!-- PRODUCER -->
+            <div id="film-producer" class="film-panel" style="display:none">
+                <div class="reveal">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                        <div style="width:30px;height:30px;background:rgba(244,185,66,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center"><i class="fas fa-video" style="color:var(--gold);font-size:12px"></i></div>
+                        <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#555">Via <span style="color:var(--gold)">2D Entertainment</span></span>
+                    </div>
+                    <div class="film-grid" id="producerCards"></div>
+                </div>
+            </div>
+
+            <!-- DISTRIBUTOR -->
+            <div id="film-distributor" class="film-panel" style="display:none">
+                <div class="reveal">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                        <div style="width:30px;height:30px;background:rgba(244,185,66,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center"><i class="fas fa-ticket-alt" style="color:var(--gold);font-size:12px"></i></div>
+                        <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#555">Films distributed by Suriya</span>
+                    </div>
+                    <div class="film-grid" id="distributorCards"></div>
+                </div>
+            </div>
+
+            <!-- VOICE -->
+            <div id="film-voice" class="film-panel" style="display:none">
+                <div class="reveal" style="display:flex;flex-direction:column;gap:10px" id="voiceCards"></div>
+            </div>
+
+            <!-- TV -->
+            <div id="film-tv" class="film-panel" style="display:none">
+                <div class="reveal" style="display:flex;flex-direction:column;gap:10px" id="tvCards"></div>
+            </div>
+
+            <!-- DISCOGRAPHY -->
+            <div id="film-music" class="film-panel" style="display:none">
+                <div class="reveal">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+                        <div style="width:30px;height:30px;background:rgba(244,185,66,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center"><i class="fas fa-music" style="color:var(--gold);font-size:12px"></i></div>
+                        <span style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:#555">Songs performed &amp; narrated by Suriya</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px" id="musicCards"></div>
+                </div>
+            </div>
+
+            <!-- AWARDS -->
+            <div id="film-awards" class="film-panel" style="display:none">
+                <div class="reveal">
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px">
+                        <button class="award-filter-btn active" onclick="filterAwards('all',this)">All</button>
+                        <button class="award-filter-btn" onclick="filterAwards('National',this)">🏛 National</button>
+                        <button class="award-filter-btn" onclick="filterAwards('Filmfare',this)">🎬 Filmfare</button>
+                        <button class="award-filter-btn" onclick="filterAwards('Tamil Nadu',this)">🎭 Tamil Nadu State</button>
+                        <button class="award-filter-btn" onclick="filterAwards('Vijay',this)">⭐ Vijay Awards</button>
+                        <button class="award-filter-btn" onclick="filterAwards('Other',this)">🌟 Other</button>
+                        <button class="award-filter-btn" onclick="filterAwards('won',this)" style="border-color:rgba(244,185,66,0.3);color:var(--gold)">🏆 Won Only</button>
+                    </div>
+                    <div id="awardsContainer"></div>
+                </div>
             </div>
 
         </div>
@@ -1198,7 +1634,478 @@ function loadTwitterScript(cb) {
     document.head.appendChild(s);
 }
 
-/* ─── SCROLL REVEAL ─── */
+
+/* ─── FILMOGRAPHY DATA (from Excel) ─── */
+const actorFilms = [
+    { year: 1997, title: "Nerrukku Ner", role: "Suriya", notes: "" },
+    { year: 1998, title: "Kaadhale Nimmadhi", role: "Chandru", notes: "" },
+    { year: 1998, title: "Sandhippoma", role: "Vishwa", notes: "" },
+    { year: 1999, title: "Perianna", role: "Suriya", notes: "" },
+    { year: 1999, title: "Poovellam Kettuppar", role: "Krishna", notes: "" },
+    { year: 2000, title: "Uyirile Kalanthathu", role: "Suriya", notes: "" },
+    { year: 2001, title: "Friends", role: "Chandru", notes: "" },
+    { year: 2001, title: "Nandhaa", role: "Nandhaa", notes: "" },
+    { year: 2002, title: "Unnai Ninaithu", role: "Suriya", notes: "" },
+    { year: 2002, title: "Sri", role: "Sri", notes: "" },
+    { year: 2002, title: "Mounam Pesiyadhe", role: "Gautham", notes: "" },
+    { year: 2003, title: "Kaakha Kaakha", role: "Anbuselvan", notes: "" },
+    { year: 2003, title: "Pithamagan", role: "Sakthivel", notes: "" },
+    { year: 2004, title: "Perazhagan", role: "Chinna & Karthik", notes: "" },
+    { year: 2004, title: "Aayutha Ezhuthu", role: "Michael Vasanth", notes: "" },
+    { year: 2005, title: "Maayavi", role: "Balaiah", notes: "" },
+    { year: 2005, title: "Ghajini", role: "Sanjay Ramaswamy (Manohar)", notes: "" },
+    { year: 2005, title: "Aaru", role: "Aarumugam (Aaru)", notes: "" },
+    { year: 2006, title: "June R", role: "Raja", notes: "cameo" },
+    { year: 2006, title: "Sillunu Oru Kaadhal", role: "Gautham", notes: "" },
+    { year: 2007, title: "Vel", role: "Vetrivel & Vasudevan", notes: "" },
+    { year: 2008, title: "Kuselan", role: "Himself", notes: "guest" },
+    { year: 2008, title: "Vaaranam Aayiram", role: "Krishnan & Suriya", notes: "" },
+    { year: 2009, title: "Ayan", role: "Devaraj Velusamy (Deva)", notes: "" },
+    { year: 2009, title: "Aadhavan", role: "Madhavan Subramaniam", notes: "" },
+    { year: 2010, title: "Singam", role: "Duraisingam", notes: "25th film" },
+    { year: 2010, title: "Rakta Charitra 2", role: "Yeturi Suryanarayana Reddy", notes: "Telugu-Hindi bilingual" },
+    { year: 2010, title: "Manmadan Ambu", role: "Himself", notes: "guest" },
+    { year: 2011, title: "Ko", role: "Himself", notes: "guest" },
+    { year: 2011, title: "Avan Ivan", role: "Himself", notes: "guest" },
+    { year: 2011, title: "7 Aum Arivu", role: "Bodhidharma & Aravind", notes: "" },
+    { year: 2012, title: "Maattrraan", role: "Akhilan & Vimalan", notes: "" },
+    { year: 2013, title: "Chennaiyil Oru Naal", role: "Himself", notes: "guest" },
+    { year: 2013, title: "Singam II", role: "Duraisingam", notes: "" },
+    { year: 2014, title: "Ninaithathu Yaaro", role: "Himself", notes: "guest" },
+    { year: 2014, title: "Anjaan", role: "Raju Bhai (Krishna)", notes: "" },
+    { year: 2015, title: "Massu Engira Masilamani", role: "Masilamani & Sakthi", notes: "" },
+    { year: 2015, title: "Pasanga 2", role: "Dr. Thamizh Nadan", notes: "" },
+    { year: 2016, title: "24", role: "Athreya / Manikandan / Sethuraman", notes: "" },
+    { year: 2017, title: "Si3", role: "Duraisingam", notes: "" },
+    { year: 2018, title: "Thaanaa Serndha Koottam", role: "Iniyan", notes: "" },
+    { year: 2018, title: "Kadaikutty Singam", role: "Himself", notes: "guest" },
+    { year: 2019, title: "NGK", role: "Nandha Gopalan Kumaran (NGK)", notes: "" },
+    { year: 2019, title: "Kaappaan", role: "Kathiravan", notes: "" },
+    { year: 2020, title: "Soorarai Pottru", role: "Nedumaaran Rajangam (Maara)", notes: "" },
+    { year: 2021, title: "Jai Bhim", role: "K. Chandru", notes: "" },
+    { year: 2022, title: "Etharkkum Thunindhavan", role: "A. R. Kannabiran", notes: "" },
+    { year: 2022, title: "Vikram", role: "Rolex", notes: "cameo" },
+    { year: 2022, title: "Rocketry: The Nambi Effect", role: "Himself", notes: "guest" },
+    { year: 2024, title: "Sarfira", role: "Unnamed businessman", notes: "Mid-credits cameo; Hindi film" },
+    { year: 2024, title: "Kanguva", role: "Kanguva & Francis Theodore", notes: "" },
+    { year: 2025, title: "Retro", role: 'Paarivel "Paari" Kannan (Jada Muni)', notes: "" },
+    { year: 2026, title: "Karuppu †", role: "Saravanan / Karuppu", notes: "upcoming" },
+    { year: 2026, title: "Vishwanath & Sons †", role: "TBA", notes: "upcoming" },
+    { year: "TBA", title: "Suriya 47 †", role: "—", notes: "filming" },
+];
+
+const producerFilms = [
+    { year: 2015, title: "36 Vayadhinile", notes: "" },
+    { year: 2015, title: "Pasanga 2", notes: "" },
+    { year: 2016, title: "24", notes: "" },
+    { year: 2017, title: "Magalir Mattum", notes: "" },
+    { year: 2018, title: "Kadaikutty Singam", notes: "" },
+    { year: 2019, title: "Uriyadi 2", notes: "" },
+    { year: 2019, title: "Jackpot", notes: "" },
+    { year: 2020, title: "Ponmagal Vandhal", notes: "" },
+    { year: 2020, title: "Soorarai Pottru", notes: "" },
+    { year: 2021, title: "Raame Aandalum Raavane Aandalum", notes: "" },
+    { year: 2021, title: "Udanpirappe", notes: "" },
+    { year: 2021, title: "Jai Bhim", notes: "" },
+    { year: 2022, title: "Oh My Dog", notes: "" },
+    { year: 2022, title: "Viruman", notes: "" },
+    { year: 2024, title: "Sarfira", notes: "Hindi film" },
+    { year: 2024, title: "Meiyazhagan", notes: "" },
+    { year: 2025, title: "Retro", notes: "" },
+    { year: 2025, title: "Leading Light", notes: "Documentary" },
+];
+
+const distributorFilms = [
+    { year: 2013, title: "Singam II", notes: "" },
+    { year: 2017, title: "Kadugu", notes: "" },
+    { year: 2019, title: "Sillu Karuppatti", notes: "" },
+    { year: 2022, title: "Gargi", notes: "" },
+    { year: 2026, title: "My Lord", notes: "" },
+];
+
+const voiceFilms = [
+    { year: 2007, title: "Guru", actor: "Abhishek Bachchan", notes: "Tamil dubbed version" },
+    { year: 2007, title: "Taare Zameen Par", actor: "Aamir Khan", notes: "Tamil dubbed version" },
+    { year: 2017, title: "Ghazi", actor: "—", notes: "Narrator, Tamil dubbed version" },
+    { year: 2020, title: "Ponmagal Vandhal", actor: "—", notes: "Narrator" },
+];
+
+const tvCredits = [
+    { year: "2012–2013", title: "Neengalum Vellalam Oru Kodi", role: "Himself", network: "Star Vijay" },
+    { year: 2021, title: "Navarasa", role: "Kamal", network: "Netflix" },
+    { year: 2024, title: "Nayanthara: Beyond the Fairytale", role: "Himself", network: "Netflix" },
+];
+
+const musicCredits = [
+    { year: 2014, film: "Anjaan", song: '"Ek Do Teen"', notes: "Composed by Yuvan Shankar Raja; Co-sang with Andrea Jeremiah" },
+    { year: 2020, film: "Soorarai Pottru", song: '"Maara Theme"', notes: "Tamil version" },
+    { year: 2020, film: "Aakaasam Nee Haddhu Ra", song: '"Maha Theme"', notes: "Telugu version" },
+    { year: 2025, film: "Retro", song: '"Love Detox"', notes: "Composed by Santhosh Narayanan" },
+    { year: "TBA", film: "Party", song: '"Cha Cha Charey"', notes: "Co-sang with Karthi, Kharesma Ravichandran, Venkat Prabhu & Premgi Amaren" },
+];
+
+/* ─── AWARDS DATA (from Excel) ─── */
+const awardsData = [
+    {
+        category: "National Film Awards", group: "National",
+        entries: [
+            { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
+            { year: 2020, film: "Soorarai Pottru", award: "Best Feature Film", result: "Won" },
+        ]
+    },
+    {
+        category: "Filmfare Awards South", group: "Filmfare",
+        entries: [
+            { year: 2002, film: "Nandhaa", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2003, film: "Mounam Pesiyadhe", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2004, film: "Pithamagan", award: "Best Supporting Actor – Tamil", result: "Won" },
+            { year: 2004, film: "Kaakha Kaakha", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2005, film: "Perazhagan", award: "Best Actor – Tamil", result: "Won" },
+            { year: 2006, film: "Ghajini", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor – Tamil", result: "Won" },
+            { year: 2010, film: "Ayan", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2011, film: "Singam", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2014, film: "Singam 2", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2017, film: "24", award: "Critics Best Actor – Tamil", result: "Won" },
+            { year: 2022, film: "Soorarai Pottru", award: "Best Film", result: "Nominated" },
+            { year: 2022, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
+            { year: 2022, film: "Jai Bhim", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2022, film: "Jai Bhim", award: "Best Film – Tamil", result: "Won" },
+            { year: 2024, film: "Meiyazhagan", award: "Best Film – Tamil", result: "Nominated" },
+            { year: 2024, film: "Meiyazhagan", award: "Best Film – Critics'", result: "Won" },
+        ]
+    },
+    {
+        category: "Tamil Nadu State Film Awards", group: "Tamil Nadu",
+        entries: [
+            { year: 2001, film: "Nandhaa", award: "Best Actor", result: "Won" },
+            { year: 2005, film: "Ghajini", award: "Best Actor: Special Prize", result: "Won" },
+            { year: 2008, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
+            { year: 2015, film: "Pasanga 2", award: "Best Film: Second Prize", result: "Won" },
+            { year: 2015, film: "36 Vayadhinile", award: "Best Film About Women's Empowerment", result: "Won" },
+            { year: 2018, film: "Kadaikutty Singam", award: "Best Film: Second Prize", result: "Won" },
+            { year: 2019, film: "Ponmagal Vandhal", award: "Best Film About Women's Empowerment", result: "Won" },
+            { year: 2020, film: "Soorarai Pottru", award: "Best Actor", result: "Won" },
+            { year: 2020, film: "Soorarai Pottru", award: "Best Film: Second Prize", result: "Won" },
+            { year: 2021, film: "Jai Bhim", award: "Best Film", result: "Won" },
+        ]
+    },
+    {
+        category: "Vijay Awards", group: "Vijay",
+        entries: [
+            { year: 2008, film: "Various films", award: "Icon of the Year", result: "Won" },
+            { year: 2009, film: "Vaaranam Aayiram", award: "Best Actor", result: "Won" },
+            { year: 2010, film: "Ayan, Aadhavan", award: "Entertainer of the Year", result: "Won" },
+            { year: 2010, film: "Agaram Foundation", award: "Best Welfare Provider", result: "Won" },
+            { year: 2011, film: "Ratha Sarithiram", award: "Best Actor", result: "Nominated" },
+            { year: 2011, film: "Singam", award: "Entertainer of the Year", result: "Won" },
+            { year: 2011, film: "Singam", award: "Favourite Hero", result: "Nominated" },
+            { year: 2012, film: "7 Aum Arivu", award: "Favourite Hero", result: "Nominated" },
+            { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
+            { year: 2013, film: "Maattrraan", award: "Favourite Hero", result: "Nominated" },
+            { year: 2014, film: "Singam II", award: "Best Actor", result: "Nominated" },
+            { year: 2015, film: "Anjaan", award: "Best Actor", result: "Nominated" },
+            { year: 2018, film: "Singam 3", award: "Best Actor", result: "Nominated" },
+        ]
+    },
+    {
+        category: "Kalaimamani Awards", group: "Other",
+        entries: [
+            { year: 2005, film: "Various films", award: "Art and Literature", result: "Won" },
+        ]
+    },
+    {
+        category: "Cinema Express Awards", group: "Other",
+        entries: [
+            { year: 1997, film: "Nerrukku Ner", award: "Best New Face Actor", result: "Won" },
+            { year: 2002, film: "Nandhaa", award: "Best Popular Tamil Actor in Lead Role", result: "Won" },
+        ]
+    },
+    {
+        category: "Edison Awards", group: "Other",
+        entries: [
+            { year: 2017, film: "24", award: "Best Protagonist", result: "Won" },
+            { year: 2017, film: "24", award: "Best Antagonist", result: "Won" },
+        ]
+    },
+    {
+        category: "International Tamil Film Awards", group: "Other",
+        entries: [
+            { year: 2004, film: "Kaakha Kaakha", award: "Best Actor", result: "Won" },
+        ]
+    },
+    {
+        category: "South Indian International Movie Awards (SIIMA)", group: "Other",
+        entries: [
+            { year: 2012, film: "7 Aum Arivu", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2014, film: "Singam II", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2017, film: "24", award: "Best Actor – Tamil", result: "Nominated" },
+            { year: 2021, film: "Soorarai Pottru", award: "Best Actor – Tamil", result: "Won" },
+            { year: 2021, film: "Soorarai Pottru", award: "Best Film – Tamil", result: "Won" },
+        ]
+    },
+    {
+        category: "CineMAA Awards", group: "Other",
+        entries: [
+            { year: 2013, film: "Maattrraan", award: "Best Actor – Tamil", result: "Won" },
+        ]
+    },
+    {
+        category: "Chennai Times Film Awards", group: "Other",
+        entries: [
+            { year: 2012, film: "7 Aum Arivu", award: "Best Actor", result: "Nominated" },
+            { year: 2013, film: "Maattrraan", award: "Best Actor", result: "Nominated" },
+        ]
+    },
+    {
+        category: "Other Awards & Recognition", group: "Other",
+        entries: [
+            { year: 1998, film: "Nerrukku Ner", award: "Dinakaran Best New Face Actor", result: "Won" },
+            { year: 2008, film: "Various films", award: "South Scope Awards – Style Icon of the Year", result: "Won" },
+            { year: 2009, film: "Vaaranam Aayiram", award: "South Scope – Most Stylish Actor", result: "Nominated" },
+            { year: 2010, film: "Aadhavan, Ayan", award: "Amrita Mathrubhumi – Best Actor Tamil", result: "Won" },
+            { year: 2010, film: "Aadhavan", award: "Meera Isaiaruvi – Best Performance in Song", result: "Won" },
+            { year: 2016, film: "36 Vayathinile", award: "Behindwoods Gold Medal – Best Debut Producer", result: "Won" },
+            { year: 2017, film: "24", award: "Zee Cine Awards Telugu – South Sensation", result: "Won" },
+            { year: 2017, film: "24", award: "Kollywood Cinemaaa – Best Villain", result: "Won" },
+            { year: 2020, film: "Soorarai Pottru", award: "Norway Tamil Film Festival – NTFF Kalaichigaram Award", result: "Won" },
+            { year: 2021, film: "Soorarai Pottru", award: "Cinema At Its Best – Best Actor", result: "Won" },
+            { year: 2021, film: "Soorarai Pottru", award: "Indian Film Festival of Melbourne – Best Actor", result: "Won" },
+            { year: 2021, film: "Soorarai Pottru", award: "Blacksheep Digital – Best Film of the Year", result: "Won" },
+            { year: "2021-22", film: "Jai Bhim", award: "Norway Tamil Film Festival – Best Film", result: "Won" },
+            { year: "2021-22", film: "Jai Bhim", award: "Congressional Global Community Oscars – Medal of Excellence", result: "Won" },
+            { year: "2021-22", film: "Jai Bhim", award: "Cinema At Its Best – Best Feature Film", result: "Won" },
+            { year: "2021-22", film: "Jai Bhim", award: "Noida International Film Festival – Best Feature Film", result: "Won" },
+        ]
+    },
+];
+
+/* ─── HELPERS ─── */
+function noteTag(note) {
+    if (!note) return '';
+    const n = note.toLowerCase();
+    if (n.includes('filming')) return `<span class="film-status-tag tag-filming">Filming</span>`;
+    if (n.includes('upcoming') || n.includes('post-production')) return `<span class="film-status-tag tag-upcoming">Upcoming</span>`;
+    if (n === 'cameo' || n.includes('cameo')) return `<span class="film-status-tag tag-cameo">Cameo</span>`;
+    if (n === 'guest' || n.includes('guest')) return `<span class="film-status-tag tag-guest">Guest</span>`;
+    return note;
+}
+
+function getFilmIcon(title, notes) {
+    const t = (title + ' ' + notes).toLowerCase();
+    if (t.includes('singam')) return 'fa-shield-alt';
+    if (t.includes('jai bhim')) return 'fa-balance-scale';
+    if (t.includes('soorarai')) return 'fa-plane';
+    if (t.includes('vikram') && t.includes('rolex')) return 'fa-mask';
+    if (t.includes('7 aum')) return 'fa-dna';
+    if (t.includes('" 24"') || title === '24') return 'fa-clock';
+    if (t.includes('ghajini')) return 'fa-head-side-brain';
+    if (t.includes('kaakha')) return 'fa-user-shield';
+    if (t.includes('pithamagan')) return 'fa-skull';
+    if (t.includes('ayan')) return 'fa-car';
+    if (t.includes('kanguva')) return 'fa-dharmachakra';
+    if (t.includes('retro')) return 'fa-history';
+    if (t.includes('ngk')) return 'fa-fist-raised';
+    if (t.includes('kaappaan')) return 'fa-user-secret';
+    if (t.includes('maattrraan')) return 'fa-user-friends';
+    if (t.includes('vaaranam')) return 'fa-heart';
+    if (t.includes('vel')) return 'fa-khanda';
+    if (t.includes('aaru')) return 'fa-fire';
+    if (t.includes('†') || notes.toLowerCase().includes('upcoming') || notes.toLowerCase().includes('filming')) return 'fa-hourglass-half';
+    if (notes && notes.toLowerCase().includes('guest')) return 'fa-star';
+    if (notes && notes.toLowerCase().includes('cameo')) return 'fa-eye';
+    return 'fa-film';
+}
+
+/* ─── CARD BUILDERS ─── */
+function buildActorTable() {
+    const container = document.getElementById('actorCards');
+    if (!container) return;
+    container.innerHTML = actorFilms.map(f => {
+        const tag = noteTag(f.notes);
+        const noteStr = (f.notes && !['cameo','guest','upcoming','filming','post-production'].some(k => f.notes.toLowerCase().includes(k))) ? f.notes : '';
+        const icon = getFilmIcon(f.title, f.notes);
+        return `<div class="film-card">
+            <div class="film-card-year">${f.year}</div>
+            <div class="film-card-icon"><i class="fas ${icon}"></i></div>
+            <div class="film-card-body">
+                <div class="film-card-title">${f.title}${tag}</div>
+                <div class="film-card-role"><i class="fas fa-user" style="font-size:10px;margin-right:5px;color:#444"></i>${f.role}</div>
+                ${noteStr ? `<div class="film-card-note">${noteStr}</div>` : ''}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function buildProducerTable() {
+    const container = document.getElementById('producerCards');
+    if (!container) return;
+    container.innerHTML = producerFilms.map(f => `
+        <div class="film-grid-card">
+            <div class="film-grid-card-icon"><i class="fas fa-video"></i></div>
+            <div>
+                <div class="film-grid-card-year">${f.year}</div>
+                <div class="film-grid-card-title">${f.title}</div>
+                ${f.notes ? `<div class="film-grid-card-note">${f.notes}</div>` : ''}
+            </div>
+        </div>`).join('');
+}
+
+function buildDistributorTable() {
+    const container = document.getElementById('distributorCards');
+    if (!container) return;
+    container.innerHTML = distributorFilms.map(f => `
+        <div class="film-grid-card">
+            <div class="film-grid-card-icon"><i class="fas fa-ticket-alt"></i></div>
+            <div>
+                <div class="film-grid-card-year">${f.year}</div>
+                <div class="film-grid-card-title">${f.title}</div>
+                ${f.notes ? `<div class="film-grid-card-note">${f.notes}</div>` : ''}
+            </div>
+        </div>`).join('');
+}
+
+function buildVoiceTable() {
+    const container = document.getElementById('voiceCards');
+    if (!container) return;
+    container.innerHTML = voiceFilms.map(f => `
+        <div class="voice-card">
+            <div style="width:40px;height:40px;background:rgba(244,185,66,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="fas fa-microphone" style="color:var(--gold);font-size:14px"></i>
+            </div>
+            <div style="flex:1">
+                <div style="font-family:'Rajdhani';font-weight:700;font-size:15px;color:#e0e0e0">${f.title}</div>
+                <div style="font-family:'Rajdhani';font-size:12px;color:#555;margin-top:3px">
+                    ${f.actor !== '—' ? `<i class="fas fa-user" style="font-size:10px;margin-right:4px;color:#3a3a3a"></i>Dubbed for <span style="color:#aaa">${f.actor}</span>` : `<i class="fas fa-comment" style="font-size:10px;margin-right:4px;color:#3a3a3a"></i>${f.notes}`}
+                </div>
+                ${f.actor !== '—' ? `<div style="font-size:11px;color:#444;font-style:italic;margin-top:2px">${f.notes}</div>` : ''}
+            </div>
+            <div style="font-family:'Bebas Neue';font-size:1rem;color:var(--gold)">${f.year}</div>
+        </div>`).join('');
+}
+
+function buildTvTable() {
+    const container = document.getElementById('tvCards');
+    if (!container) return;
+    const networkIcons = { 'Star Vijay': 'fa-star', 'Netflix': 'fa-film' };
+    container.innerHTML = tvCredits.map(f => `
+        <div class="tv-card">
+            <div style="width:40px;height:40px;background:rgba(244,185,66,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <i class="fas ${networkIcons[f.network] || 'fa-tv'}" style="color:var(--gold);font-size:14px"></i>
+            </div>
+            <div style="flex:1">
+                <div style="font-family:'Rajdhani';font-weight:700;font-size:15px;color:#e0e0e0">${f.title}</div>
+                <div style="font-family:'Rajdhani';font-size:12px;color:#555;margin-top:4px;display:flex;gap:14px;flex-wrap:wrap">
+                    <span><i class="fas fa-user" style="font-size:10px;margin-right:4px;color:#3a3a3a"></i>${f.role}</span>
+                    <span><i class="fas fa-broadcast-tower" style="font-size:10px;margin-right:4px;color:#3a3a3a"></i><span style="color:var(--gold);font-weight:700">${f.network}</span></span>
+                </div>
+            </div>
+            <div style="font-family:'Bebas Neue';font-size:1rem;color:var(--gold)">${f.year}</div>
+        </div>`).join('');
+}
+
+function buildMusicTable() {
+    const container = document.getElementById('musicCards');
+    if (!container) return;
+    container.innerHTML = musicCredits.map(f => `
+        <div class="music-card">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+                <div style="width:28px;height:28px;background:rgba(244,185,66,0.1);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <i class="fas fa-music" style="color:var(--gold);font-size:11px"></i>
+                </div>
+                <div class="music-card-song">${f.song}</div>
+                <div style="margin-left:auto;font-family:'Bebas Neue';font-size:0.9rem;color:var(--gold)">${f.year}</div>
+            </div>
+            <div class="music-card-film"><i class="fas fa-film" style="font-size:10px;margin-right:5px;color:#444"></i>${f.film}</div>
+            <div class="music-card-note">${f.notes}</div>
+        </div>`).join('');
+}
+
+/* ─── AWARDS BUILDER ─── */
+const awardCategoryIcons = {
+    'National': 'fa-flag',
+    'Filmfare': 'fa-video',
+    'Tamil Nadu': 'fa-landmark',
+    'Vijay': 'fa-star',
+    'Other': 'fa-award',
+};
+
+function buildAwards(filter) {
+    const container = document.getElementById('awardsContainer');
+    if (!container) return;
+    let html = '';
+    awardsData.forEach(block => {
+        let entries = block.entries;
+        if (filter === 'won') {
+            entries = entries.filter(e => e.result === 'Won');
+        } else if (filter !== 'all') {
+            if (block.group !== filter && !block.category.includes(filter)) entries = [];
+        }
+        if (!entries.length) return;
+        const wonCount = entries.filter(e => e.result === 'Won').length;
+        const icon = awardCategoryIcons[block.group] || 'fa-award';
+        html += `<div class="award-block">
+            <div class="award-block-header">
+                <div class="award-block-icon"><i class="fas ${icon}"></i></div>
+                <div class="award-block-title">${block.category}</div>
+                ${wonCount > 0 ? `<span class="award-won-count"><i class="fas fa-trophy" style="font-size:9px;margin-right:4px"></i>${wonCount} Won</span>` : ''}
+            </div>
+            ${entries.map(e => `<div class="award-row">
+                <div class="award-row-year">${e.year}</div>
+                <div class="award-row-film"><i class="fas fa-film" style="font-size:10px;margin-right:5px;color:#333"></i>${e.film}</div>
+                <div class="award-row-category">${e.award}</div>
+                <span class="award-badge ${e.result === 'Won' ? 'award-badge-won' : 'award-badge-nom'}">
+                    ${e.result === 'Won' ? '<i class="fas fa-trophy" style="font-size:9px"></i> Won' : 'Nominated'}
+                </span>
+            </div>`).join('')}
+        </div>`;
+    });
+    container.innerHTML = html || '<div style="text-align:center;padding:48px;color:#333;font-family:Rajdhani;font-size:12px;letter-spacing:0.15em;text-transform:uppercase">No matching awards</div>';
+}
+
+/* ─── FILM SEARCH ─── */
+function filterFilms(query) {
+    const q = query.trim().toLowerCase();
+    const panelMap = { actor: 'actorCards', producer: 'producerCards', distributor: 'distributorCards' };
+    const activeKey = Object.keys(panelMap).find(id => {
+        const p = document.getElementById('film-' + id);
+        return p && p.style.display !== 'none';
+    });
+    if (!activeKey) return;
+    const container = document.getElementById(panelMap[activeKey]);
+    if (!container) return;
+    container.querySelectorAll('.film-card, .film-grid-card').forEach(card => {
+        card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
+    });
+}
+
+/* ─── AWARD FILTER ─── */
+function filterAwards(filter, btn) {
+    document.querySelectorAll('.award-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    buildAwards(filter);
+}
+
+/* ─── TAB SWITCHER ─── */
+function switchFilmTab(tab) {
+    document.querySelectorAll('.film-panel').forEach(p => p.style.display = 'none');
+    document.getElementById('film-' + tab).style.display = 'block';
+    document.querySelectorAll('.film-tab-btn').forEach(b => b.classList.remove('active'));
+    const idx = ['actor','producer','distributor','voice','tv','music','awards'].indexOf(tab);
+    document.querySelectorAll('.film-tab-btn')[idx]?.classList.add('active');
+    const searchWrap = document.getElementById('filmSearchWrap');
+    if (searchWrap) searchWrap.style.display = ['actor','producer','distributor'].includes(tab) ? 'block' : 'none';
+    const fs = document.getElementById('filmSearch');
+    if (fs) fs.value = '';
+    filterFilms('');
+    if (tab === 'awards') buildAwards('all');
+    initReveal();
+}
+
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1411,6 +2318,12 @@ function toggleMenu() {
 
 /* ─── INIT ─── */
 window.onload = function() {
+    buildActorTable();
+    buildProducerTable();
+    buildDistributorTable();
+    buildVoiceTable();
+    buildTvTable();
+    buildMusicTable();
     populateGrid('welfare2025Grid', welfare2025);
     populateGrid('welfare2024Grid', welfare2024);
     populateGrid('movieGrid', movieCelebrations);
