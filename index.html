@@ -293,12 +293,7 @@
             background-clip: text;
         }
 
-        #mobileMenu {
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1);
-        }
-
-        #mobileMenu.open { transform: translateX(0); }
+        /* old rule overridden below */
 
         .gold-divider {
             height: 1px;
@@ -1142,48 +1137,48 @@
         /* ── SWIPE SIDEBAR (mobile) ── */
         #sidebarOverlay {
             position: fixed; inset: 0; z-index: 99;
-            background: rgba(0,0,0,0.55);
+            background: rgba(0,0,0,0.6);
             opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
-            backdrop-filter: blur(4px);
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
         }
         #sidebarOverlay.visible { opacity: 1; pointer-events: all; }
 
         #mobileMenu {
+            position: fixed;
+            top: 0; bottom: 0; left: 0;
+            width: min(80vw, 300px);
+            z-index: 100;
+            background: #0a0a0a;
+            border-right: 1px solid rgba(244,185,66,0.12);
+            display: flex; flex-direction: column;
+            padding: 0;
+            overflow-y: auto;
             transform: translateX(-100%);
-            transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
-            left: 0; right: auto;
-            width: min(82vw, 320px);
-            border-right: 1px solid rgba(244,185,66,0.1);
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+            /* override inset-y-0 from tailwind */
+            right: auto !important;
         }
         #mobileMenu.open { transform: translateX(0); }
 
-        /* swipe edge hint */
-        #swipeHint {
-            display: none;
-            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
-            z-index: 98; width: 14px; height: 60px;
-            background: linear-gradient(135deg,rgba(244,185,66,0.25),rgba(244,185,66,0.06));
-            border-radius: 0 8px 8px 0;
-            border-right: 1px solid rgba(244,185,66,0.2);
+        /* swipe edge pull indicator */
+        #swipeEdgePull {
+            position: fixed;
+            left: 0; top: 45%; transform: translateY(-50%);
+            z-index: 98;
+            width: 5px; height: 48px;
+            background: rgba(244,185,66,0.35);
+            border-radius: 0 4px 4px 0;
             pointer-events: none;
-            transition: opacity 0.3s;
         }
-        @media (max-width: 768px) { #swipeHint { display: block; } }
+        @media (min-width: 769px) { #swipeEdgePull { display: none; } }
 
-        /* mobile menu nav item active highlight */
-        #mobileMenu .mob-nav-btn.mob-active {
-            color: var(--gold) !important;
-        }
-        #mobileMenu .mob-nav-btn.mob-active::after {
-            content: '';
-            display: block;
-            height: 3px;
-            width: 40px;
-            background: linear-gradient(90deg, var(--gold), transparent);
-            border-radius: 2px;
-            margin-top: 2px;
-        }
+        /* active tab highlight in mobile nav */
+        #mobileMenu .mob-nav-btn { color: rgba(255,255,255,0.55) !important; transition: color 0.2s; }
+        #mobileMenu .mob-nav-btn.mob-active { color: var(--gold) !important; }
+        #mobileMenu .mob-nav-btn:hover { color: #fff !important; background: rgba(255,255,255,0.04) !important; }
 
         /* ── BACK TO HOME BUTTON ── */
         #backToHome {
@@ -1217,34 +1212,38 @@
             box-shadow: 0 2px 12px rgba(244,185,66,0.3);
         }
 
-        /* ── QUIZ STYLES ── */
+        /* ── QUIZ ENHANCED STYLES ── */
         .quiz-option {
-            width: 100%; text-align: left; padding: 14px 18px;
+            width: 100%; text-align: left; padding: 14px 16px;
             background: var(--card); border: 1px solid rgba(255,255,255,0.06);
             border-radius: 14px; color: #ccc;
             font-family: 'Rajdhani'; font-size: 1rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px;
+            cursor: pointer; transition: all 0.18s; display: flex; align-items: center; gap: 12px;
         }
+        @media (max-width: 480px) { .quiz-option { padding: 12px 14px; font-size: 0.92rem; } }
         .quiz-option:hover:not(:disabled) {
             border-color: rgba(244,185,66,0.4); background: rgba(244,185,66,0.05); color: #fff;
+            transform: translateX(3px);
         }
         .quiz-option .opt-letter {
-            width: 28px; height: 28px; border-radius: 8px;
+            width: 32px; height: 32px; border-radius: 9px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Bebas Neue'; font-size: 14px; color: #555;
-            flex-shrink: 0; transition: all 0.2s;
+            font-family: 'Bebas Neue'; font-size: 15px; color: #555;
+            flex-shrink: 0; transition: all 0.18s;
         }
         .quiz-option:hover:not(:disabled) .opt-letter { background: rgba(244,185,66,0.15); border-color: rgba(244,185,66,0.3); color: var(--gold); }
-        .quiz-option.correct { border-color: #4ade80 !important; background: rgba(74,222,128,0.08) !important; color: #4ade80 !important; }
+        .quiz-option.correct { border-color: #4ade80 !important; background: rgba(74,222,128,0.09) !important; color: #4ade80 !important; }
         .quiz-option.correct .opt-letter { background: rgba(74,222,128,0.2); border-color: #4ade80; color: #4ade80; }
-        .quiz-option.wrong { border-color: #ef4444 !important; background: rgba(239,68,68,0.08) !important; color: #ef4444 !important; }
+        .quiz-option.wrong { border-color: #ef4444 !important; background: rgba(239,68,68,0.09) !important; color: #ef4444 !important; }
         .quiz-option.wrong .opt-letter { background: rgba(239,68,68,0.2); border-color: #ef4444; color: #ef4444; }
-        .quiz-option:disabled { cursor: not-allowed; }
-        @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-        .shake { animation: shake 0.35s ease; }
-        @keyframes pop-correct { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+        .quiz-option:disabled { cursor: not-allowed; opacity: 0.8; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-9px)} 60%{transform:translateX(9px)} 80%{transform:translateX(-5px)} }
+        .shake { animation: shake 0.38s ease; }
+        @keyframes pop-correct { 0%{transform:scale(1)} 40%{transform:scale(1.04)} 100%{transform:scale(1)} }
         .pop-correct { animation: pop-correct 0.3s ease; }
+
+        /* leaderboard */
         .lb-row {
             display: flex; align-items: center; justify-content: space-between;
             padding: 10px 16px; background: var(--card); border: 1px solid rgba(255,255,255,0.05);
@@ -1253,6 +1252,46 @@
         .lb-rank { font-family:'Bebas Neue'; font-size:1.2rem; color:var(--gold); min-width:28px; }
         .lb-score { font-family:'Bebas Neue'; font-size:1.4rem; color:#fff; }
         .lb-date { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#333; font-weight:700; }
+
+        /* score share card */
+        #quizShareCard {
+            display: none;
+            background: linear-gradient(145deg, #0f0f0f, #161616);
+            border: 1px solid rgba(244,185,66,0.2);
+            border-radius: 20px; padding: 28px 24px; text-align: center; margin-top: 20px;
+        }
+        .share-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 11px 20px; border-radius: 12px; font-family: 'Rajdhani';
+            font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            cursor: pointer; transition: all 0.2s; border: none; text-decoration: none;
+        }
+        .share-btn-wa { background: #25D366; color: #fff; }
+        .share-btn-wa:hover { background: #1ebe5a; transform: translateY(-2px); }
+        .share-btn-x  { background: #000; color: #fff; border: 1px solid #333; }
+        .share-btn-x:hover  { background: #111; transform: translateY(-2px); }
+        .share-btn-ig { background: linear-gradient(135deg,#405DE6,#C13584,#FD1D1D); color: #fff; }
+        .share-btn-ig:hover { opacity: 0.9; transform: translateY(-2px); }
+        .share-btn-dl { background: rgba(244,185,66,0.1); color: var(--gold); border: 1px solid rgba(244,185,66,0.3); }
+        .share-btn-dl:hover { background: rgba(244,185,66,0.18); transform: translateY(-2px); }
+
+        /* name input */
+        #playerNameInput {
+            width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(244,185,66,0.2); border-radius: 12px; color: #e0e0e0;
+            font-family: 'Rajdhani'; font-size: 1rem; font-weight: 600;
+            outline: none; text-align: center; transition: border-color 0.2s;
+        }
+        #playerNameInput:focus { border-color: rgba(244,185,66,0.5); }
+        #playerNameInput::placeholder { color: #333; }
+
+        /* Quiz section mobile responsive tweaks */
+        @media (max-width: 480px) {
+            #quizGame { padding: 0 2px; }
+            #qCard { padding: 20px 16px !important; min-height: 90px !important; }
+            #qText { font-size: 1.05rem !important; }
+            .quiz-option .opt-letter { width: 28px; height: 28px; }
+        }
     </style>
 </head>
 <body>
@@ -1274,7 +1313,7 @@
 
 
 <div id="sidebarOverlay" onclick="toggleMenu()"></div>
-<div id="swipeHint"></div>
+<div id="swipeEdgePull"></div>
 
 <div id="copyTip">Copied!</div>
 
@@ -1297,33 +1336,40 @@
             <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Welfare</button>
             <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
-            <button class="nav-btn" onclick="switchTab('quiz')" data-tab="quiz" style="border:1px solid rgba(244,185,66,0.3)"><i class="fas fa-bolt" style="color:var(--gold);font-size:10px;margin-right:4px"></i>Quiz</button>
+            <button class="nav-btn" onclick="switchTab('quiz')" data-tab="quiz"><i class="fas fa-bolt" style="font-size:9px;margin-right:3px;opacity:0.7"></i>Quiz</button>
         </div>
         <button class="md:hidden text-white text-xl" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </div>
 </nav>
 
 <!-- MOBILE SIDEBAR MENU (swipe from left) -->
-<div id="mobileMenu" class="fixed inset-y-0 z-[100] bg-[#090909] flex flex-col p-7 overflow-y-auto">
-    <div class="flex justify-between items-center mb-10">
-        <div class="flex items-center gap-3">
-            <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200" alt="NCSFC" style="width:36px;height:36px;object-fit:contain;border-radius:9px;background:#111;padding:4px">
-            <span style="font-family:'Bebas Neue';font-size:1.2rem;color:var(--gold);letter-spacing:0.05em">NSFC</span>
+<div id="mobileMenu">
+    <!-- Header -->
+    <div style="padding:20px 20px 16px;border-bottom:1px solid rgba(244,185,66,0.08);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px">
+            <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200" alt="NCSFC" style="width:32px;height:32px;object-fit:contain;border-radius:8px;background:#111;padding:3px">
+            <div>
+                <div style="font-family:'Bebas Neue';font-size:1rem;color:var(--gold);letter-spacing:0.06em;line-height:1">NSFC</div>
+                <div style="font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:#333;font-weight:700">North Coimbatore</div>
+            </div>
         </div>
-        <button onclick="toggleMenu()" class="text-white text-2xl w-9 h-9 flex items-center justify-center rounded-lg" style="background:rgba(255,255,255,0.05)">&times;</button>
+        <button onclick="toggleMenu()" style="width:32px;height:32px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:8px;color:#666;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1">&times;</button>
     </div>
-    <nav class="flex flex-col gap-2">
-        <button onclick="switchTab('home');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="home">Home</button>
-        <button onclick="switchTab('membership');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="membership">Membership</button>
-        <button onclick="switchTab('about');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="about">About</button>
-        <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="welfare">Welfare</button>
-        <button onclick="switchTab('filmography');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="filmography">Filmography</button>
-        <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="contact">Contact</button>
-        <button onclick="switchTab('quiz');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:var(--gold);letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="quiz"><i class="fas fa-bolt" style="font-size:1.2rem;margin-right:8px"></i>Quiz</button>
+    <!-- Nav items -->
+    <nav style="padding:12px 10px;flex:1">
+        <button onclick="switchTab('home');toggleMenu()" class="mob-nav-btn" data-tab="home" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-home" style="font-size:14px;width:18px;opacity:0.4"></i>Home</button>
+        <button onclick="switchTab('membership');toggleMenu()" class="mob-nav-btn" data-tab="membership" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-id-card" style="font-size:14px;width:18px;opacity:0.4"></i>Membership</button>
+        <button onclick="switchTab('about');toggleMenu()" class="mob-nav-btn" data-tab="about" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-info-circle" style="font-size:14px;width:18px;opacity:0.4"></i>About</button>
+        <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn" data-tab="welfare" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-hand-holding-heart" style="font-size:14px;width:18px;opacity:0.4"></i>Welfare</button>
+        <button onclick="switchTab('filmography');toggleMenu()" class="mob-nav-btn" data-tab="filmography" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-film" style="font-size:14px;width:18px;opacity:0.4"></i>Filmography</button>
+        <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn" data-tab="contact" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-share-alt" style="font-size:14px;width:18px;opacity:0.4"></i>Contact</button>
+        <div style="height:1px;background:rgba(244,185,66,0.07);margin:10px 4px"></div>
+        <button onclick="switchTab('quiz');toggleMenu()" class="mob-nav-btn" data-tab="quiz" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-bolt" style="font-size:14px;width:18px;color:var(--gold)"></i><span style="color:var(--gold)">Quiz</span></button>
     </nav>
-    <div class="mt-auto pt-10" style="border-top:1px solid rgba(244,185,66,0.08)">
-        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#333;font-weight:700">Est. 2011 · North Coimbatore</div>
-        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(244,185,66,0.3);font-weight:700;margin-top:4px">#AnbaanaFans</div>
+    <!-- Footer -->
+    <div style="padding:16px 20px;border-top:1px solid rgba(244,185,66,0.06);flex-shrink:0">
+        <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#2a2a2a;font-weight:700">Est. 2011 · North Coimbatore</div>
+        <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(244,185,66,0.2);font-weight:700;margin-top:3px">#AnbaanaFans</div>
     </div>
 </div>
 
@@ -1376,8 +1422,8 @@
                         <div class="stat-num" data-target="2011">2011</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Established Year</div>
                     </div>
-                    <div class="stat-card reveal reveal-delay-5" data-counter="655" data-suffix="+">
-                        <div class="stat-num" data-target="655" data-suffix="+">655+</div>
+                    <div class="stat-card reveal reveal-delay-5" data-counter="1200" data-suffix="+">
+                        <div class="stat-num" data-target="1200" data-suffix="+">1200+</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Welfare Events</div>
                     </div>
                     <div class="stat-card reveal reveal-delay-4">
@@ -1771,44 +1817,51 @@
 
     <!-- QUIZ / TRIVIA -->
     <section id="quiz" class="tab-content">
-        <div class="max-w-2xl mx-auto px-5 py-16">
+        <div class="max-w-2xl mx-auto px-4 py-12" style="padding-bottom:100px">
             <!-- Header -->
-            <div class="text-center mb-10 reveal">
+            <div class="text-center mb-8 reveal">
                 <div class="section-tag mb-3"><i class="fas fa-bolt mr-2"></i>Suriya Trivia</div>
-                <h2 style="font-size:3rem;color:#fff;line-height:1">Fan Knowledge</h2>
-                <h2 style="font-size:3rem;line-height:1;margin-bottom:12px" class="gold-text">Challenge</h2>
-                <p style="font-family:'Inter';color:#555;font-size:0.9rem">One wrong answer ends the game. How far can you go?</p>
+                <h2 style="font-size:clamp(2.2rem,8vw,3rem);color:#fff;line-height:1">Fan Knowledge</h2>
+                <h2 style="font-size:clamp(2.2rem,8vw,3rem);line-height:1;margin-bottom:10px" class="gold-text">Challenge</h2>
+                <p style="font-family:'Inter';color:#555;font-size:0.88rem">One wrong answer ends the game. How far can you go?</p>
             </div>
 
             <!-- Leaderboard strip -->
-            <div id="quizLeaderboard" class="mb-8 reveal" style="display:none">
+            <div id="quizLeaderboard" class="mb-6 reveal" style="display:none">
                 <div class="section-tag mb-3"><i class="fas fa-trophy mr-2"></i>Your Best Scores</div>
                 <div id="leaderboardList"></div>
             </div>
 
             <!-- START SCREEN -->
             <div id="quizStart" class="reveal">
-                <div style="background:var(--card);border:1px solid rgba(244,185,66,0.18);border-radius:24px;padding:36px;text-align:center">
-                    <div style="width:80px;height:80px;background:rgba(244,185,66,0.1);border:1px solid rgba(244,185,66,0.25);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
-                        <i class="fas fa-film" style="font-size:2rem;color:var(--gold)"></i>
+                <div style="background:var(--card);border:1px solid rgba(244,185,66,0.15);border-radius:22px;padding:clamp(24px,5vw,40px);text-align:center">
+                    <div style="width:72px;height:72px;background:linear-gradient(135deg,rgba(244,185,66,0.15),rgba(244,185,66,0.05));border:1px solid rgba(244,185,66,0.2);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+                        <i class="fas fa-film" style="font-size:1.8rem;color:var(--gold)"></i>
                     </div>
-                    <h3 style="font-size:1.8rem;color:#fff;margin-bottom:8px">Ready to Play?</h3>
-                    <p style="font-family:'Inter';color:#666;font-size:0.9rem;margin-bottom:28px;line-height:1.6">Questions from Suriya's filmography & awards.<br>One wrong answer = Game Over. Survive as long as you can!</p>
-                    <div class="flex justify-center gap-3 mb-6 flex-wrap">
-                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
-                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold)" id="qTotalCount">30+</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Questions</div>
+                    <h3 style="font-size:1.7rem;color:#fff;margin-bottom:8px">Ready to Play?</h3>
+                    <p style="font-family:'Inter';color:#666;font-size:0.88rem;margin-bottom:24px;line-height:1.6">Questions from Suriya's filmography & awards.<br>One wrong answer = Game Over!</p>
+
+                    <!-- Player name input -->
+                    <div style="margin-bottom:24px">
+                        <label style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#555;font-weight:700;display:block;margin-bottom:8px">Your Name (for score card)</label>
+                        <input id="playerNameInput" type="text" placeholder="Enter your name..." maxlength="20" value="">
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px">
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.1);border-radius:10px;padding:14px 8px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.6rem;color:var(--gold)">80+</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:2px">Questions</div>
                         </div>
-                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
-                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold)">∞</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Lives</div>
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.1);border-radius:10px;padding:14px 8px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.6rem;color:var(--gold)">15s</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:2px">Per Q</div>
                         </div>
-                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
-                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:#ef4444">1</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Strike = Out</div>
+                        <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.12);border-radius:10px;padding:14px 8px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.6rem;color:#ef4444">1</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:2px">Strike Out</div>
                         </div>
                     </div>
-                    <button onclick="startQuiz()" class="btn-gold px-10 py-4 rounded-xl text-base" style="font-size:1rem">
+                    <button onclick="startQuiz()" class="btn-gold px-10 py-4 rounded-xl" style="font-size:1rem;width:100%;max-width:260px">
                         <i class="fas fa-play mr-2"></i> Start Game
                     </button>
                 </div>
@@ -1816,98 +1869,131 @@
 
             <!-- GAME SCREEN -->
             <div id="quizGame" style="display:none">
-                <!-- Progress bar + score -->
-                <div class="flex items-center justify-between mb-4">
-                    <div style="font-family:'Bebas Neue';font-size:1rem;color:var(--gold);letter-spacing:0.08em">
-                        Q <span id="qNum">1</span>
+                <!-- Top bar -->
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px">
+                    <div style="font-family:'Bebas Neue';font-size:1rem;color:#555;letter-spacing:0.08em;white-space:nowrap">
+                        Q <span id="qNum" style="color:var(--gold)">1</span>
                     </div>
-                    <div style="font-family:'Bebas Neue';font-size:1.2rem;color:#fff;letter-spacing:0.05em">
-                        Score: <span id="qScore" style="color:var(--gold)">0</span>
+                    <div style="font-family:'Bebas Neue';font-size:1.1rem;color:#fff;letter-spacing:0.05em;white-space:nowrap">
+                        <span style="color:#555;font-size:0.85rem">SCORE</span> <span id="qScore" style="color:var(--gold)">0</span>
                     </div>
-                    <div id="qStreakBadge" style="display:none;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);padding:4px 10px;border-radius:999px">
-                        🔥 <span id="qStreakNum">0</span> Streak
+                    <div id="qStreakBadge" style="display:none;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);padding:4px 10px;border-radius:999px;white-space:nowrap">
+                        🔥 <span id="qStreakNum">0</span>x
                     </div>
                 </div>
-                <div style="height:4px;background:rgba(255,255,255,0.04);border-radius:2px;margin-bottom:24px;overflow:hidden">
+                <!-- Progress -->
+                <div style="height:3px;background:rgba(255,255,255,0.05);border-radius:2px;margin-bottom:18px;overflow:hidden">
                     <div id="qProgressBar" style="height:100%;background:linear-gradient(90deg,#C9921A,#F4B942);border-radius:2px;transition:width 0.4s ease;width:0%"></div>
                 </div>
 
                 <!-- Category badge -->
-                <div id="qCategory" class="badge badge-gold mb-4" style="font-size:10px;letter-spacing:0.15em"></div>
+                <div id="qCategory" class="badge badge-gold mb-3" style="font-size:9px;letter-spacing:0.15em"></div>
 
                 <!-- Question card -->
-                <div id="qCard" style="background:var(--card);border:1px solid rgba(244,185,66,0.15);border-radius:20px;padding:28px;margin-bottom:20px;min-height:110px;display:flex;align-items:center">
-                    <p id="qText" style="font-family:'Rajdhani';font-size:1.2rem;font-weight:600;color:#e8e8e8;line-height:1.5;width:100%"></p>
+                <div id="qCard" style="background:var(--card);border:1px solid rgba(244,185,66,0.12);border-radius:18px;padding:22px 20px;margin-bottom:16px;min-height:100px;display:flex;align-items:center">
+                    <p id="qText" style="font-family:'Rajdhani';font-size:1.1rem;font-weight:600;color:#e8e8e8;line-height:1.5;width:100%;margin:0"></p>
                 </div>
 
                 <!-- Options -->
-                <div id="qOptions" class="grid grid-cols-1 gap-3"></div>
+                <div id="qOptions" style="display:flex;flex-direction:column;gap:10px"></div>
 
-                <!-- Timer bar -->
-                <div style="margin-top:20px;height:3px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden">
+                <!-- Timer -->
+                <div style="margin-top:16px;height:3px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden">
                     <div id="qTimerBar" style="height:100%;background:var(--gold);border-radius:2px;transition:width 0.1s linear;width:100%"></div>
                 </div>
-                <div style="text-align:right;margin-top:5px;font-size:11px;color:#333;font-family:'Rajdhani';font-weight:700;letter-spacing:0.1em">
-                    <span id="qTimerText">15</span>s remaining
+                <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:#333;font-family:'Rajdhani';font-weight:700;letter-spacing:0.1em">
+                    <span>TIMER</span><span><span id="qTimerText">15</span>s</span>
                 </div>
             </div>
 
-            <!-- FEEDBACK OVERLAY (correct/wrong) -->
-            <div id="qFeedback" style="display:none;position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)">
-                <div id="qFeedbackBox" style="background:var(--card);border-radius:24px;padding:40px 36px;text-align:center;max-width:340px;width:90%;transform:scale(0.85);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)">
-                    <div id="qFeedbackIcon" style="font-size:3rem;margin-bottom:12px"></div>
+            <!-- FEEDBACK OVERLAY -->
+            <div id="qFeedback" style="display:none;position:fixed;inset:0;z-index:600;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">
+                <div id="qFeedbackBox" style="background:var(--card);border-radius:22px;padding:36px 28px;text-align:center;max-width:320px;width:88%;transform:scale(0.85);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)">
+                    <div id="qFeedbackIcon" style="font-size:2.8rem;margin-bottom:10px"></div>
                     <div id="qFeedbackTitle" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.05em;margin-bottom:6px"></div>
-                    <div id="qFeedbackSub" style="font-family:'Rajdhani';font-size:0.95rem;color:#888;line-height:1.5"></div>
+                    <div id="qFeedbackSub" style="font-family:'Rajdhani';font-size:0.9rem;color:#888;line-height:1.5"></div>
                 </div>
             </div>
 
             <!-- GAME OVER SCREEN -->
             <div id="quizOver" style="display:none">
-                <div style="background:var(--card);border:1px solid rgba(239,68,68,0.25);border-radius:24px;padding:40px 32px;text-align:center">
-                    <div style="font-size:3.5rem;margin-bottom:16px">💀</div>
-                    <h3 style="font-family:'Bebas Neue';font-size:2.5rem;color:#ef4444;letter-spacing:0.05em;margin-bottom:4px">Game Over!</h3>
-                    <p style="font-family:'Rajdhani';color:#555;font-size:0.95rem;margin-bottom:24px" id="goMessage"></p>
-                    <div class="flex justify-center gap-4 mb-8 flex-wrap">
-                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.15);border-radius:12px;padding:16px 24px">
-                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold)" id="goScore">0</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Score</div>
+                <div style="background:var(--card);border:1px solid rgba(239,68,68,0.2);border-radius:22px;padding:clamp(24px,5vw,40px);text-align:center">
+                    <div style="width:64px;height:64px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+                        <i class="fas fa-times" style="font-size:1.8rem;color:#ef4444"></i>
+                    </div>
+                    <h3 style="font-family:'Bebas Neue';font-size:2.2rem;color:#ef4444;letter-spacing:0.05em;margin-bottom:4px">Game Over!</h3>
+                    <p style="font-family:'Rajdhani';color:#555;font-size:0.9rem;margin-bottom:20px" id="goMessage"></p>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:12px;padding:14px 8px">
+                            <div style="font-family:'Bebas Neue';font-size:2rem;color:var(--gold)" id="goScore">0</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700">Score</div>
                         </div>
-                        <div style="background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.15);border-radius:12px;padding:16px 24px">
-                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:#4ade80" id="goBest">0</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Best Ever</div>
+                        <div style="background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.12);border-radius:12px;padding:14px 8px">
+                            <div style="font-family:'Bebas Neue';font-size:2rem;color:#4ade80" id="goBest">0</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700">Best</div>
                         </div>
-                        <div style="background:rgba(100,150,255,0.05);border:1px solid rgba(100,150,255,0.15);border-radius:12px;padding:16px 24px">
-                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:#7aadff" id="goStreak">0</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Best Streak</div>
+                        <div style="background:rgba(100,150,255,0.05);border:1px solid rgba(100,150,255,0.12);border-radius:12px;padding:14px 8px">
+                            <div style="font-family:'Bebas Neue';font-size:2rem;color:#7aadff" id="goStreak">0</div>
+                            <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700">Streak</div>
                         </div>
                     </div>
-                    <div id="goWrongBox" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:24px;text-align:left">
-                        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:8px">You answered wrong</div>
-                        <div id="goWrongQ" style="font-family:'Rajdhani';font-size:0.95rem;color:#aaa;margin-bottom:6px"></div>
-                        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#555;font-weight:700;margin-bottom:4px">Correct Answer:</div>
-                        <div id="goCorrectA" style="font-family:'Rajdhani';font-size:1rem;font-weight:700;color:#4ade80"></div>
+                    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.12);border-radius:14px;padding:14px;margin-bottom:20px;text-align:left">
+                        <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:6px">You answered wrong</div>
+                        <div id="goWrongQ" style="font-family:'Rajdhani';font-size:0.9rem;color:#aaa;margin-bottom:5px"></div>
+                        <div style="font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#555;font-weight:700;margin-bottom:3px">Correct Answer:</div>
+                        <div id="goCorrectA" style="font-family:'Rajdhani';font-size:0.95rem;font-weight:700;color:#4ade80"></div>
                     </div>
-                    <div class="flex justify-center gap-3 flex-wrap">
-                        <button onclick="startQuiz()" class="btn-gold px-8 py-3 rounded-xl text-sm">
+                    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+                        <button onclick="startQuiz()" class="btn-gold px-7 py-3 rounded-xl text-sm">
                             <i class="fas fa-redo mr-2"></i> Play Again
                         </button>
-                        <button onclick="switchTab('home')" class="btn-outline px-8 py-3 rounded-xl text-sm">
+                        <button onclick="switchTab('home')" class="btn-outline px-7 py-3 rounded-xl text-sm">
                             <i class="fas fa-home mr-2"></i> Home
                         </button>
+                    </div>
+                    <!-- Share section -->
+                    <div id="quizShareCard">
+                        <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#555;font-weight:700;margin-bottom:12px">📸 Share Your Score</div>
+                        <canvas id="scoreCanvas" style="display:none"></canvas>
+                        <div id="scorePreview" style="margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid rgba(244,185,66,0.15)"></div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+                            <button class="share-btn share-btn-wa" onclick="shareScore('whatsapp')">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                            <button class="share-btn share-btn-x" onclick="shareScore('twitter')">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="white" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X / Twitter
+                            </button>
+                            <button class="share-btn share-btn-ig" onclick="shareScore('instagram')">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </button>
+                            <button class="share-btn share-btn-dl" onclick="downloadScoreCard()">
+                                <i class="fas fa-download"></i> Save Image
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- VICTORY SCREEN (completed all questions) -->
+            <!-- VICTORY SCREEN -->
             <div id="quizVictory" style="display:none">
-                <div style="background:linear-gradient(135deg,rgba(244,185,66,0.1),rgba(244,185,66,0.03));border:1px solid rgba(244,185,66,0.3);border-radius:24px;padding:40px 32px;text-align:center">
-                    <div style="font-size:3.5rem;margin-bottom:16px">🏆</div>
-                    <h3 style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold);letter-spacing:0.05em;margin-bottom:4px">Legend!</h3>
-                    <p style="font-family:'Rajdhani';color:#888;font-size:0.95rem;margin-bottom:24px">You answered every question correctly. True NSFC Fan!</p>
-                    <div class="flex justify-center gap-4 mb-8">
-                        <div style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:12px;padding:16px 28px">
-                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold)" id="vicScore">0</div>
-                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Perfect Score</div>
+                <div style="background:linear-gradient(135deg,rgba(244,185,66,0.09),rgba(244,185,66,0.02));border:1px solid rgba(244,185,66,0.25);border-radius:22px;padding:clamp(24px,5vw,40px);text-align:center">
+                    <div style="font-size:3rem;margin-bottom:12px">🏆</div>
+                    <h3 style="font-family:'Bebas Neue';font-size:2.2rem;color:var(--gold);letter-spacing:0.05em;margin-bottom:4px">Legend!</h3>
+                    <p style="font-family:'Rajdhani';color:#888;font-size:0.9rem;margin-bottom:20px">Perfect run! True NSFC Fan! 🔥</p>
+                    <div style="display:inline-block;background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.18);border-radius:12px;padding:16px 32px;margin-bottom:20px">
+                        <div style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold)" id="vicScore">0</div>
+                        <div style="font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Perfect Score</div>
+                    </div>
+                    <br>
+                    <!-- Share for victory too -->
+                    <div id="victoryShareCard" style="margin-bottom:16px">
+                        <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:#555;font-weight:700;margin-bottom:12px">📸 Share Your Victory</div>
+                        <canvas id="victoryCanvas" style="display:none"></canvas>
+                        <div id="victoryPreview" style="margin-bottom:14px;border-radius:12px;overflow:hidden;border:1px solid rgba(244,185,66,0.15)"></div>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">
+                            <button class="share-btn share-btn-wa" onclick="shareVictory('whatsapp')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                            <button class="share-btn share-btn-x" onclick="shareVictory('twitter')"><svg viewBox="0 0 24 24" width="14" height="14" fill="white" style="flex-shrink:0"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</button>
+                            <button class="share-btn share-btn-dl" onclick="downloadCanvas('victoryCanvas','nsfc-victory.png')"><i class="fas fa-download"></i> Save</button>
                         </div>
                     </div>
                     <button onclick="startQuiz()" class="btn-gold px-8 py-3 rounded-xl text-sm">
@@ -2752,21 +2838,44 @@ function toggleMenu() {
 
 // ── SWIPE GESTURE TO OPEN SIDEBAR ──
 (function initSwipe() {
-    let touchStartX = 0, touchStartY = 0;
+    let startX = 0, startY = 0, startTime = 0, isDragging = false;
+    const EDGE_ZONE = 28; // px from left edge to trigger open
+    const menu = () => document.getElementById('mobileMenu');
+
     document.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        startTime = Date.now();
+        isDragging = false;
     }, { passive: true });
+
+    document.addEventListener('touchmove', e => {
+        if (!isDragging) {
+            const dx = e.touches[0].clientX - startX;
+            const dy = Math.abs(e.touches[0].clientY - startY);
+            // Only horizontal swipes
+            if (Math.abs(dx) > 8 && dy < Math.abs(dx)) isDragging = true;
+        }
+    }, { passive: true });
+
     document.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-        const menu = document.getElementById('mobileMenu');
-        // Swipe right from left edge to open
-        if (touchStartX < 30 && dx > 50 && dy < 80 && !menu.classList.contains('open')) {
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        const dx = endX - startX;
+        const dy = Math.abs(endY - startY);
+        const dt = Date.now() - startTime;
+        const velocity = Math.abs(dx) / dt; // px/ms
+        const m = menu();
+        if (!m) return;
+
+        const isOpen = m.classList.contains('open');
+
+        // Open: swipe right from left edge zone, fast enough
+        if (!isOpen && startX < EDGE_ZONE && dx > 40 && dy < 80 && velocity > 0.2) {
             toggleMenu();
         }
-        // Swipe left to close
-        if (menu.classList.contains('open') && dx < -60 && dy < 100) {
+        // Close: swipe left while open, or fast flick
+        if (isOpen && dx < -50 && dy < 100 && velocity > 0.15) {
             toggleMenu();
         }
     }, { passive: true });
@@ -3100,6 +3209,7 @@ function endQuiz(victory) {
     if (victory) {
         document.getElementById('quizVictory').style.display = 'block';
         document.getElementById('vicScore').textContent = quizState.score;
+        buildScoreCanvas('victoryCanvas', 'victoryPreview', true);
     } else {
         document.getElementById('quizOver').style.display = 'block';
         document.getElementById('goScore').textContent = quizState.score;
@@ -3107,7 +3217,7 @@ function endQuiz(victory) {
         document.getElementById('goStreak').textContent = quizState.bestStreak;
         document.getElementById('goWrongQ').textContent = quizState.wrongQ || '—';
         document.getElementById('goCorrectA').textContent = quizState.wrongA || '—';
-        // Game over message
+        document.getElementById('quizShareCard').style.display = 'block';
         const msgs = [
             "Better luck next time, anna!",
             "Suriya Anna would train harder. Try again!",
@@ -3116,7 +3226,398 @@ function endQuiz(victory) {
             "Don't give up — Singam never does!"
         ];
         document.getElementById('goMessage').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+        buildScoreCanvas('scoreCanvas', 'scorePreview', false);
     }
+}
+
+/* ── SCORE CARD CANVAS GENERATOR ── */
+function getPlayerName() {
+    const inp = document.getElementById('playerNameInput');
+    return (inp && inp.value.trim()) ? inp.value.trim() : 'NSFC Fan';
+}
+
+function buildScoreCanvas(canvasId, previewId, victory) {
+    const W = 1080, H = 1080;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.width = W; canvas.height = H;
+
+    // Local files uploaded to root — same origin = no CORS, canvas won't be tainted
+    const imgNSFC = new Image();
+    const imgOSFC = new Image();
+    // No crossOrigin needed for same-origin files
+
+    let loaded = 0;
+    const tryDraw = () => { if (++loaded === 2) drawCard(canvas, imgNSFC, imgOSFC, victory, previewId); };
+    const onErr  = () => { if (++loaded === 2) drawCard(canvas, null, null, victory, previewId); };
+
+    imgNSFC.onload = tryDraw; imgNSFC.onerror = onErr;
+    imgOSFC.onload = tryDraw; imgOSFC.onerror = onErr;
+
+    // Use local root files — will work perfectly on same-origin host
+    imgNSFC.src = 'NSFC.png';
+    imgOSFC.src = 'OSFC.png';
+
+    // Fallback if files not found (e.g. opened as local file:// without server)
+    setTimeout(() => {
+        if (loaded < 2) { loaded = 99; drawCard(canvas, null, null, victory, previewId); }
+    }, 3000);
+}
+
+function drawCard(canvas, imgNSFC, imgOSFC, victory, previewId) {
+    const W = canvas.width, H = canvas.height;
+    const ctx = canvas.getContext('2d');
+
+    // ── BACKGROUND ──
+    ctx.fillStyle = '#070707';
+    ctx.fillRect(0, 0, W, H);
+
+    // Radial glow center
+    const radGlow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W * 0.65);
+    radGlow.addColorStop(0, victory ? 'rgba(244,185,66,0.07)' : 'rgba(239,68,68,0.05)');
+    radGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = radGlow;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── GOLD FRAME ──
+    // Outer border
+    ctx.strokeStyle = 'rgba(244,185,66,0.35)';
+    ctx.lineWidth = 3;
+    drawRoundedRect(ctx, 28, 28, W - 56, H - 56, 24);
+    ctx.stroke();
+    // Inner subtle border
+    ctx.strokeStyle = 'rgba(244,185,66,0.1)';
+    ctx.lineWidth = 1;
+    drawRoundedRect(ctx, 36, 36, W - 72, H - 72, 20);
+    ctx.stroke();
+
+    // ── TOP + BOTTOM ACCENT BARS ──
+    const goldBar = ctx.createLinearGradient(0, 0, W, 0);
+    goldBar.addColorStop(0, 'transparent');
+    goldBar.addColorStop(0.25, '#C9921A');
+    goldBar.addColorStop(0.5, '#F4B942');
+    goldBar.addColorStop(0.75, '#C9921A');
+    goldBar.addColorStop(1, 'transparent');
+    ctx.fillStyle = goldBar;
+    ctx.fillRect(28, 28, W - 56, 4);
+    ctx.fillRect(28, H - 32, W - 56, 4);
+
+    // ── PARTICLES ──
+    const seed = Date.now();
+    for (let i = 0; i < 80; i++) {
+        const px = pseudoRand(seed + i * 37) * W;
+        const py = pseudoRand(seed + i * 71) * H;
+        const pr = pseudoRand(seed + i * 13) * 2.5 + 0.5;
+        const pa = pseudoRand(seed + i * 53) * 0.08 + 0.02;
+        ctx.beginPath();
+        ctx.arc(px, py, pr, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(244,185,66,${pa})`;
+        ctx.fill();
+    }
+
+    // ── LOGOS ROW (top) ──
+    const logoY = 52, logoSize = 100, logoR = 18, gap = 16;
+
+    // Helper: draw one logo box with clip mask
+    const drawLogoBox = (x, img, label) => {
+        // Box background
+        const lgrd = ctx.createLinearGradient(x, logoY, x, logoY + logoSize);
+        lgrd.addColorStop(0, 'rgba(244,185,66,0.14)');
+        lgrd.addColorStop(1, 'rgba(244,185,66,0.04)');
+        ctx.fillStyle = lgrd;
+        drawRoundedRect(ctx, x, logoY, logoSize, logoSize, logoR); ctx.fill();
+        ctx.strokeStyle = 'rgba(244,185,66,0.3)'; ctx.lineWidth = 1.5;
+        drawRoundedRect(ctx, x, logoY, logoSize, logoSize, logoR); ctx.stroke();
+
+        if (img && img.complete && img.naturalWidth > 0) {
+            // Clip and draw real logo image
+            ctx.save();
+            drawRoundedRect(ctx, x + 4, logoY + 4, logoSize - 8, logoSize - 8, logoR - 3);
+            ctx.clip();
+            // Draw with object-fit:contain style
+            const iW = img.naturalWidth, iH = img.naturalHeight;
+            const scale = Math.min((logoSize - 8) / iW, (logoSize - 8) / iH);
+            const dw = iW * scale, dh = iH * scale;
+            const dx = x + 4 + ((logoSize - 8) - dw) / 2;
+            const dy = logoY + 4 + ((logoSize - 8) - dh) / 2;
+            ctx.drawImage(img, dx, dy, dw, dh);
+            ctx.restore();
+        } else {
+            // Styled initial fallback
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#F4B942';
+            ctx.font = `bold 32px sans-serif`;
+            ctx.fillText(label[0], x + logoSize/2, logoY + logoSize/2 + 2);
+            ctx.font = 'bold 12px sans-serif';
+            ctx.fillStyle = 'rgba(244,185,66,0.65)';
+            ctx.fillText(label.slice(1), x + logoSize/2, logoY + logoSize/2 + 22);
+        }
+
+        // Label below box
+        ctx.textAlign = 'center';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.fillStyle = 'rgba(244,185,66,0.5)';
+        ctx.fillText(label, x + logoSize/2, logoY + logoSize + 16);
+    };
+
+    drawLogoBox(56, imgNSFC, 'NSFC');
+    drawLogoBox(56 + logoSize + gap, imgOSFC, 'OSFC');
+
+    // Club name — right side
+    ctx.textAlign = 'right';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.fillStyle = '#F4B942';
+    ctx.fillText('NORTH COIMBATORE', W - 56, logoY + 32);
+    ctx.font = 'bold 15px sans-serif';
+    ctx.fillStyle = 'rgba(244,185,66,0.6)';
+    ctx.fillText('SURIYA FANS CLUB', W - 56, logoY + 56);
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = 'rgba(244,185,66,0.3)';
+    ctx.fillText('Est. 2011 · Coimbatore', W - 56, logoY + 78);
+
+    // Divider
+    ctx.strokeStyle = 'rgba(244,185,66,0.14)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(56, logoY + logoSize + 26); ctx.lineTo(W - 56, logoY + logoSize + 26); ctx.stroke();
+
+    // ── RESULT TITLE (no emoji) ──
+    ctx.textAlign = 'center';
+
+    if (victory) {
+        // Trophy icon drawn as geometric shape
+        drawTrophyIcon(ctx, W/2, 270, 70);
+        ctx.font = 'bold 78px sans-serif';
+        const titleGrad = ctx.createLinearGradient(0, 300, 0, 400);
+        titleGrad.addColorStop(0, '#F4B942');
+        titleGrad.addColorStop(1, '#C9921A');
+        ctx.fillStyle = titleGrad;
+        ctx.fillText('LEGEND!', W / 2, 410);
+    } else {
+        // Game over — just text, no skull
+        drawXIcon(ctx, W/2, 260, 54);
+        ctx.font = 'bold 78px sans-serif';
+        ctx.fillStyle = '#ef4444';
+        ctx.fillText('GAME OVER', W / 2, 400);
+    }
+
+    // ── PLAYER NAME ──
+    const name = getPlayerName().toUpperCase();
+    // Name plate
+    const npW = Math.min(500, ctx.measureText(name).width + 80);
+    const npX = W/2 - npW/2;
+    ctx.fillStyle = 'rgba(255,255,255,0.04)';
+    drawRoundedRect(ctx, npX, 420, npW, 56, 12); ctx.fill();
+    ctx.font = 'bold 32px sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(name, W / 2, 460);
+
+    // ── SCORE BOX ──
+    const bx = W/2 - 160, by = 500, bw = 320, bh = 150;
+    // Box glow
+    ctx.shadowColor = victory ? 'rgba(244,185,66,0.3)' : 'rgba(239,68,68,0.2)';
+    ctx.shadowBlur = 30;
+    ctx.fillStyle = victory ? 'rgba(244,185,66,0.1)' : 'rgba(239,68,68,0.07)';
+    drawRoundedRect(ctx, bx, by, bw, bh, 22); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = victory ? 'rgba(244,185,66,0.35)' : 'rgba(239,68,68,0.3)';
+    ctx.lineWidth = 2;
+    drawRoundedRect(ctx, bx, by, bw, bh, 22); ctx.stroke();
+
+    const scoreGrad = ctx.createLinearGradient(0, by + 10, 0, by + bh - 10);
+    scoreGrad.addColorStop(0, '#FFDE88');
+    scoreGrad.addColorStop(1, '#C9921A');
+    ctx.fillStyle = scoreGrad;
+    ctx.font = 'bold 88px sans-serif';
+    ctx.fillText(quizState.score, W / 2, by + 98);
+    ctx.font = 'bold 15px sans-serif';
+    ctx.fillStyle = 'rgba(244,185,66,0.4)';
+    ctx.fillText('P T S', W / 2, by + 132);
+
+    // ── STATS ROW ──
+    const stats = [
+        { label: 'QUESTIONS', val: quizState.current, color: '#7aadff' },
+        { label: 'STREAK', val: quizState.bestStreak, color: '#4ade80' },
+        { label: 'BEST EVER', val: getBestScore() + ' pts', color: '#F4B942' }
+    ];
+    const sw2 = (W - 120) / 3;
+    stats.forEach((s, i) => {
+        const sx = 60 + i * sw2;
+        ctx.fillStyle = 'rgba(255,255,255,0.03)';
+        drawRoundedRect(ctx, sx + 8, 680, sw2 - 16, 110, 16); ctx.fill();
+        ctx.strokeStyle = `rgba(${i===0?'100,150,255':i===1?'74,222,128':'244,185,66'},0.15)`;
+        ctx.lineWidth = 1;
+        drawRoundedRect(ctx, sx + 8, 680, sw2 - 16, 110, 16); ctx.stroke();
+
+        ctx.font = 'bold 46px sans-serif';
+        ctx.fillStyle = s.color;
+        ctx.fillText(s.val, sx + sw2/2, 742);
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.28)';
+        ctx.fillText(s.label, sx + sw2/2, 770);
+    });
+
+    // ── HASHTAGS ──
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillStyle = 'rgba(244,185,66,0.65)';
+    ctx.fillText('#NorthCoimbatoreSFC', W / 2, 848);
+    ctx.font = '16px sans-serif';
+    ctx.fillStyle = 'rgba(244,185,66,0.3)';
+    ctx.fillText('#AnbaanaFans  ·  #SuriyaFans  ·  #SuriyaTrivia', W / 2, 878);
+
+    // Subtle "Suriya Fans Quiz" watermark
+    ctx.font = '11px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.1)';
+    ctx.fillText('NSFC SURIYA TRIVIA CHALLENGE', W / 2, H - 50);
+
+    // ── PREVIEW ──
+    const preview = document.getElementById(previewId);
+    if (preview) {
+        preview.innerHTML = '';
+        const img = new Image();
+        img.onload = () => {
+            img.style.cssText = 'width:100%;height:auto;display:block;border-radius:10px';
+            preview.appendChild(img);
+        };
+        img.src = canvas.toDataURL('image/png');
+    }
+}
+
+// Deterministic pseudo-random (no Math.random so particles are stable on re-render)
+function pseudoRand(n) {
+    const x = Math.sin(n) * 43758.5453;
+    return x - Math.floor(x);
+}
+
+// Draw rounded rect path (no fill/stroke — caller decides)
+function drawRoundedRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+}
+
+// Draw a clean vector trophy icon (no emoji)
+function drawTrophyIcon(ctx, cx, cy, size) {
+    const s = size / 60;
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.fillStyle = '#F4B942';
+    ctx.strokeStyle = '#C9921A';
+    ctx.lineWidth = 2 * s;
+    // Cup body
+    ctx.beginPath();
+    ctx.moveTo(-22*s, -28*s);
+    ctx.lineTo(-22*s, 10*s);
+    ctx.quadraticCurveTo(-22*s, 26*s, 0, 26*s);
+    ctx.quadraticCurveTo(22*s, 26*s, 22*s, 10*s);
+    ctx.lineTo(22*s, -28*s);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    // Handles
+    ctx.beginPath(); ctx.arc(-28*s, -12*s, 8*s, Math.PI*0.5, Math.PI*1.5); ctx.stroke();
+    ctx.beginPath(); ctx.arc(28*s, -12*s, 8*s, -Math.PI*0.5, Math.PI*0.5); ctx.stroke();
+    // Stem
+    ctx.fillRect(-4*s, 26*s, 8*s, 16*s);
+    // Base
+    ctx.beginPath();
+    ctx.roundRect(-18*s, 42*s, 36*s, 8*s, 4*s);
+    ctx.fill(); ctx.stroke();
+    // Star highlight
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = `bold ${20*s}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('★', 0, 6*s);
+    ctx.restore();
+}
+
+// Draw a clean vector X / cross icon (game over, no skull)
+function drawXIcon(ctx, cx, cy, size) {
+    const s = size / 60;
+    ctx.save();
+    ctx.translate(cx, cy);
+    // Circle background
+    ctx.beginPath();
+    ctx.arc(0, 0, 40*s, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(239,68,68,0.15)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(239,68,68,0.4)';
+    ctx.lineWidth = 2*s;
+    ctx.stroke();
+    // X lines
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 8*s;
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(-18*s, -18*s); ctx.lineTo(18*s, 18*s); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(18*s, -18*s); ctx.lineTo(-18*s, 18*s); ctx.stroke();
+    ctx.restore();
+}
+
+function getCanvasBlob(canvasId, cb) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    canvas.toBlob(cb, 'image/png');
+}
+
+function getShareText(victory) {
+    const name = getPlayerName();
+    const score = quizState.score;
+    const streak = quizState.bestStreak;
+    if (victory) return `🏆 ${name} scored a PERFECT run in the Suriya Trivia Challenge!\n🎬 Score: ${score} pts | 🔥 Streak: ${streak}\n\nAre you a true fan? Try it at NSFC!\n#NorthCoimbatoreSFC #AnbaanaFans #SuriyaFans`;
+    return `🎬 ${name} scored ${score} pts in the Suriya Trivia Challenge!\n🔥 Best Streak: ${streak}\n\nCan you beat me? #NorthCoimbatoreSFC #AnbaanaFans #SuriyaFans`;
+}
+
+async function shareScore(platform) { await doShare(platform, 'scoreCanvas', false); }
+async function shareVictory(platform) { await doShare(platform, 'victoryCanvas', true); }
+
+async function doShare(platform, canvasId, victory) {
+    const text = getShareText(victory);
+    const canvas = document.getElementById(canvasId);
+
+    if (platform === 'twitter') {
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+        return;
+    }
+    if (platform === 'whatsapp') {
+        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank');
+        return;
+    }
+    if (platform === 'instagram') {
+        // Instagram doesn't have a web share URL — download + prompt
+        downloadCanvas(canvasId, 'nsfc-score.png');
+        setTimeout(() => alert('Image saved! Now open Instagram and share it as a Story or Post 🎬\n\nRemember to tag #NorthCoimbatoreSFC'), 500);
+        return;
+    }
+
+    // Native share API fallback
+    if (navigator.share && canvas) {
+        try {
+            canvas.toBlob(async blob => {
+                const file = new File([blob], 'nsfc-score.png', { type: 'image/png' });
+                await navigator.share({ title: 'Suriya Trivia Score', text, files: [file] });
+            }, 'image/png');
+        } catch { downloadCanvas(canvasId, 'nsfc-score.png'); }
+        return;
+    }
+    downloadCanvas(canvasId, 'nsfc-score.png');
+}
+
+function downloadScoreCard() { downloadCanvas('scoreCanvas', 'nsfc-score.png'); }
+function downloadCanvas(canvasId, filename) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const a = document.createElement('a');
+    a.download = filename;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
 }
 </script>
 </body>
