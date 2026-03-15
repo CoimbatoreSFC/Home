@@ -17,232 +17,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#F4B942">
 
-    <!-- ═══════════════════════════════════════════════════
-         ONE SIGNAL PUSH NOTIFICATIONS — NSFC
-         ───────────────────────────────────────────────────
-         SETUP STEPS (one-time, free):
-         1. Go to https://onesignal.com → Sign up free
-         2. Add New App → Web → select "Typical Site"
-         3. Enter your website URL & site name "NSFC"
-         4. Copy your APP ID → paste below replacing YOUR_APP_ID
-         5. Download OneSignalSDKWorker.js from your OneSignal
-            dashboard and upload it to your website's root folder
-         ═══════════════════════════════════════════════════ -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        await OneSignal.init({
-          appId: "067fd25c-dcef-48b8-b081-2004b8d09a8c",
-          serviceWorkerPath: "OneSignalSDKWorker.js",
-          notifyButton: { enable: false }
-        });
 
-        // Update our custom bell UI based on subscription state
-        const isSubscribed = await OneSignal.User.PushSubscription.optedIn;
-        updateNotifBell(isSubscribed);
-        OneSignal.User.PushSubscription.addEventListener('change', e => updateNotifBell(e.current.optedIn));
-      });
 
-      function updateNotifBell(subscribed) {
-        const dot = document.getElementById('nsfc-notif-dot');
-        const lbl = document.getElementById('nsfc-notif-label');
-        const btn = document.getElementById('np-cta-btn');
-        const txt = document.getElementById('np-cta-text');
-        const note = document.getElementById('np-cta-note');
-        if (!dot) return;
-        if (subscribed) {
-          dot.style.background = '#4ade80';
-          if (lbl)  lbl.textContent  = "Notifications ON ✓";
-          if (txt)  txt.textContent  = "Subscribed!";
-          if (btn)  { btn.style.background = 'linear-gradient(135deg,#0F6E56,#1D9E75)'; btn.style.cursor = 'default'; }
-          if (note) note.textContent = "You will receive 1–2 updates daily";
-        } else {
-          dot.style.background = '#F4B942';
-          if (lbl)  lbl.textContent  = "Enable Notifications";
-          if (txt)  txt.textContent  = "Enable Notifications";
-          if (btn)  { btn.style.background = ''; btn.style.cursor = 'pointer'; }
-          if (note) note.textContent = "1–2 per day · No spam · Free";
-        }
-      }
 
-      function toggleNotifPanel() {
-        const panel = document.getElementById('nsfc-notif-panel');
-        if (panel) panel.classList.toggle('open');
-      }
-
-      async function subscribeNSFC() {
-        toggleNotifPanel();
-        if (!window.OneSignal) return;
-        try {
-          // Check current permission state
-          const permission = Notification.permission;
-
-          if (permission === 'denied') {
-            // Browser has blocked — guide user to unblock
-            alert('Notifications are blocked.\n\nTo enable:\n1. Tap the lock icon in your browser address bar\n2. Find Notifications\n3. Change to Allow\n4. Refresh the page');
-            return;
-          }
-
-          if (permission === 'default') {
-            // Not asked yet — show native browser prompt
-            await OneSignal.Slidedown.promptPush();
-            return;
-          }
-
-          if (permission === 'granted') {
-            // Already granted — just opt in silently
-            await OneSignal.User.PushSubscription.optIn();
-            updateNotifBell(true);
-          }
-        } catch(e) {
-          // Fallback: try native Notification API directly
-          try {
-            const result = await Notification.requestPermission();
-            if (result === 'granted') {
-              await OneSignal.User.PushSubscription.optIn();
-              updateNotifBell(true);
-            }
-          } catch(e2) {
-            console.log('Notification error:', e2);
-          }
-        }
-      }
-
-      // Close panel when clicking outside
-      document.addEventListener('click', function(e) {
-        const panel = document.getElementById('nsfc-notif-panel');
-        const btn   = document.getElementById('nsfc-notif-btn');
-        if (panel && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
-          panel.classList.remove('open');
-        }
-      });
-    </script>
-
-    <style>
-      /* ── Custom NSFC Notification Bell ── */
-      #nsfc-notif-btn {
-        position: fixed;
-        bottom: 90px;
-        left: 22px;
-        z-index: 490;
-        width: 46px;
-        height: 46px;
-        background: #161616;
-        border: 1px solid rgba(244,185,66,0.35);
-        border-radius: 13px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 0 0 rgba(244,185,66,0);
-        transition: all 0.25s;
-      }
-      #nsfc-notif-btn:hover {
-        border-color: #F4B942;
-        background: rgba(244,185,66,0.12);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px rgba(244,185,66,0.22);
-      }
-      #nsfc-notif-btn i { color: #F4B942; font-size: 17px; }
-      #nsfc-notif-dot {
-        position: absolute;
-        top: 9px; right: 9px;
-        width: 8px; height: 8px;
-        background: #F4B942;
-        border-radius: 50%;
-        border: 1.5px solid #161616;
-        animation: dot-blink 2s ease-in-out infinite;
-      }
-
-      /* ── Notification Info Panel ── */
-      #nsfc-notif-panel {
-        position: fixed;
-        bottom: 148px;
-        left: 18px;
-        z-index: 491;
-        width: 300px;
-        background: #0f0f0f;
-        border: 1px solid rgba(244,185,66,0.22);
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(244,185,66,0.05);
-        transform: translateY(12px) scale(0.96);
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-      }
-      #nsfc-notif-panel.open {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-        pointer-events: all;
-      }
-      .np-header {
-        display: flex; align-items: center; gap: 10px;
-        padding-bottom: 14px;
-        border-bottom: 1px solid rgba(244,185,66,0.1);
-        margin-bottom: 14px;
-      }
-      .np-icon {
-        width: 34px; height: 34px;
-        background: rgba(244,185,66,0.1);
-        border: 1px solid rgba(244,185,66,0.2);
-        border-radius: 9px;
-        display: flex; align-items: center; justify-content: center;
-      }
-      .np-title {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 1rem; letter-spacing: 0.08em; color: #fff;
-      }
-      .np-sub {
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 10px; font-weight: 700;
-        letter-spacing: 0.2em; text-transform: uppercase;
-        color: #F4B942; margin-top: 1px;
-      }
-      .np-type {
-        display: flex; align-items: center; gap: 10px;
-        padding: 9px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.04);
-      }
-      .np-type:last-of-type { border-bottom: none; }
-      .np-type-icon {
-        width: 28px; height: 28px;
-        border-radius: 7px;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 12px; flex-shrink: 0;
-      }
-      .np-type-name {
-        font-family: 'Rajdhani', sans-serif;
-        font-weight: 700; font-size: 13px; color: #ccc;
-        flex: 1;
-      }
-      .np-type-freq {
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 10px; font-weight: 700;
-        letter-spacing: 0.1em; text-transform: uppercase;
-        color: #444;
-      }
-      .np-cta {
-        width: 100%; margin-top: 16px;
-        padding: 11px;
-        background: linear-gradient(135deg, #C9921A, #F4B942);
-        color: #000; border: none; border-radius: 11px;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 13px; font-weight: 700;
-        letter-spacing: 0.12em; text-transform: uppercase;
-        cursor: pointer; transition: all 0.2s;
-        display: flex; align-items: center; justify-content: center; gap: 7px;
-      }
-      .np-cta:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(244,185,66,0.3); }
-      .np-note {
-        text-align: center; margin-top: 10px;
-        font-family: 'Rajdhani', sans-serif;
-        font-size: 10px; font-weight: 700;
-        letter-spacing: 0.12em; text-transform: uppercase;
-        color: #2a2a2a;
-      }
-    </style>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -1361,6 +1138,121 @@
         .cameo-card:hover {
             transform: translateX(3px);
         }
+
+        /* ── SWIPE SIDEBAR (mobile) ── */
+        #sidebarOverlay {
+            position: fixed; inset: 0; z-index: 99;
+            background: rgba(0,0,0,0.55);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(4px);
+        }
+        #sidebarOverlay.visible { opacity: 1; pointer-events: all; }
+
+        #mobileMenu {
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+            left: 0; right: auto;
+            width: min(82vw, 320px);
+            border-right: 1px solid rgba(244,185,66,0.1);
+        }
+        #mobileMenu.open { transform: translateX(0); }
+
+        /* swipe edge hint */
+        #swipeHint {
+            display: none;
+            position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+            z-index: 98; width: 14px; height: 60px;
+            background: linear-gradient(135deg,rgba(244,185,66,0.25),rgba(244,185,66,0.06));
+            border-radius: 0 8px 8px 0;
+            border-right: 1px solid rgba(244,185,66,0.2);
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        @media (max-width: 768px) { #swipeHint { display: block; } }
+
+        /* mobile menu nav item active highlight */
+        #mobileMenu .mob-nav-btn.mob-active {
+            color: var(--gold) !important;
+        }
+        #mobileMenu .mob-nav-btn.mob-active::after {
+            content: '';
+            display: block;
+            height: 3px;
+            width: 40px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            border-radius: 2px;
+            margin-top: 2px;
+        }
+
+        /* ── BACK TO HOME BUTTON ── */
+        #backToHome {
+            position: fixed; bottom: 90px; right: 26px;
+            z-index: 500;
+            display: none;
+            align-items: center; gap: 7px;
+            padding: 10px 16px;
+            background: var(--card);
+            border: 1px solid rgba(244,185,66,0.3);
+            border-radius: 12px;
+            color: var(--gold);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            transition: all 0.25s;
+            opacity: 0; transform: translateY(10px);
+        }
+        #backToHome.visible { display: flex; opacity: 1; transform: translateY(0); }
+        #backToHome:hover { background: var(--gold); color: #000; border-color: var(--gold); }
+        #backToHome i { font-size: 11px; }
+
+
+
+        /* ── DESKTOP NAV ACTIVE TAB INDICATOR ── */
+        .nav-btn.active {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 2px 12px rgba(244,185,66,0.3);
+        }
+
+        /* ── QUIZ STYLES ── */
+        .quiz-option {
+            width: 100%; text-align: left; padding: 14px 18px;
+            background: var(--card); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; color: #ccc;
+            font-family: 'Rajdhani'; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 12px;
+        }
+        .quiz-option:hover:not(:disabled) {
+            border-color: rgba(244,185,66,0.4); background: rgba(244,185,66,0.05); color: #fff;
+        }
+        .quiz-option .opt-letter {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Bebas Neue'; font-size: 14px; color: #555;
+            flex-shrink: 0; transition: all 0.2s;
+        }
+        .quiz-option:hover:not(:disabled) .opt-letter { background: rgba(244,185,66,0.15); border-color: rgba(244,185,66,0.3); color: var(--gold); }
+        .quiz-option.correct { border-color: #4ade80 !important; background: rgba(74,222,128,0.08) !important; color: #4ade80 !important; }
+        .quiz-option.correct .opt-letter { background: rgba(74,222,128,0.2); border-color: #4ade80; color: #4ade80; }
+        .quiz-option.wrong { border-color: #ef4444 !important; background: rgba(239,68,68,0.08) !important; color: #ef4444 !important; }
+        .quiz-option.wrong .opt-letter { background: rgba(239,68,68,0.2); border-color: #ef4444; color: #ef4444; }
+        .quiz-option:disabled { cursor: not-allowed; }
+        @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+        .shake { animation: shake 0.35s ease; }
+        @keyframes pop-correct { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+        .pop-correct { animation: pop-correct 0.3s ease; }
+        .lb-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px; background: var(--card); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px; margin-bottom: 6px;
+        }
+        .lb-rank { font-family:'Bebas Neue'; font-size:1.2rem; color:var(--gold); min-width:28px; }
+        .lb-score { font-family:'Bebas Neue'; font-size:1.4rem; color:#fff; }
+        .lb-date { font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#333; font-weight:700; }
     </style>
 </head>
 <body>
@@ -1379,47 +1271,10 @@
     <i class="fas fa-chevron-up"></i>
 </button>
 
-<!-- ── NSFC Custom Notification Bell ── -->
-<button id="nsfc-notif-btn" onclick="toggleNotifPanel()" title="NSFC Notifications">
-  <span id="nsfc-notif-dot"></span>
-  <i class="fas fa-bell"></i>
-</button>
 
-<!-- ── Notification Info Panel ── -->
-<div id="nsfc-notif-panel">
-  <div class="np-header">
-    <div class="np-icon"><i class="fas fa-bell" style="color:#F4B942;font-size:14px"></i></div>
-    <div>
-      <div class="np-title">NSFC Notifications</div>
-      <div class="np-sub" id="nsfc-notif-label">Enable Notifications</div>
-    </div>
-  </div>
-  <div class="np-type">
-    <div class="np-type-icon" style="background:rgba(244,185,66,0.1)">
-      <i class="fas fa-hand-holding-heart" style="color:#F4B942"></i>
-    </div>
-    <div class="np-type-name">Welfare Updates</div>
-    <div class="np-type-freq">Daily</div>
-  </div>
-  <div class="np-type">
-    <div class="np-type-icon" style="background:rgba(100,150,255,0.1)">
-      <i class="fas fa-film" style="color:#7aadff"></i>
-    </div>
-    <div class="np-type-name">Suriya Movie News</div>
-    <div class="np-type-freq">As needed</div>
-  </div>
-  <div class="np-type">
-    <div class="np-type-icon" style="background:rgba(80,200,120,0.1)">
-      <i class="fas fa-quote-right" style="color:#6fdc9c"></i>
-    </div>
-    <div class="np-type-name">Fan Quotes</div>
-    <div class="np-type-freq">Daily</div>
-  </div>
-  <button class="np-cta" id="np-cta-btn" onclick="subscribeNSFC()">
-    <i class="fas fa-bell"></i> <span id="np-cta-text">Enable Notifications</span>
-  </button>
-  <div class="np-note" id="np-cta-note">1–2 per day · No spam · Free</div>
-</div>
+
+<div id="sidebarOverlay" onclick="toggleMenu()"></div>
+<div id="swipeHint"></div>
 
 <div id="copyTip">Copied!</div>
 
@@ -1442,27 +1297,40 @@
             <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Welfare</button>
             <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
+            <button class="nav-btn" onclick="switchTab('quiz')" data-tab="quiz" style="border:1px solid rgba(244,185,66,0.3)"><i class="fas fa-bolt" style="color:var(--gold);font-size:10px;margin-right:4px"></i>Quiz</button>
         </div>
         <button class="md:hidden text-white text-xl" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </div>
 </nav>
 
-<!-- MOBILE MENU -->
-<div id="mobileMenu" class="fixed inset-0 z-[100] bg-[#080808] flex flex-col p-8 overflow-y-auto">
-    <div class="flex justify-between items-center mb-16">
-        <span style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold);letter-spacing:0.05em">NORTH COIMBATORE SFC</span>
-        <button onclick="toggleMenu()" class="text-white text-3xl">&times;</button>
+<!-- MOBILE SIDEBAR MENU (swipe from left) -->
+<div id="mobileMenu" class="fixed inset-y-0 z-[100] bg-[#090909] flex flex-col p-7 overflow-y-auto">
+    <div class="flex justify-between items-center mb-10">
+        <div class="flex items-center gap-3">
+            <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w200" alt="NCSFC" style="width:36px;height:36px;object-fit:contain;border-radius:9px;background:#111;padding:4px">
+            <span style="font-family:'Bebas Neue';font-size:1.2rem;color:var(--gold);letter-spacing:0.05em">NSFC</span>
+        </div>
+        <button onclick="toggleMenu()" class="text-white text-2xl w-9 h-9 flex items-center justify-center rounded-lg" style="background:rgba(255,255,255,0.05)">&times;</button>
     </div>
-    <nav class="flex flex-col gap-8">
-        <button onclick="switchTab('home');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Home</button>
-        <button onclick="switchTab('membership');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Membership</button>
-        <button onclick="switchTab('about');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">About</button>
-        <button onclick="switchTab('welfare');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Welfare</button>
-        <button onclick="switchTab('filmography');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Filmography</button>
-        <button onclick="switchTab('contact');toggleMenu()" class="text-left" style="font-family:'Bebas Neue';font-size:3rem;color:#fff;letter-spacing:0.04em">Contact</button>
+    <nav class="flex flex-col gap-2">
+        <button onclick="switchTab('home');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="home">Home</button>
+        <button onclick="switchTab('membership');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="membership">Membership</button>
+        <button onclick="switchTab('about');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="about">About</button>
+        <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="welfare">Welfare</button>
+        <button onclick="switchTab('filmography');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="filmography">Filmography</button>
+        <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="contact">Contact</button>
+        <button onclick="switchTab('quiz');toggleMenu()" class="mob-nav-btn text-left px-4 py-3 rounded-xl transition-all" style="font-family:'Bebas Neue';font-size:2rem;color:var(--gold);letter-spacing:0.04em;background:transparent;border:none;cursor:pointer" data-tab="quiz"><i class="fas fa-bolt" style="font-size:1.2rem;margin-right:8px"></i>Quiz</button>
     </nav>
-    <div class="mt-auto pt-12 text-zinc-600" style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase">Est. 2011 · North Coimbatore</div>
+    <div class="mt-auto pt-10" style="border-top:1px solid rgba(244,185,66,0.08)">
+        <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#333;font-weight:700">Est. 2011 · North Coimbatore</div>
+        <div style="font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(244,185,66,0.3);font-weight:700;margin-top:4px">#AnbaanaFans</div>
+    </div>
 </div>
+
+<!-- BACK TO HOME BUTTON -->
+<button id="backToHome" onclick="switchTab('home')">
+    <i class="fas fa-home"></i> Home
+</button>
 
 <main class="pt-20">
 
@@ -1508,8 +1376,8 @@
                         <div class="stat-num" data-target="2011">2011</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Established Year</div>
                     </div>
-                    <div class="stat-card reveal reveal-delay-5" data-counter="1200" data-suffix="+">
-                        <div class="stat-num" data-target="1200" data-suffix="+">1200+</div>
+                    <div class="stat-card reveal reveal-delay-5" data-counter="655" data-suffix="+">
+                        <div class="stat-num" data-target="655" data-suffix="+">655+</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Welfare Events</div>
                     </div>
                     <div class="stat-card reveal reveal-delay-4">
@@ -1541,6 +1409,7 @@
                         <p style="font-family:'Inter';font-size:13.5px;color:#666;line-height:1.6">A disciplined, growing community spanning the entire Coimbatore region with digital presence worldwide.</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -1896,6 +1765,155 @@
             </div>
             <div class="text-center mt-12">
                 <p style="font-family:'Inter';color:#444;font-size:13px">Stay connected for live coverage of events, welfare activities, and movie celebrations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ / TRIVIA -->
+    <section id="quiz" class="tab-content">
+        <div class="max-w-2xl mx-auto px-5 py-16">
+            <!-- Header -->
+            <div class="text-center mb-10 reveal">
+                <div class="section-tag mb-3"><i class="fas fa-bolt mr-2"></i>Suriya Trivia</div>
+                <h2 style="font-size:3rem;color:#fff;line-height:1">Fan Knowledge</h2>
+                <h2 style="font-size:3rem;line-height:1;margin-bottom:12px" class="gold-text">Challenge</h2>
+                <p style="font-family:'Inter';color:#555;font-size:0.9rem">One wrong answer ends the game. How far can you go?</p>
+            </div>
+
+            <!-- Leaderboard strip -->
+            <div id="quizLeaderboard" class="mb-8 reveal" style="display:none">
+                <div class="section-tag mb-3"><i class="fas fa-trophy mr-2"></i>Your Best Scores</div>
+                <div id="leaderboardList"></div>
+            </div>
+
+            <!-- START SCREEN -->
+            <div id="quizStart" class="reveal">
+                <div style="background:var(--card);border:1px solid rgba(244,185,66,0.18);border-radius:24px;padding:36px;text-align:center">
+                    <div style="width:80px;height:80px;background:rgba(244,185,66,0.1);border:1px solid rgba(244,185,66,0.25);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+                        <i class="fas fa-film" style="font-size:2rem;color:var(--gold)"></i>
+                    </div>
+                    <h3 style="font-size:1.8rem;color:#fff;margin-bottom:8px">Ready to Play?</h3>
+                    <p style="font-family:'Inter';color:#666;font-size:0.9rem;margin-bottom:28px;line-height:1.6">Questions from Suriya's filmography & awards.<br>One wrong answer = Game Over. Survive as long as you can!</p>
+                    <div class="flex justify-center gap-3 mb-6 flex-wrap">
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold)" id="qTotalCount">30+</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Questions</div>
+                        </div>
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:var(--gold)">∞</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Lives</div>
+                        </div>
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:10px;padding:12px 20px;text-align:center">
+                            <div style="font-family:'Bebas Neue';font-size:1.5rem;color:#ef4444">1</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Strike = Out</div>
+                        </div>
+                    </div>
+                    <button onclick="startQuiz()" class="btn-gold px-10 py-4 rounded-xl text-base" style="font-size:1rem">
+                        <i class="fas fa-play mr-2"></i> Start Game
+                    </button>
+                </div>
+            </div>
+
+            <!-- GAME SCREEN -->
+            <div id="quizGame" style="display:none">
+                <!-- Progress bar + score -->
+                <div class="flex items-center justify-between mb-4">
+                    <div style="font-family:'Bebas Neue';font-size:1rem;color:var(--gold);letter-spacing:0.08em">
+                        Q <span id="qNum">1</span>
+                    </div>
+                    <div style="font-family:'Bebas Neue';font-size:1.2rem;color:#fff;letter-spacing:0.05em">
+                        Score: <span id="qScore" style="color:var(--gold)">0</span>
+                    </div>
+                    <div id="qStreakBadge" style="display:none;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.2);padding:4px 10px;border-radius:999px">
+                        🔥 <span id="qStreakNum">0</span> Streak
+                    </div>
+                </div>
+                <div style="height:4px;background:rgba(255,255,255,0.04);border-radius:2px;margin-bottom:24px;overflow:hidden">
+                    <div id="qProgressBar" style="height:100%;background:linear-gradient(90deg,#C9921A,#F4B942);border-radius:2px;transition:width 0.4s ease;width:0%"></div>
+                </div>
+
+                <!-- Category badge -->
+                <div id="qCategory" class="badge badge-gold mb-4" style="font-size:10px;letter-spacing:0.15em"></div>
+
+                <!-- Question card -->
+                <div id="qCard" style="background:var(--card);border:1px solid rgba(244,185,66,0.15);border-radius:20px;padding:28px;margin-bottom:20px;min-height:110px;display:flex;align-items:center">
+                    <p id="qText" style="font-family:'Rajdhani';font-size:1.2rem;font-weight:600;color:#e8e8e8;line-height:1.5;width:100%"></p>
+                </div>
+
+                <!-- Options -->
+                <div id="qOptions" class="grid grid-cols-1 gap-3"></div>
+
+                <!-- Timer bar -->
+                <div style="margin-top:20px;height:3px;background:rgba(255,255,255,0.04);border-radius:2px;overflow:hidden">
+                    <div id="qTimerBar" style="height:100%;background:var(--gold);border-radius:2px;transition:width 0.1s linear;width:100%"></div>
+                </div>
+                <div style="text-align:right;margin-top:5px;font-size:11px;color:#333;font-family:'Rajdhani';font-weight:700;letter-spacing:0.1em">
+                    <span id="qTimerText">15</span>s remaining
+                </div>
+            </div>
+
+            <!-- FEEDBACK OVERLAY (correct/wrong) -->
+            <div id="qFeedback" style="display:none;position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)">
+                <div id="qFeedbackBox" style="background:var(--card);border-radius:24px;padding:40px 36px;text-align:center;max-width:340px;width:90%;transform:scale(0.85);opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1)">
+                    <div id="qFeedbackIcon" style="font-size:3rem;margin-bottom:12px"></div>
+                    <div id="qFeedbackTitle" style="font-family:'Bebas Neue';font-size:2rem;color:#fff;letter-spacing:0.05em;margin-bottom:6px"></div>
+                    <div id="qFeedbackSub" style="font-family:'Rajdhani';font-size:0.95rem;color:#888;line-height:1.5"></div>
+                </div>
+            </div>
+
+            <!-- GAME OVER SCREEN -->
+            <div id="quizOver" style="display:none">
+                <div style="background:var(--card);border:1px solid rgba(239,68,68,0.25);border-radius:24px;padding:40px 32px;text-align:center">
+                    <div style="font-size:3.5rem;margin-bottom:16px">💀</div>
+                    <h3 style="font-family:'Bebas Neue';font-size:2.5rem;color:#ef4444;letter-spacing:0.05em;margin-bottom:4px">Game Over!</h3>
+                    <p style="font-family:'Rajdhani';color:#555;font-size:0.95rem;margin-bottom:24px" id="goMessage"></p>
+                    <div class="flex justify-center gap-4 mb-8 flex-wrap">
+                        <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.15);border-radius:12px;padding:16px 24px">
+                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold)" id="goScore">0</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Score</div>
+                        </div>
+                        <div style="background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.15);border-radius:12px;padding:16px 24px">
+                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:#4ade80" id="goBest">0</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Best Ever</div>
+                        </div>
+                        <div style="background:rgba(100,150,255,0.05);border:1px solid rgba(100,150,255,0.15);border-radius:12px;padding:16px 24px">
+                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:#7aadff" id="goStreak">0</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Best Streak</div>
+                        </div>
+                    </div>
+                    <div id="goWrongBox" style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:14px;padding:16px;margin-bottom:24px;text-align:left">
+                        <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:8px">You answered wrong</div>
+                        <div id="goWrongQ" style="font-family:'Rajdhani';font-size:0.95rem;color:#aaa;margin-bottom:6px"></div>
+                        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#555;font-weight:700;margin-bottom:4px">Correct Answer:</div>
+                        <div id="goCorrectA" style="font-family:'Rajdhani';font-size:1rem;font-weight:700;color:#4ade80"></div>
+                    </div>
+                    <div class="flex justify-center gap-3 flex-wrap">
+                        <button onclick="startQuiz()" class="btn-gold px-8 py-3 rounded-xl text-sm">
+                            <i class="fas fa-redo mr-2"></i> Play Again
+                        </button>
+                        <button onclick="switchTab('home')" class="btn-outline px-8 py-3 rounded-xl text-sm">
+                            <i class="fas fa-home mr-2"></i> Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VICTORY SCREEN (completed all questions) -->
+            <div id="quizVictory" style="display:none">
+                <div style="background:linear-gradient(135deg,rgba(244,185,66,0.1),rgba(244,185,66,0.03));border:1px solid rgba(244,185,66,0.3);border-radius:24px;padding:40px 32px;text-align:center">
+                    <div style="font-size:3.5rem;margin-bottom:16px">🏆</div>
+                    <h3 style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold);letter-spacing:0.05em;margin-bottom:4px">Legend!</h3>
+                    <p style="font-family:'Rajdhani';color:#888;font-size:0.95rem;margin-bottom:24px">You answered every question correctly. True NSFC Fan!</p>
+                    <div class="flex justify-center gap-4 mb-8">
+                        <div style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:12px;padding:16px 28px">
+                            <div style="font-family:'Bebas Neue';font-size:2.5rem;color:var(--gold)" id="vicScore">0</div>
+                            <div style="font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700">Perfect Score</div>
+                        </div>
+                    </div>
+                    <button onclick="startQuiz()" class="btn-gold px-8 py-3 rounded-xl text-sm">
+                        <i class="fas fa-redo mr-2"></i> Play Again
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -2709,11 +2727,51 @@ function switchTab(tabId) {
         btn.classList.remove('active');
         if (btn.dataset.tab === tabId) btn.classList.add('active');
     });
+    // Update mobile menu active highlight
+    document.querySelectorAll('.mob-nav-btn').forEach(btn => {
+        btn.classList.remove('mob-active');
+        if (btn.dataset.tab === tabId) btn.classList.add('mob-active');
+    });
+    // Show/hide back-to-home button
+    const bth = document.getElementById('backToHome');
+    if (bth) {
+        if (tabId === 'home') bth.classList.remove('visible');
+        else bth.classList.add('visible');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => { initReveal(); staggerCards(); }, 50);
 }
 
-function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const overlay = document.getElementById('sidebarOverlay');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+}
+
+// ── SWIPE GESTURE TO OPEN SIDEBAR ──
+(function initSwipe() {
+    let touchStartX = 0, touchStartY = 0;
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+        const menu = document.getElementById('mobileMenu');
+        // Swipe right from left edge to open
+        if (touchStartX < 30 && dx > 50 && dy < 80 && !menu.classList.contains('open')) {
+            toggleMenu();
+        }
+        // Swipe left to close
+        if (menu.classList.contains('open') && dx < -60 && dy < 100) {
+            toggleMenu();
+        }
+    }, { passive: true });
+})();
+
 
 window.onload = function() {
     buildFilmStatsBar();
@@ -2734,8 +2792,332 @@ window.onload = function() {
     initScrollProgress();
     initBackToTop();
     initCursorTrail();
+    initQuizLeaderboard();
     setTimeout(staggerCards, 100);
 };
+
+/* ══════════════════════════════════════════════
+   SURIYA TRIVIA QUIZ ENGINE
+   ══════════════════════════════════════════════ */
+
+const QUIZ_STORAGE_KEY = 'nsfc_quiz_scores_v1';
+
+// ── Question Bank ──
+function buildQuestionBank() {
+    const qs = [];
+
+    // Filmography: year questions
+    const mainFilms = actorFilms.filter(f => !f.notes.includes('guest') && !f.notes.includes('cameo') && !f.notes.includes('upcoming') && !f.notes.includes('filming'));
+    mainFilms.forEach(f => {
+        if (typeof f.year !== 'number') return;
+        // "Which year was X released?"
+        const wrongYears = [f.year - 1, f.year + 1, f.year + 2, f.year - 2].filter(y => y > 1995 && y < 2030 && y !== f.year);
+        const opts = shuffle([f.year, ...wrongYears.slice(0,3)]).map(String);
+        qs.push({ category: 'Filmography', q: `In which year was "${f.title}" released?`, opts, ans: String(f.year) });
+
+        // "What role did Suriya play in X?"
+        if (f.role && f.role !== 'Himself' && f.role.length < 50) {
+            const roles = mainFilms.filter(x => x.title !== f.title && x.role && x.role !== 'Himself' && x.role.length < 50).map(x => x.role);
+            const wrongRoles = shuffle(roles).slice(0, 3);
+            if (wrongRoles.length === 3) {
+                const ropts = shuffle([f.role, ...wrongRoles]);
+                qs.push({ category: 'Filmography', q: `What was Suriya's character name in "${f.title}"?`, opts: ropts, ans: f.role });
+            }
+        }
+    });
+
+    // "Which film was Suriya's 25th?"
+    qs.push({ category: 'Filmography', q: "Which film is considered Suriya's 25th film milestone?", opts: shuffle(["Singam", "Vaaranam Aayiram", "Ayan", "7 Aum Arivu"]), ans: "Singam" });
+    qs.push({ category: 'Filmography', q: "In which film did Suriya play the dual role of Bodhidharma and Aravind?", opts: shuffle(["7 Aum Arivu", "Maattrraan", "24", "Kaappaan"]), ans: "7 Aum Arivu" });
+    qs.push({ category: 'Filmography', q: "What character did Suriya play in 'Jai Bhim'?", opts: shuffle(["K. Chandru", "Devaraj", "Kathiravan", "Iniyan"]), ans: "K. Chandru" });
+    qs.push({ category: 'Filmography', q: "Suriya played a triple role in which film?", opts: shuffle(["24", "Maattrraan", "Perazhagan", "Vaaranam Aayiram"]), ans: "24" });
+    qs.push({ category: 'Filmography', q: "In which film did Suriya debut as an actor?", opts: shuffle(["Nerrukku Ner", "Kaadhale Nimmadhi", "Perianna", "Friends"]), ans: "Nerrukku Ner" });
+    qs.push({ category: 'Filmography', q: "Which film is Suriya's Hindi language production as a producer?", opts: shuffle(["Sarfira", "NGK", "Kaappaan", "Kanguva"]), ans: "Sarfira" });
+    qs.push({ category: 'Filmography', q: "Suriya played 'Rolex' as a cameo in which blockbuster film?", opts: shuffle(["Vikram", "Kanguva", "Anjaan", "NGK"]), ans: "Vikram" });
+    qs.push({ category: 'Filmography', q: "What is the name of Suriya's character in 'Kaakha Kaakha'?", opts: shuffle(["Anbuselvan", "Duraisingam", "Sakthivel", "Krishnan"]), ans: "Anbuselvan" });
+    qs.push({ category: 'Filmography', q: "In 'Perazhagan', Suriya played dual roles named?", opts: shuffle(["Chinna & Karthik", "Akhilan & Vimalan", "Krishnan & Suriya", "Athreya & Manikandan"]), ans: "Chinna & Karthik" });
+    qs.push({ category: 'Filmography', q: "Which film was a Telugu-Hindi bilingual featuring Suriya?", opts: shuffle(["Rakta Charitra 2", "Singam", "Aayutha Ezhuthu", "Anjaan"]), ans: "Rakta Charitra 2" });
+    qs.push({ category: 'Filmography', q: "In which year did Suriya star in both 'Ayan' and 'Aadhavan'?", opts: shuffle(["2009", "2010", "2008", "2011"]), ans: "2009" });
+    qs.push({ category: 'Filmography', q: "What was Suriya's role name in 'Soorarai Pottru'?", opts: shuffle(["Nedumaaran Rajangam", "Iniyan", "Kathiravan", "K. Chandru"]), ans: "Nedumaaran Rajangam" });
+    qs.push({ category: 'Filmography', q: "Suriya's character 'Duraisingam' appears across how many Singam films?", opts: shuffle(["3", "2", "4", "1"]), ans: "3" });
+
+    // Awards questions
+    awardsData.forEach(block => {
+        block.entries.filter(e => e.result === 'Won').forEach(e => {
+            if (typeof e.year !== 'number') return;
+            // "Which film won X award at Y ceremony?"
+            const wrongFilms = mainFilms.filter(f => f.title !== e.film).map(f => f.title);
+            const wf = shuffle(wrongFilms).slice(0, 3);
+            if (wf.length === 3) {
+                qs.push({ category: 'Awards', q: `Suriya won "${e.award}" at ${block.category} for which film?`, opts: shuffle([e.film, ...wf]), ans: e.film });
+            }
+            // "In which year did Suriya win X at Y?"
+            if (typeof e.year === 'number') {
+                const wy = shuffle([e.year-1,e.year+1,e.year+2,e.year-2].filter(y=>y>1995&&y<2030&&y!==e.year)).slice(0,3);
+                if (wy.length === 3) {
+                    qs.push({ category: 'Awards', q: `In which year did Suriya win "${e.award}" at ${block.category}?`, opts: shuffle([e.year,...wy]).map(String), ans: String(e.year) });
+                }
+            }
+        });
+    });
+
+    // Handcrafted award questions
+    qs.push({ category: 'Awards', q: "Suriya won National Best Actor Award for which film?", opts: shuffle(["Soorarai Pottru", "Jai Bhim", "Kaakha Kaakha", "Vaaranam Aayiram"]), ans: "Soorarai Pottru" });
+    qs.push({ category: 'Awards', q: "At which awards did Suriya win 'Best Supporting Actor' for Pithamagan?", opts: shuffle(["Filmfare Awards South", "Tamil Nadu State Film Awards", "SIIMA", "Vijay Awards"]), ans: "Filmfare Awards South" });
+    qs.push({ category: 'Awards', q: "Suriya received the Kalaimamani award for?", opts: shuffle(["Art and Literature", "Best Actor", "Social Service", "Best Film"]), ans: "Art and Literature" });
+    qs.push({ category: 'Awards', q: "Which film won Suriya his first Tamil Nadu State Best Actor award?", opts: shuffle(["Nandhaa", "Kaakha Kaakha", "Pithamagan", "Ghajini"]), ans: "Nandhaa" });
+    qs.push({ category: 'Awards', q: "Jai Bhim won the Congressional Global Community Oscars in which year?", opts: shuffle(["2021-22", "2022-23", "2020-21", "2023-24"]), ans: "2021-22" });
+
+    // Production questions
+    qs.push({ category: 'Production', q: "Which was the first film produced by Suriya's 2D Entertainment?", opts: shuffle(["36 Vayadhinile", "Pasanga 2", "Magalir Mattum", "Soorarai Pottru"]), ans: "36 Vayadhinile" });
+    qs.push({ category: 'Production', q: "Suriya produced which critically acclaimed documentary?", opts: shuffle(["Leading Light", "Ponmagal Vandhal", "Udanpirappe", "Oh My Dog"]), ans: "Leading Light" });
+    qs.push({ category: 'Production', q: "Which film starring Suriya's wife was produced under 2D Entertainment in 2020?", opts: shuffle(["Ponmagal Vandhal", "Viruman", "Meiyazhagan", "Raame Aandalum"]), ans: "Ponmagal Vandhal" });
+
+    // TV / Other
+    qs.push({ category: 'Filmography', q: "On which channel did Suriya host 'Neengalum Vellalam Oru Kodi'?", opts: shuffle(["Star Vijay", "Sun TV", "Zee Tamil", "Kalaignar TV"]), ans: "Star Vijay" });
+    qs.push({ category: 'Filmography', q: "Suriya appeared in 'Navarasa' on which streaming platform?", opts: shuffle(["Netflix", "Amazon Prime", "Disney+", "Zee5"]), ans: "Netflix" });
+    qs.push({ category: 'Filmography', q: "Which upcoming Suriya film features the character 'Saravanan / Karuppu'?", opts: shuffle(["Karuppu", "Vishwanath & Sons", "Suriya 47", "Retro"]), ans: "Karuppu" });
+    qs.push({ category: 'Filmography', q: "What year was North Coimbatore Suriya Fans Club established?", opts: shuffle(["2011", "2008", "2013", "2015"]), ans: "2011" });
+
+    return shuffle(qs);
+}
+
+function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+// ── State ──
+let quizState = {
+    questions: [], current: 0, score: 0,
+    streak: 0, bestStreak: 0,
+    wrongQ: null, wrongA: null,
+    timerInterval: null, timeLeft: 15,
+    active: false
+};
+
+// ── Local Storage ──
+function loadScores() {
+    try { return JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || []; } catch { return []; }
+}
+function saveScore(score, streak) {
+    const scores = loadScores();
+    scores.push({ score, streak, date: new Date().toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'2-digit'}) });
+    scores.sort((a,b) => b.score - a.score);
+    localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(scores.slice(0, 5)));
+}
+function getBestScore() {
+    const scores = loadScores();
+    return scores.length ? scores[0].score : 0;
+}
+
+function initQuizLeaderboard() {
+    renderLeaderboard();
+}
+
+function renderLeaderboard() {
+    const scores = loadScores();
+    const lb = document.getElementById('quizLeaderboard');
+    const list = document.getElementById('leaderboardList');
+    if (!lb || !list) return;
+    if (!scores.length) { lb.style.display = 'none'; return; }
+    lb.style.display = 'block';
+    const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+    list.innerHTML = scores.map((s, i) => `
+        <div class="lb-row">
+            <span class="lb-rank">${medals[i] || (i+1)}</span>
+            <span class="lb-score">${s.score} pts</span>
+            <span style="font-size:10px;color:#555;font-family:'Rajdhani';font-weight:700">Streak ${s.streak}</span>
+            <span class="lb-date">${s.date}</span>
+        </div>
+    `).join('');
+}
+
+// ── Start Game ──
+function startQuiz() {
+    clearInterval(quizState.timerInterval);
+    quizState = {
+        questions: buildQuestionBank(),
+        current: 0, score: 0, streak: 0, bestStreak: 0,
+        wrongQ: null, wrongA: null,
+        timerInterval: null, timeLeft: 15, active: true
+    };
+    document.getElementById('quizStart').style.display = 'none';
+    document.getElementById('quizOver').style.display = 'none';
+    document.getElementById('quizVictory').style.display = 'none';
+    document.getElementById('quizGame').style.display = 'block';
+    showQuestion();
+}
+
+function showQuestion() {
+    const q = quizState.questions[quizState.current];
+    if (!q) { endQuiz(true); return; }
+
+    document.getElementById('qNum').textContent = quizState.current + 1;
+    document.getElementById('qScore').textContent = quizState.score;
+    document.getElementById('qCategory').textContent = q.category;
+    document.getElementById('qText').textContent = q.q;
+
+    // Progress bar
+    const pct = (quizState.current / quizState.questions.length) * 100;
+    document.getElementById('qProgressBar').style.width = pct + '%';
+
+    // Streak badge
+    const streak = document.getElementById('qStreakBadge');
+    if (quizState.streak >= 3) {
+        streak.style.display = 'inline-flex';
+        document.getElementById('qStreakNum').textContent = quizState.streak;
+    } else {
+        streak.style.display = 'none';
+    }
+
+    // Options
+    const letters = ['A', 'B', 'C', 'D'];
+    const optsEl = document.getElementById('qOptions');
+    optsEl.innerHTML = q.opts.map((opt, i) => `
+        <button class="quiz-option" onclick="selectAnswer(this, '${opt.replace(/'/g,"\\'")}')">
+            <span class="opt-letter">${letters[i]}</span>
+            <span>${opt}</span>
+        </button>
+    `).join('');
+
+    // Timer
+    startTimer();
+}
+
+function startTimer() {
+    clearInterval(quizState.timerInterval);
+    quizState.timeLeft = 15;
+    document.getElementById('qTimerBar').style.transition = 'none';
+    document.getElementById('qTimerBar').style.width = '100%';
+    document.getElementById('qTimerText').textContent = 15;
+
+    setTimeout(() => {
+        document.getElementById('qTimerBar').style.transition = 'width 0.1s linear';
+    }, 50);
+
+    quizState.timerInterval = setInterval(() => {
+        quizState.timeLeft -= 0.1;
+        const pct = Math.max(0, (quizState.timeLeft / 15) * 100);
+        const bar = document.getElementById('qTimerBar');
+        if (bar) {
+            bar.style.width = pct + '%';
+            bar.style.background = pct > 40 ? 'var(--gold)' : pct > 20 ? '#f97316' : '#ef4444';
+        }
+        const txt = document.getElementById('qTimerText');
+        if (txt) txt.textContent = Math.ceil(quizState.timeLeft);
+
+        if (quizState.timeLeft <= 0) {
+            clearInterval(quizState.timerInterval);
+            timeUp();
+        }
+    }, 100);
+}
+
+function timeUp() {
+    if (!quizState.active) return;
+    quizState.active = false;
+    const q = quizState.questions[quizState.current];
+    quizState.wrongQ = q.q;
+    quizState.wrongA = q.ans;
+    // Disable all options, show correct
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.disabled = true;
+        if (btn.querySelector('span:last-child').textContent === q.ans) {
+            btn.classList.add('correct');
+        }
+    });
+    showFeedback(false, "Time's Up!", `The correct answer was: ${q.ans}`);
+    setTimeout(() => endQuiz(false), 2000);
+}
+
+function selectAnswer(btn, selected) {
+    if (!quizState.active) return;
+    quizState.active = false;
+    clearInterval(quizState.timerInterval);
+
+    const q = quizState.questions[quizState.current];
+    const isCorrect = selected === q.ans;
+
+    // Disable all buttons
+    document.querySelectorAll('.quiz-option').forEach(b => {
+        b.disabled = true;
+        const bText = b.querySelector('span:last-child').textContent;
+        if (bText === q.ans) b.classList.add('correct');
+    });
+
+    if (isCorrect) {
+        btn.classList.add('correct', 'pop-correct');
+        quizState.score += 10 + Math.round(quizState.timeLeft);
+        quizState.streak++;
+        if (quizState.streak > quizState.bestStreak) quizState.bestStreak = quizState.streak;
+        showFeedback(true, quizState.streak >= 3 ? `🔥 ${quizState.streak}x Streak!` : 'Correct!', `+${10 + Math.round(quizState.timeLeft)} points (speed bonus included)`);
+        setTimeout(() => {
+            hideFeedback();
+            quizState.current++;
+            quizState.active = true;
+            showQuestion();
+        }, 1200);
+    } else {
+        btn.classList.add('wrong', 'shake');
+        quizState.wrongQ = q.q;
+        quizState.wrongA = q.ans;
+        showFeedback(false, 'Wrong!', `Correct answer: ${q.ans}`);
+        setTimeout(() => endQuiz(false), 2000);
+    }
+}
+
+function showFeedback(correct, title, sub) {
+    const overlay = document.getElementById('qFeedback');
+    const box = document.getElementById('qFeedbackBox');
+    overlay.style.display = 'flex';
+    setTimeout(() => { box.style.transform = 'scale(1)'; box.style.opacity = '1'; }, 20);
+    document.getElementById('qFeedbackIcon').textContent = correct ? '✅' : '❌';
+    document.getElementById('qFeedbackTitle').textContent = title;
+    document.getElementById('qFeedbackTitle').style.color = correct ? '#4ade80' : '#ef4444';
+    document.getElementById('qFeedbackSub').textContent = sub;
+}
+
+function hideFeedback() {
+    const overlay = document.getElementById('qFeedback');
+    const box = document.getElementById('qFeedbackBox');
+    box.style.transform = 'scale(0.85)';
+    box.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 300);
+}
+
+function endQuiz(victory) {
+    clearInterval(quizState.timerInterval);
+    hideFeedback();
+    saveScore(quizState.score, quizState.bestStreak);
+    renderLeaderboard();
+    document.getElementById('quizGame').style.display = 'none';
+
+    if (victory) {
+        document.getElementById('quizVictory').style.display = 'block';
+        document.getElementById('vicScore').textContent = quizState.score;
+    } else {
+        document.getElementById('quizOver').style.display = 'block';
+        document.getElementById('goScore').textContent = quizState.score;
+        document.getElementById('goBest').textContent = getBestScore();
+        document.getElementById('goStreak').textContent = quizState.bestStreak;
+        document.getElementById('goWrongQ').textContent = quizState.wrongQ || '—';
+        document.getElementById('goCorrectA').textContent = quizState.wrongA || '—';
+        // Game over message
+        const msgs = [
+            "Better luck next time, anna!",
+            "Suriya Anna would train harder. Try again!",
+            "Every fan starts somewhere. Keep going!",
+            "Study the filmography tab and come back!",
+            "Don't give up — Singam never does!"
+        ];
+        document.getElementById('goMessage').textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    }
+}
 </script>
 </body>
 </html>
