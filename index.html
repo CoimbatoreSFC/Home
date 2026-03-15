@@ -3352,12 +3352,6 @@ function drawCard(canvas, imgNSFC, imgOSFC, victory, previewId) {
             ctx.fillStyle = 'rgba(244,185,66,0.65)';
             ctx.fillText(label.slice(1), x + logoSize/2, logoY + logoSize/2 + 22);
         }
-
-        // Label below box
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 11px sans-serif';
-        ctx.fillStyle = 'rgba(244,185,66,0.5)';
-        ctx.fillText(label, x + logoSize/2, logoY + logoSize + 16);
     };
 
     drawLogoBox(56, imgNSFC, 'NSFC');
@@ -3378,7 +3372,7 @@ function drawCard(canvas, imgNSFC, imgOSFC, victory, previewId) {
     // Divider
     ctx.strokeStyle = 'rgba(244,185,66,0.14)';
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(56, logoY + logoSize + 26); ctx.lineTo(W - 56, logoY + logoSize + 26); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(56, logoY + logoSize + 14); ctx.lineTo(W - 56, logoY + logoSize + 14); ctx.stroke();
 
     // ── RESULT TITLE (no emoji) ──
     ctx.textAlign = 'center';
