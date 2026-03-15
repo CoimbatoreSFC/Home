@@ -16,6 +16,220 @@
     <meta name="apple-mobile-web-app-title" content="NSFC">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#F4B942">
+
+    <!-- ═══════════════════════════════════════════════════
+         ONE SIGNAL PUSH NOTIFICATIONS — NSFC
+         ───────────────────────────────────────────────────
+         SETUP STEPS (one-time, free):
+         1. Go to https://onesignal.com → Sign up free
+         2. Add New App → Web → select "Typical Site"
+         3. Enter your website URL & site name "NSFC"
+         4. Copy your APP ID → paste below replacing YOUR_APP_ID
+         5. Download OneSignalSDKWorker.js from your OneSignal
+            dashboard and upload it to your website's root folder
+         ═══════════════════════════════════════════════════ -->
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "067fd25c-dcef-48b8-b081-2004b8d09a8c", // ✅ Your NSFC App ID
+
+          promptOptions: {
+            slidedown: {
+              prompts: [{
+                type: "push",
+                autoPrompt: true,
+                text: {
+                  actionMessage: "🌟 Get daily updates from NSFC! Welfare activities, Suriya movie news & fan quotes.",
+                  acceptButton: "Yes, Notify Me!",
+                  cancelButton: "Maybe Later"
+                },
+                delay: { pageViews: 1, timeDelay: 6 }
+              }]
+            }
+          },
+
+          welcomeNotification: {
+            title: "North Coimbatore SFC 🌟",
+            message: "Welcome, Anbaana Fan! You'll receive welfare updates, movie news & fan quotes daily.",
+            url: window.location.href
+          },
+
+          // Hide the default OneSignal bell (we use our custom bell below)
+          notifyButton: { enable: false }
+        });
+
+        // Update our custom bell UI based on subscription state
+        const isSubscribed = await OneSignal.User.PushSubscription.optedIn;
+        updateNotifBell(isSubscribed);
+        OneSignal.User.PushSubscription.addEventListener('change', e => updateNotifBell(e.current.optedIn));
+      });
+
+      function updateNotifBell(subscribed) {
+        const dot = document.getElementById('nsfc-notif-dot');
+        const lbl = document.getElementById('nsfc-notif-label');
+        if (!dot) return;
+        if (subscribed) {
+          dot.style.background = '#4ade80';
+          if (lbl) lbl.textContent = "Notifications ON";
+        } else {
+          dot.style.background = '#F4B942';
+          if (lbl) lbl.textContent = "Enable Notifications";
+        }
+      }
+
+      function toggleNotifPanel() {
+        const panel = document.getElementById('nsfc-notif-panel');
+        if (panel) panel.classList.toggle('open');
+      }
+
+      async function subscribeNSFC() {
+        if (window.OneSignal) {
+          try {
+            await OneSignal.User.PushSubscription.optIn();
+            toggleNotifPanel();
+          } catch(e) {
+            alert('Please allow notifications in your browser settings.');
+          }
+        }
+      }
+
+      // Close panel when clicking outside
+      document.addEventListener('click', function(e) {
+        const panel = document.getElementById('nsfc-notif-panel');
+        const btn   = document.getElementById('nsfc-notif-btn');
+        if (panel && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
+          panel.classList.remove('open');
+        }
+      });
+    </script>
+
+    <style>
+      /* ── Custom NSFC Notification Bell ── */
+      #nsfc-notif-btn {
+        position: fixed;
+        bottom: 90px;
+        left: 22px;
+        z-index: 490;
+        width: 46px;
+        height: 46px;
+        background: #161616;
+        border: 1px solid rgba(244,185,66,0.35);
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 0 0 rgba(244,185,66,0);
+        transition: all 0.25s;
+      }
+      #nsfc-notif-btn:hover {
+        border-color: #F4B942;
+        background: rgba(244,185,66,0.12);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(244,185,66,0.22);
+      }
+      #nsfc-notif-btn i { color: #F4B942; font-size: 17px; }
+      #nsfc-notif-dot {
+        position: absolute;
+        top: 9px; right: 9px;
+        width: 8px; height: 8px;
+        background: #F4B942;
+        border-radius: 50%;
+        border: 1.5px solid #161616;
+        animation: dot-blink 2s ease-in-out infinite;
+      }
+
+      /* ── Notification Info Panel ── */
+      #nsfc-notif-panel {
+        position: fixed;
+        bottom: 148px;
+        left: 18px;
+        z-index: 491;
+        width: 300px;
+        background: #0f0f0f;
+        border: 1px solid rgba(244,185,66,0.22);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(244,185,66,0.05);
+        transform: translateY(12px) scale(0.96);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      }
+      #nsfc-notif-panel.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        pointer-events: all;
+      }
+      .np-header {
+        display: flex; align-items: center; gap: 10px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(244,185,66,0.1);
+        margin-bottom: 14px;
+      }
+      .np-icon {
+        width: 34px; height: 34px;
+        background: rgba(244,185,66,0.1);
+        border: 1px solid rgba(244,185,66,0.2);
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .np-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1rem; letter-spacing: 0.08em; color: #fff;
+      }
+      .np-sub {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 10px; font-weight: 700;
+        letter-spacing: 0.2em; text-transform: uppercase;
+        color: #F4B942; margin-top: 1px;
+      }
+      .np-type {
+        display: flex; align-items: center; gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+      }
+      .np-type:last-of-type { border-bottom: none; }
+      .np-type-icon {
+        width: 28px; height: 28px;
+        border-radius: 7px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 12px; flex-shrink: 0;
+      }
+      .np-type-name {
+        font-family: 'Rajdhani', sans-serif;
+        font-weight: 700; font-size: 13px; color: #ccc;
+        flex: 1;
+      }
+      .np-type-freq {
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 10px; font-weight: 700;
+        letter-spacing: 0.1em; text-transform: uppercase;
+        color: #444;
+      }
+      .np-cta {
+        width: 100%; margin-top: 16px;
+        padding: 11px;
+        background: linear-gradient(135deg, #C9921A, #F4B942);
+        color: #000; border: none; border-radius: 11px;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 13px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        cursor: pointer; transition: all 0.2s;
+        display: flex; align-items: center; justify-content: center; gap: 7px;
+      }
+      .np-cta:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(244,185,66,0.3); }
+      .np-note {
+        text-align: center; margin-top: 10px;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 10px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase;
+        color: #2a2a2a;
+      }
+    </style>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1150,6 +1364,48 @@
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
     <i class="fas fa-chevron-up"></i>
 </button>
+
+<!-- ── NSFC Custom Notification Bell ── -->
+<button id="nsfc-notif-btn" onclick="toggleNotifPanel()" title="NSFC Notifications">
+  <span id="nsfc-notif-dot"></span>
+  <i class="fas fa-bell"></i>
+</button>
+
+<!-- ── Notification Info Panel ── -->
+<div id="nsfc-notif-panel">
+  <div class="np-header">
+    <div class="np-icon"><i class="fas fa-bell" style="color:#F4B942;font-size:14px"></i></div>
+    <div>
+      <div class="np-title">NSFC Notifications</div>
+      <div class="np-sub" id="nsfc-notif-label">Enable Notifications</div>
+    </div>
+  </div>
+  <div class="np-type">
+    <div class="np-type-icon" style="background:rgba(244,185,66,0.1)">
+      <i class="fas fa-hand-holding-heart" style="color:#F4B942"></i>
+    </div>
+    <div class="np-type-name">Welfare Updates</div>
+    <div class="np-type-freq">Daily</div>
+  </div>
+  <div class="np-type">
+    <div class="np-type-icon" style="background:rgba(100,150,255,0.1)">
+      <i class="fas fa-film" style="color:#7aadff"></i>
+    </div>
+    <div class="np-type-name">Suriya Movie News</div>
+    <div class="np-type-freq">As needed</div>
+  </div>
+  <div class="np-type">
+    <div class="np-type-icon" style="background:rgba(80,200,120,0.1)">
+      <i class="fas fa-quote-right" style="color:#6fdc9c"></i>
+    </div>
+    <div class="np-type-name">Fan Quotes</div>
+    <div class="np-type-freq">Daily</div>
+  </div>
+  <button class="np-cta" onclick="subscribeNSFC()">
+    <i class="fas fa-bell"></i> Subscribe Now
+  </button>
+  <div class="np-note">1–2 notifications per day · No spam</div>
+</div>
 
 <div id="copyTip">Copied!</div>
 
