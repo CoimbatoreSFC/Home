@@ -47,13 +47,22 @@
       function updateNotifBell(subscribed) {
         const dot = document.getElementById('nsfc-notif-dot');
         const lbl = document.getElementById('nsfc-notif-label');
+        const btn = document.getElementById('np-cta-btn');
+        const txt = document.getElementById('np-cta-text');
+        const note = document.getElementById('np-cta-note');
         if (!dot) return;
         if (subscribed) {
           dot.style.background = '#4ade80';
-          if (lbl) lbl.textContent = "Notifications ON";
+          if (lbl)  lbl.textContent  = "Notifications ON ✓";
+          if (txt)  txt.textContent  = "Subscribed!";
+          if (btn)  { btn.style.background = 'linear-gradient(135deg,#0F6E56,#1D9E75)'; btn.style.cursor = 'default'; }
+          if (note) note.textContent = "You will receive 1–2 updates daily";
         } else {
           dot.style.background = '#F4B942';
-          if (lbl) lbl.textContent = "Enable Notifications";
+          if (lbl)  lbl.textContent  = "Enable Notifications";
+          if (txt)  txt.textContent  = "Enable Notifications";
+          if (btn)  { btn.style.background = ''; btn.style.cursor = 'pointer'; }
+          if (note) note.textContent = "1–2 per day · No spam · Free";
         }
       }
 
@@ -63,12 +72,39 @@
       }
 
       async function subscribeNSFC() {
-        if (window.OneSignal) {
-          try {
+        toggleNotifPanel();
+        if (!window.OneSignal) return;
+        try {
+          // Check current permission state
+          const permission = Notification.permission;
+
+          if (permission === 'denied') {
+            // Browser has blocked — guide user to unblock
+            alert('Notifications are blocked.\n\nTo enable:\n1. Tap the lock icon in your browser address bar\n2. Find Notifications\n3. Change to Allow\n4. Refresh the page');
+            return;
+          }
+
+          if (permission === 'default') {
+            // Not asked yet — show native browser prompt
+            await OneSignal.Slidedown.promptPush();
+            return;
+          }
+
+          if (permission === 'granted') {
+            // Already granted — just opt in silently
             await OneSignal.User.PushSubscription.optIn();
-            toggleNotifPanel();
-          } catch(e) {
-            alert('Please allow notifications in your browser settings.');
+            updateNotifBell(true);
+          }
+        } catch(e) {
+          // Fallback: try native Notification API directly
+          try {
+            const result = await Notification.requestPermission();
+            if (result === 'granted') {
+              await OneSignal.User.PushSubscription.optIn();
+              updateNotifBell(true);
+            }
+          } catch(e2) {
+            console.log('Notification error:', e2);
           }
         }
       }
@@ -1379,10 +1415,10 @@
     <div class="np-type-name">Fan Quotes</div>
     <div class="np-type-freq">Daily</div>
   </div>
-  <button class="np-cta" onclick="subscribeNSFC()">
-    <i class="fas fa-bell"></i> Subscribe Now
+  <button class="np-cta" id="np-cta-btn" onclick="subscribeNSFC()">
+    <i class="fas fa-bell"></i> <span id="np-cta-text">Enable Notifications</span>
   </button>
-  <div class="np-note">1–2 notifications per day · No spam</div>
+  <div class="np-note" id="np-cta-note">1–2 per day · No spam · Free</div>
 </div>
 
 <div id="copyTip">Copied!</div>
