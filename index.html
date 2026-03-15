@@ -591,6 +591,152 @@
             100% { opacity: 0; transform: scale(0.1) translateY(-6px); }
         }
 
+        /* ── FC TIMELINE ── */
+        .fc-timeline-wrap {
+            position: relative;
+            padding: 0 0 40px 0;
+        }
+        .fc-timeline-spine {
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, transparent, rgba(244,185,66,0.35) 8%, rgba(244,185,66,0.35) 92%, transparent);
+            transform: translateX(-50%);
+        }
+        @media (max-width: 767px) {
+            .fc-timeline-spine { left: 22px; }
+        }
+
+        .fc-tl-entry {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            margin-bottom: 48px;
+            position: relative;
+        }
+        .fc-tl-entry:nth-child(odd)  { flex-direction: row; }
+        .fc-tl-entry:nth-child(even) { flex-direction: row-reverse; }
+
+        @media (max-width: 767px) {
+            .fc-tl-entry:nth-child(odd),
+            .fc-tl-entry:nth-child(even) { flex-direction: row; }
+        }
+
+        .fc-tl-side {
+            flex: 1;
+            padding: 0 44px;
+        }
+        .fc-tl-entry:nth-child(odd)  .fc-tl-side { text-align: right; }
+        .fc-tl-entry:nth-child(even) .fc-tl-side { text-align: left; }
+        @media (max-width: 767px) {
+            .fc-tl-side { padding: 0 0 0 44px !important; text-align: left !important; }
+        }
+
+        .fc-tl-node {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .fc-tl-dot {
+            width: 48px; height: 48px;
+            background: var(--card);
+            border: 2px solid rgba(244,185,66,0.5);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            flex-shrink: 0;
+        }
+        .fc-tl-dot i { color: var(--gold); font-size: 16px; }
+        .fc-tl-entry.tl-visible .fc-tl-dot {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 6px rgba(244,185,66,0.08), 0 0 20px rgba(244,185,66,0.18);
+        }
+
+        .fc-tl-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 22px;
+            display: inline-block;
+            text-align: left;
+            max-width: 380px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.3s;
+        }
+        .fc-tl-entry:nth-child(odd) .fc-tl-card  { transform: translateX(32px) translateY(10px); }
+        .fc-tl-entry:nth-child(even) .fc-tl-card { transform: translateX(-32px) translateY(10px); }
+        @media (max-width: 767px) {
+            .fc-tl-entry:nth-child(odd) .fc-tl-card,
+            .fc-tl-entry:nth-child(even) .fc-tl-card { transform: translateX(20px) translateY(10px); }
+        }
+        .fc-tl-entry.tl-visible .fc-tl-card {
+            opacity: 1;
+            transform: translateX(0) translateY(0) !important;
+        }
+        .fc-tl-card:hover {
+            border-color: rgba(244,185,66,0.4);
+        }
+        .fc-tl-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #C9921A, #F4B942, #FFDE88, #F4B942, #C9921A);
+            background-size: 200% 100%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .fc-tl-card:hover::before { opacity: 1; animation: shimmer 2s linear infinite; }
+
+        .fc-tl-year {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.05em;
+            background: linear-gradient(135deg, #F4B942, #FFDE88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .fc-tl-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+        .fc-tl-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: #666;
+            line-height: 1.65;
+        }
+
+        /* special "before 2011" entry */
+        .fc-tl-entry.tl-pre .fc-tl-dot {
+            background: rgba(244,185,66,0.08);
+            border-style: dashed;
+        }
+        .fc-tl-entry.tl-pre .fc-tl-card::before { display: none; }
+
+        /* current year highlight */
+        .fc-tl-entry.tl-current .fc-tl-dot {
+            background: rgba(244,185,66,0.15);
+            border-color: var(--gold);
+            animation: dot-blink 2s ease-in-out infinite;
+        }
+
         .welfare-search-wrap { position: relative; max-width: 360px; margin-bottom: 32px; }
         .welfare-search-wrap i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #444; font-size: 13px; }
         #welfareSearch {
@@ -1292,6 +1438,356 @@
             #qText { font-size: 1.05rem !important; }
             .quiz-option .opt-letter { width: 28px; height: 28px; }
         }
+
+        /* ══════════════════════════════════════
+           UPGRADED ANIMATIONS
+        ══════════════════════════════════════ */
+
+        /* Cinematic tab fade with slide */
+        .tab-content { display: none; }
+        .tab-content.active {
+            display: block;
+            animation: tabEnter 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes tabEnter {
+            from { opacity: 0; transform: translateY(22px) scale(0.985); filter: blur(4px); }
+            to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        /* Aurora background on hero */
+        .aurora-bg {
+            position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+        }
+        .aurora-blob {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12;
+            animation: aurora-drift 12s ease-in-out infinite alternate;
+        }
+        @keyframes aurora-drift {
+            0%   { transform: translate(0,0) scale(1); }
+            33%  { transform: translate(30px,-40px) scale(1.12); }
+            66%  { transform: translate(-20px,20px) scale(0.92); }
+            100% { transform: translate(10px,-10px) scale(1.06); }
+        }
+
+        /* Glitch title effect */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 0;
+            font-family: inherit; font-size: inherit; color: inherit;
+            background: inherit; -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+            pointer-events: none;
+        }
+        .glitch::before {
+            animation: glitch-1 4s infinite steps(1);
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+            transform: translateX(-2px);
+            opacity: 0.7;
+        }
+        .glitch::after {
+            animation: glitch-2 4s infinite steps(1);
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+            transform: translateX(2px);
+            opacity: 0.7;
+        }
+        @keyframes glitch-1 {
+            0%,90%,100% { opacity:0; transform:translateX(0); }
+            91%  { opacity:1; transform:translateX(-3px); }
+            93%  { opacity:1; transform:translateX(3px); }
+            95%  { opacity:1; transform:translateX(-1px); }
+        }
+        @keyframes glitch-2 {
+            0%,88%,100% { opacity:0; transform:translateX(0); }
+            89%  { opacity:1; transform:translateX(3px); }
+            91%  { opacity:1; transform:translateX(-3px); }
+            93%  { opacity:1; transform:translateX(2px); }
+        }
+
+        /* Stat card neon glow on hover */
+        .stat-card {
+            transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .stat-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 0 40px rgba(244,185,66,0.18), 0 8px 32px rgba(0,0,0,0.5);
+            border-color: rgba(244,185,66,0.5) !important;
+        }
+
+        /* Magnetic card tilt effect */
+        .mag-card {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* Animated gold border on nav pill */
+        .nav-pill {
+            position: relative;
+            overflow: hidden;
+        }
+        .nav-pill::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(244,185,66,0.08) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: nav-sweep 3s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes nav-sweep {
+            0%   { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Floating label hero badge */
+        .hero-badge-float {
+            animation: badge-float 3s ease-in-out infinite;
+        }
+        @keyframes badge-float {
+            0%,100% { transform: translateY(0); }
+            50%     { transform: translateY(-5px); }
+        }
+
+        /* Section transition line draw */
+        .line-draw {
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+            transform-origin: left;
+            animation: line-grow 1s ease forwards;
+            width: 0;
+        }
+        .line-draw.visible { animation: line-grow 0.8s ease forwards; }
+        @keyframes line-grow {
+            from { width: 0; opacity: 0; }
+            to   { width: 60px; opacity: 1; }
+        }
+
+        /* Card shimmer sweep on hover */
+        .card::after {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(244,185,66,0.06), transparent);
+            transform: skewX(-20deg);
+            transition: none;
+            pointer-events: none;
+        }
+        .card:hover::after {
+            animation: card-sweep 0.7s ease forwards;
+        }
+        @keyframes card-sweep {
+            from { left: -100%; }
+            to   { left: 150%; }
+        }
+
+        /* Pulse ring on logo circle */
+        @keyframes logo-pulse-ring {
+            0%   { transform: scale(1); opacity: 0.2; }
+            70%  { transform: scale(1.15); opacity: 0; }
+            100% { transform: scale(1.15); opacity: 0; }
+        }
+        .logo-pulse::before {
+            content: '';
+            position: absolute; inset: -12px;
+            border-radius: 50%;
+            border: 2px solid rgba(244,185,66,0.4);
+            animation: logo-pulse-ring 2.5s ease-out infinite;
+        }
+        .logo-pulse { position: relative; }
+
+        /* ══════════════════════════════════════
+           WALL OF FAME TAB
+        ══════════════════════════════════════ */
+
+        /* Quote card */
+        .quote-card {
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34,1.2,0.64,1);
+        }
+        .quote-card::before {
+            content: '"';
+            position: absolute; top: -10px; left: 16px;
+            font-family: 'Bebas Neue'; font-size: 8rem;
+            color: rgba(244,185,66,0.06); line-height: 1;
+            pointer-events: none;
+        }
+        .quote-card:hover {
+            border-color: rgba(244,185,66,0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(244,185,66,0.1);
+        }
+        .quote-text {
+            font-family: 'Rajdhani'; font-weight: 700; font-size: 1.15rem;
+            color: #e8e8e8; line-height: 1.55; position: relative; z-index: 1;
+        }
+        .quote-film {
+            font-family: 'Bebas Neue'; font-size: 0.9rem; color: var(--gold);
+            letter-spacing: 0.08em; margin-top: 14px; display: flex; align-items: center; gap: 8px;
+        }
+        .quote-film-dot {
+            width: 4px; height: 4px; background: var(--gold);
+            border-radius: 50%; opacity: 0.5;
+        }
+
+        /* Character spotlight card */
+        .char-card {
+            background: linear-gradient(145deg, rgba(22,22,22,0.9), rgba(12,12,12,0.95));
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 18px;
+            padding: 22px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .char-card::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .char-card:hover {
+            border-color: rgba(244,185,66,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .char-card:hover::after { opacity: 1; }
+        .char-rank {
+            font-family: 'Bebas Neue'; font-size: 2.2rem;
+            background: linear-gradient(135deg, #F4B942, #FFDE88);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            line-height: 1;
+        }
+        .char-name {
+            font-family: 'Bebas Neue'; font-size: 1.3rem; color: #fff;
+            letter-spacing: 0.04em; margin-top: 6px; line-height: 1.1;
+        }
+        .char-film {
+            font-family: 'Rajdhani'; font-size: 11px; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: #444; margin-top: 6px;
+        }
+        .char-badge {
+            display: inline-block; margin-top: 10px;
+            padding: 3px 10px; border-radius: 6px; font-size: 9px;
+            font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .char-icon {
+            width: 56px; height: 56px; margin: 0 auto 12px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Fan milestone card */
+        .milestone-card {
+            display: flex; align-items: flex-start; gap: 18px;
+            background: var(--card); border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px; padding: 20px 22px;
+            transition: all 0.25s ease; position: relative; overflow: hidden;
+        }
+        .milestone-card::before {
+            content: '';
+            position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .milestone-card:hover { border-color: rgba(244,185,66,0.25); transform: translateX(4px); }
+        .milestone-card:hover::before { opacity: 1; }
+        .milestone-year {
+            font-family: 'Bebas Neue'; font-size: 2rem; color: var(--gold);
+            line-height: 1; min-width: 54px; flex-shrink: 0;
+        }
+        .milestone-title {
+            font-family: 'Rajdhani'; font-weight: 700; font-size: 16px; color: #e0e0e0;
+        }
+        .milestone-desc {
+            font-family: 'Inter'; font-size: 12.5px; color: #555; line-height: 1.6; margin-top: 4px;
+        }
+
+        /* Animated number ticker for fame stats */
+        .fame-stat {
+            text-align: center; padding: 24px 12px;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 16px; position: relative; overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .fame-stat:hover {
+            border-color: rgba(244,185,66,0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(244,185,66,0.1);
+        }
+        .fame-stat-num {
+            font-family: 'Bebas Neue'; font-size: 2.8rem; line-height: 1;
+            background: linear-gradient(135deg, #F4B942, #FFDE88);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .fame-stat-label {
+            font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: #444; font-weight: 700; margin-top: 5px;
+        }
+        .fame-stat-bar {
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            opacity: 0.4;
+        }
+
+        /* Rotating reel decoration */
+        @keyframes reel-spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+        .reel-spin { animation: reel-spin 20s linear infinite; }
+        .reel-spin-slow { animation: reel-spin 40s linear infinite; }
+
+        /* Marquee ticker */
+        .ticker-wrap {
+            overflow: hidden; border-top: 1px solid rgba(244,185,66,0.1);
+            border-bottom: 1px solid rgba(244,185,66,0.1);
+            padding: 10px 0; background: rgba(0,0,0,0.3);
+        }
+        .ticker-track {
+            display: flex; gap: 0;
+            animation: ticker-scroll 30s linear infinite;
+            width: max-content;
+        }
+        .ticker-track:hover { animation-play-state: paused; }
+        @keyframes ticker-scroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+        .ticker-item {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 0 32px; white-space: nowrap;
+            font-family: 'Rajdhani'; font-size: 12px; font-weight: 700;
+            letter-spacing: 0.14em; text-transform: uppercase; color: #444;
+        }
+        .ticker-item i { color: var(--gold); font-size: 10px; }
+
+        /* WOF hero banner */
+        .wof-hero {
+            background: linear-gradient(135deg,
+                rgba(244,185,66,0.06) 0%,
+                rgba(244,185,66,0.02) 40%,
+                rgba(100,50,0,0.04) 100%);
+            border: 1px solid rgba(244,185,66,0.1);
+            border-radius: 24px; padding: 40px 36px;
+            position: relative; overflow: hidden;
+        }
+        .wof-hero::before {
+            content: '★';
+            position: absolute; right: -20px; top: -40px;
+            font-size: 16rem; color: rgba(244,185,66,0.03);
+            pointer-events: none; line-height: 1;
+        }
     </style>
 </head>
 <body>
@@ -1333,8 +1829,10 @@
             <button class="nav-btn active" onclick="switchTab('home')" data-tab="home">Home</button>
             <button class="nav-btn" onclick="switchTab('membership')" data-tab="membership">Membership</button>
             <button class="nav-btn" onclick="switchTab('about')" data-tab="about">About</button>
-            <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Activities</button>
+            <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Welfare</button>
             <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
+            <button class="nav-btn" onclick="switchTab('fame')" data-tab="fame" style="display:flex;align-items:center;gap:5px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:14px;width:auto;object-fit:contain;opacity:0.85">Agaram</button>
+            <button class="nav-btn" onclick="switchTab('osfc')" data-tab="osfc" style="display:flex;align-items:center;gap:5px"><img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w64" alt="OSFC" style="height:14px;width:auto;object-fit:contain;opacity:0.85;border-radius:3px">OSFC</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
             <button class="nav-btn" onclick="switchTab('quiz')" data-tab="quiz"><i class="fas fa-bolt" style="font-size:9px;margin-right:3px;opacity:0.7"></i>Quiz</button>
         </div>
@@ -1360,10 +1858,12 @@
         <button onclick="switchTab('home');toggleMenu()" class="mob-nav-btn" data-tab="home" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-home" style="font-size:14px;width:18px;opacity:0.4"></i>Home</button>
         <button onclick="switchTab('membership');toggleMenu()" class="mob-nav-btn" data-tab="membership" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-id-card" style="font-size:14px;width:18px;opacity:0.4"></i>Membership</button>
         <button onclick="switchTab('about');toggleMenu()" class="mob-nav-btn" data-tab="about" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-info-circle" style="font-size:14px;width:18px;opacity:0.4"></i>About</button>
-        <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn" data-tab="welfare" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-hand-holding-heart" style="font-size:14px;width:18px;opacity:0.4"></i>Activities</button>
+        <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn" data-tab="welfare" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-hand-holding-heart" style="font-size:14px;width:18px;opacity:0.4"></i>Welfare</button>
         <button onclick="switchTab('filmography');toggleMenu()" class="mob-nav-btn" data-tab="filmography" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-film" style="font-size:14px;width:18px;opacity:0.4"></i>Filmography</button>
         <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn" data-tab="contact" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-share-alt" style="font-size:14px;width:18px;opacity:0.4"></i>Contact</button>
         <div style="height:1px;background:rgba(244,185,66,0.07);margin:10px 4px"></div>
+        <button onclick="switchTab('osfc');toggleMenu()" class="mob-nav-btn" data-tab="osfc" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w64" alt="OSFC" style="height:16px;width:auto;object-fit:contain;opacity:0.6;border-radius:3px">OSFC</button>
+        <button onclick="switchTab('fame');toggleMenu()" class="mob-nav-btn" data-tab="fame" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:16px;width:auto;object-fit:contain;opacity:0.6">Agaram</button>
         <button onclick="switchTab('quiz');toggleMenu()" class="mob-nav-btn" data-tab="quiz" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-bolt" style="font-size:14px;width:18px;opacity:0.4"></i>Quiz</button>
     </nav>
     <!-- Footer -->
@@ -1384,6 +1884,12 @@
     <section id="home" class="tab-content active">
         <div class="hero-bg min-h-screen flex items-center relative">
             <canvas id="particles"></canvas>
+            <!-- Aurora blobs -->
+            <div class="aurora-bg">
+                <div class="aurora-blob" style="width:600px;height:600px;background:#C9921A;top:-100px;right:-100px;animation-duration:14s"></div>
+                <div class="aurora-blob" style="width:400px;height:400px;background:#F4B942;bottom:0;left:-80px;animation-duration:10s;animation-delay:-5s;opacity:0.07"></div>
+                <div class="aurora-blob" style="width:300px;height:300px;background:#ff8c00;top:40%;left:40%;animation-duration:18s;animation-delay:-8s;opacity:0.04"></div>
+            </div>
             <div class="absolute inset-0 pointer-events-none">
                 <div class="ring-pulse" style="position:absolute;top:10%;right:5%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,0.06),transparent 70%)"></div>
                 <div class="ring-pulse-slow" style="position:absolute;bottom:15%;left:2%;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,0.04),transparent 70%)"></div>
@@ -1391,9 +1897,9 @@
             <div class="hero-content max-w-7xl mx-auto px-6 py-20 w-full">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div>
-                        <div class="badge badge-gold mb-6 reveal">Established 2011 · Coimbatore <span class="live-dot"></span></div>
+                        <div class="badge badge-gold mb-6 reveal hero-badge-float">Established 2011 · Coimbatore <span class="live-dot"></span></div>
                         <h1 class="hero-text text-white mb-2 reveal reveal-delay-1">BEYOND</h1>
-                        <h1 class="hero-text gold-text mb-6 reveal reveal-delay-2">THE SCREEN.</h1>
+                        <h1 class="hero-text gold-text glitch mb-6 reveal reveal-delay-2" data-text="THE SCREEN.">THE SCREEN.</h1>
                         <p class="text-zinc-400 text-lg leading-relaxed mb-10 max-w-lg reveal reveal-delay-3" style="font-family:'Inter';font-size:1rem">
                             United by admiration. Driven by humanity. North Coimbatore Suriya Fans Club transforms fan energy into meaningful social impact across Coimbatore.
                         </p>
@@ -1407,11 +1913,11 @@
                         </div>
                     </div>
                     <div class="flex justify-center lg:justify-end reveal reveal-delay-2">
-                        <div class="logo-float" style="position:relative;width:300px;height:300px">
+                        <div class="logo-float logo-pulse" style="position:relative;width:300px;height:300px">
                             <div class="ring-pulse" style="position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(244,185,66,0.1)"></div>
                             <div class="ring-pulse-slow" style="position:absolute;inset:-40px;border-radius:50%;border:1px solid rgba(244,185,66,0.05)"></div>
                             <div style="background:var(--card);border:1px solid rgba(244,185,66,0.2);border-radius:50%;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
-                                <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w400" alt="NCSFC" style="width:220px;height:220px;object-fit:contain">
+                                <img src="NSFC.png" alt="NCSFC" style="width:220px;height:220px;object-fit:contain">
                             </div>
                         </div>
                     </div>
@@ -1422,8 +1928,8 @@
                         <div class="stat-num" data-target="2011">2011</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Established Year</div>
                     </div>
-                    <div class="stat-card reveal reveal-delay-5" data-counter="655" data-suffix="+">
-                        <div class="stat-num" data-target="655" data-suffix="+">655+</div>
+                    <div class="stat-card reveal reveal-delay-5" data-counter="665" data-suffix="+">
+                        <div class="stat-num" data-target="665" data-suffix="+">665+</div>
                         <div style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#555;font-weight:700;margin-top:4px">Welfare Events</div>
                     </div>
                     <div class="stat-card reveal reveal-delay-4">
@@ -1538,27 +2044,359 @@
 
             <div class="gold-divider mb-20"></div>
 
-            <div class="osfc-panel reveal" style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:clamp(28px,5vw,72px)">
-                <div class="flex flex-col lg:flex-row gap-12 items-center">
-                    <div style="flex-shrink:0;width:180px;height:180px;background:var(--deep);border:1px solid var(--border);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:center">
-                        <img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w400" alt="OSFC Logo" style="width:100%;object-fit:contain">
+            <!-- ── FC TIMELINE ── -->
+            <div class="reveal mb-16">
+                <div class="section-tag mb-3">Our Journey</div>
+                <h2 style="font-size:3rem;color:#fff;line-height:1;margin-bottom:6px">FC Timeline</h2>
+                <p style="font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700;margin-top:4px">2011 – Present</p>
+                <span class="section-heading-line"></span>
+            </div>
+
+            <div class="fc-timeline-wrap reveal">
+                <div class="fc-timeline-spine"></div>
+
+                <!-- Before 2011 -->
+                <div class="fc-tl-entry tl-pre">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-seedling"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">Pre-2011</div>
+                        <div class="fc-tl-title">The Roots</div>
+                        <div class="fc-tl-desc">Members were already involved in charity work and blood donation camps, showing dedication to social service inspired by Suriya — long before the official formation.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2011 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2011</div>
+                        <div class="fc-tl-title">Official Formation</div>
+                        <div class="fc-tl-desc">Our Fans Club was officially established on <strong style="color:#F4B942">25.10.2011</strong>. First-ever FDFS celebration as a registered fan club was for the movie <em>7aum Arivu</em>.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-flag"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2012 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-book-open"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2012</div>
+                        <div class="fc-tl-title">Education &amp; Expansion</div>
+                        <div class="fc-tl-desc">Education support, welfare activities, and grand FDFS celebrations — along with early club expansion across the region.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2013 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2013</div>
+                        <div class="fc-tl-title">Large-Scale Welfare Begins</div>
+                        <div class="fc-tl-desc">The club launched large-scale welfare activities including blood donation camps and charity programs, cementing its welfare-first identity.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-hand-holding-heart"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2014 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-users"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2014</div>
+                        <div class="fc-tl-title">Massive Celebrations &amp; Growth</div>
+                        <div class="fc-tl-desc">New divisions formed, fan club boards opened citywide, and we organized the biggest-ever FDFS in Coimbatore with <strong style="color:#F4B942">5+ shows</strong> — one of the largest crowd gatherings for any actor in the city.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2015 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2015</div>
+                        <div class="fc-tl-title">Monthly Welfare Ritual</div>
+                        <div class="fc-tl-desc">Fans began conducting special welfare events on the <strong style="color:#F4B942">23rd of every month</strong> to honour Suriya's birthday month — a tradition born from devotion.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-calendar-check"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2016 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-wifi"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2016</div>
+                        <div class="fc-tl-title">Mega Welfare &amp; Online Presence</div>
+                        <div class="fc-tl-desc">Large welfare initiatives conducted and activities started being shared online, strengthening unity among fans across the region.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2017 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2017</div>
+                        <div class="fc-tl-title">Community Support Programs</div>
+                        <div class="fc-tl-desc">Members organised food distribution programs, charity visits, and fan meet gatherings — deepening the club's roots in the community.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-utensils"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2018 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-graduation-cap"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2018</div>
+                        <div class="fc-tl-title">Education Support Initiative</div>
+                        <div class="fc-tl-desc">Inspired by <strong style="color:#F4B942">Agaram Foundation</strong>, the club supported the education needs of underprivileged students across Coimbatore.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2019 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2019</div>
+                        <div class="fc-tl-title">Digital Fan Community</div>
+                        <div class="fc-tl-desc">Fan updates and activities migrated to WhatsApp groups and social media platforms, connecting more fans online than ever before.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-mobile-alt"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2020 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-shield-virus"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2020</div>
+                        <div class="fc-tl-title">COVID-19 Relief</div>
+                        <div class="fc-tl-desc">During the pandemic, members stepped up — distributing food kits and essential supplies to communities in need across Coimbatore.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2021 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2021</div>
+                        <div class="fc-tl-title">Fan Support Initiative</div>
+                        <div class="fc-tl-desc">The club extended a helping hand to financially struggling fan club members who were severely affected by the pandemic.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-heart"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-film"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2022</div>
+                        <div class="fc-tl-title">Post-Pandemic Theatre Celebrations</div>
+                        <div class="fc-tl-desc">Grand FDFS for <em>Etharkkum Thunindhavan</em> as theatres reopened. The <strong style="color:#F4B942">OSFC – Coimbatore</strong> team was also launched as a powerful online fan community.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2023</div>
+                        <div class="fc-tl-title">Expanding the Network</div>
+                        <div class="fc-tl-desc">More than <strong style="color:#F4B942">50 new fan club boards</strong> opened across Coimbatore. OSFC Coimbatore also conducted its first welfare initiative — a summer camp program.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-map-marker-alt"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-camera"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2024</div>
+                        <div class="fc-tl-title">Birthday Celebrations &amp; Suriya Meets Us</div>
+                        <div class="fc-tl-desc">Massive welfare initiatives during Suriya's birthday. During the shooting of <em>Karuppu</em> in Coimbatore, <strong style="color:#F4B942">Suriya met our members</strong> for a special photo session.</div>
+                    </div></div>
+                </div>
+
+                <!-- 2025 -->
+                <div class="fc-tl-entry">
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2025</div>
+                        <div class="fc-tl-title">Youth Wing Expansion</div>
+                        <div class="fc-tl-desc">15+ welfare activities during Suriya's birthday month. Youth Wing expanded with <strong style="color:#F4B942">300+ new members</strong>. Grand Annadhanam for <strong style="color:#F4B942">25,000+ devotees</strong> on the occasion of Koniyamman Ther Festival.</div>
+                    </div></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-star"></i></div></div>
+                    <div class="fc-tl-side"></div>
+                </div>
+
+                <!-- 2026 -->
+                <div class="fc-tl-entry tl-current">
+                    <div class="fc-tl-side"></div>
+                    <div class="fc-tl-node"><div class="fc-tl-dot"><i class="fas fa-crown"></i></div></div>
+                    <div class="fc-tl-side"><div class="fc-tl-card">
+                        <div class="fc-tl-year">2026</div>
+                        <div class="fc-tl-title">15+ Years of Unity <span class="live-dot"></span></div>
+                        <div class="fc-tl-desc">Celebrating over 15 years of unity — continuing fan unity, social welfare, and support inspired by Suriya's values. Grand Annadhanam for <strong style="color:#F4B942">15,000+ devotees</strong> on Koniyamman Ther Festival.</div>
+                    </div></div>
+                </div>
+
+            </div><!-- /fc-timeline-wrap -->
+
+        </div>
+    </section>
+
+    <!-- OSFC -->
+    <section id="osfc" class="tab-content">
+        <div class="max-w-7xl mx-auto px-6 py-16">
+
+            <!-- Hero Banner -->
+            <div class="osfc-panel reveal" style="background:linear-gradient(135deg,rgba(22,22,22,0.95),rgba(14,14,14,0.98));border:1px solid rgba(244,185,66,0.18);border-radius:28px;overflow:hidden;margin-bottom:24px;position:relative">
+                <div style="position:absolute;top:-60px;right:-60px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(244,185,66,0.05),transparent 70%);pointer-events:none"></div>
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#F4B942,#FFDE88,#F4B942,transparent)"></div>
+                <div class="flex flex-col lg:flex-row gap-12 items-center" style="padding:clamp(32px,5vw,72px)">
+                    <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:16px">
+                        <div style="width:180px;height:180px;background:var(--deep);border:1px solid rgba(244,185,66,0.2);border-radius:24px;padding:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(244,185,66,0.08)">
+                            <img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w400" alt="OSFC Logo" style="width:100%;object-fit:contain">
+                        </div>
+                        <div style="display:flex;gap:10px">
+                            <a href="https://x.com/CoimbatoreOSFC" target="_blank" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(0,0,0,0.5);border:1px solid #333;border-radius:10px;color:#ccc;font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.08em;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(244,185,66,0.4)'" onmouseout="this.style.borderColor='#333'">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                X / Twitter
+                            </a>
+                            <a href="https://www.instagram.com/coimbatore_osfc/" target="_blank" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,rgba(64,93,230,0.2),rgba(193,53,132,0.2));border:1px solid rgba(193,53,132,0.3);border-radius:10px;color:#ccc;font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.08em;text-decoration:none;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(193,53,132,0.6)'" onmouseout="this.style.borderColor='rgba(193,53,132,0.3)'">
+                                <i class="fab fa-instagram" style="font-size:12px"></i> Instagram
+                            </a>
+                        </div>
                     </div>
-                    <div>
+                    <div style="flex:1">
                         <div class="section-tag mb-3">Digital Headquarters</div>
-                        <h2 style="font-size:2.8rem;color:#fff;line-height:1.05;margin-bottom:6px">Coimbatore Online</h2>
-                        <h2 style="font-size:2.8rem;margin-bottom:16px" class="gold-text">Suriya Fans Club</h2>
-                        <p style="font-family:'Inter';color:#666;font-size:0.95rem;line-height:1.75;margin-bottom:20px;max-width:540px">
-                            OSFC is the digital wing of the All India Suriya Fans Club — responsible for online promotions, social media trends, digital fan events, and coordinating global fan engagement from Coimbatore.
+                        <h2 style="font-size:clamp(2.2rem,5vw,3.5rem);color:#fff;line-height:1;margin-bottom:6px">Coimbatore Online</h2>
+                        <h2 style="font-size:clamp(2.2rem,5vw,3.5rem);margin-bottom:20px;line-height:1" class="gold-text">Suriya Fans Club</h2>
+                        <p style="font-family:'Inter';color:#666;font-size:0.95rem;line-height:1.8;margin-bottom:24px;max-width:560px">
+                            OSFC (Online Suriya Fans Club) is the <strong style="color:#ccc">digital wing of the All India Suriya Fans Club</strong> — responsible for online promotions, social media trends, digital fan events, and coordinating global fan engagement from Coimbatore. Launched in 2022, OSFC bridges offline fan energy with the online world.
                         </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="badge badge-gold">Digital Fans Club</span>
-                            <span class="badge badge-blue">Social Media Trends</span>
-                            <span class="badge badge-green">Fan Engagement</span>
-                            <span class="badge badge-gold">Movie Promotions</span>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">
+                            <span class="badge badge-gold"><i class="fas fa-wifi" style="font-size:9px;margin-right:4px"></i>Digital Fans Club</span>
+                            <span class="badge badge-blue"><i class="fas fa-hashtag" style="font-size:9px;margin-right:4px"></i>Social Media Trends</span>
+                            <span class="badge badge-green"><i class="fas fa-users" style="font-size:9px;margin-right:4px"></i>Fan Engagement</span>
+                            <span class="badge badge-gold"><i class="fas fa-film" style="font-size:9px;margin-right:4px"></i>Movie Promotions</span>
+                            <span class="badge" style="background:rgba(180,80,255,0.1);color:#c97aff;border:1px solid rgba(180,80,255,0.2)"><i class="fas fa-star" style="font-size:9px;margin-right:4px"></i>Est. 2022</span>
+                        </div>
+                        <!-- Stats row -->
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:480px">
+                            <div style="background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.12);border-radius:12px;padding:14px 8px;text-align:center">
+                                <div style="font-family:'Bebas Neue';font-size:1.8rem;color:var(--gold);line-height:1">2022</div>
+                                <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:3px">Founded</div>
+                            </div>
+                            <div style="background:rgba(100,150,255,0.06);border:1px solid rgba(100,150,255,0.12);border-radius:12px;padding:14px 8px;text-align:center">
+                                <div style="font-family:'Bebas Neue';font-size:1.8rem;color:#7aadff;line-height:1">CBE</div>
+                                <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:3px">Coimbatore</div>
+                            </div>
+                            <div style="background:rgba(80,200,120,0.06);border:1px solid rgba(80,200,120,0.12);border-radius:12px;padding:14px 8px;text-align:center">
+                                <div style="font-family:'Bebas Neue';font-size:1.8rem;color:#4ade80;line-height:1">🌐</div>
+                                <div style="font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#444;font-weight:700;margin-top:3px">Online Wing</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="gold-divider mb-16"></div>
+
+            <!-- What OSFC Does -->
+            <div class="reveal mb-16">
+                <div class="section-tag mb-3">What We Do</div>
+                <h2 style="font-size:2.5rem;color:#fff;line-height:1;margin-bottom:6px">Our Digital Mission</h2>
+                <span class="section-heading-line"></span>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+                    <div class="card p-7 reveal reveal-delay-1">
+                        <div style="width:44px;height:44px;background:rgba(244,185,66,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-hashtag" style="color:var(--gold);font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Social Media Trends</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Coordinating trending campaigns on X (Twitter) & Instagram for Suriya's films, birthdays, and achievements — building viral momentum across Tamil Nadu and beyond.</p>
+                    </div>
+                    <div class="card p-7 reveal reveal-delay-2">
+                        <div style="width:44px;height:44px;background:rgba(100,150,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-film" style="color:#7aadff;font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Movie Promotions</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Digital promotion of Suriya's films — creating content, sharing updates, and building online excitement leading up to releases and FDFS celebrations.</p>
+                    </div>
+                    <div class="card p-7 reveal reveal-delay-3">
+                        <div style="width:44px;height:44px;background:rgba(80,200,120,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-users" style="color:#4ade80;font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Fan Engagement</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Connecting fans worldwide through digital events, virtual meetups, and online welfare announcements — extending the reach of NSFC's activities globally.</p>
+                    </div>
+                    <div class="card p-7 reveal reveal-delay-1">
+                        <div style="width:44px;height:44px;background:rgba(244,185,66,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-hand-holding-heart" style="color:var(--gold);font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Welfare Coverage</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Documenting and amplifying the club's welfare activities online — blood donation camps, food distribution drives, and community support programs.</p>
+                    </div>
+                    <div class="card p-7 reveal reveal-delay-2">
+                        <div style="width:44px;height:44px;background:rgba(180,80,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-camera" style="color:#c97aff;font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Event Documentation</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Capturing and publishing photos, videos, and live coverage of FDFS events, fan meets, and welfare activities for the online community.</p>
+                    </div>
+                    <div class="card p-7 reveal reveal-delay-3">
+                        <div style="width:44px;height:44px;background:rgba(239,68,68,0.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
+                            <i class="fas fa-globe" style="color:#f87171;font-size:1.2rem"></i>
+                        </div>
+                        <h3 style="font-size:1.1rem;color:#fff;margin-bottom:8px">Global Outreach</h3>
+                        <p style="font-family:'Inter';font-size:13px;color:#666;line-height:1.65">Acting as the bridge between Coimbatore fans and Suriya fans worldwide — keeping the entire global community updated and united.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gold-divider mb-16"></div>
+
+            <!-- Connect with OSFC -->
+            <div class="reveal">
+                <div class="section-tag mb-3">Connect With OSFC</div>
+                <h2 style="font-size:2.5rem;color:#fff;line-height:1;margin-bottom:6px">Follow &amp; Stay Updated</h2>
+                <span class="section-heading-line"></span>
+                <div class="grid md:grid-cols-2 gap-6 mt-10" style="max-width:680px">
+                    <a href="https://x.com/CoimbatoreOSFC" target="_blank" class="social-link" style="border-radius:16px;padding:20px 22px;text-decoration:none">
+                        <div style="display:flex;align-items:center;gap:14px">
+                            <div class="x-icon-badge" style="width:44px;height:44px;border-radius:10px">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.743l7.73-8.835L1.254 2.25H8.08l4.258 5.63 5.906-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </div>
+                            <div>
+                                <div style="font-family:'Rajdhani';font-weight:700;color:#ccc;font-size:15px">X (Twitter)</div>
+                                <div style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.08em;color:#444;margin-top:2px">@CoimbatoreOSFC</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <button onclick="event.preventDefault();copyHandle('@CoimbatoreOSFC',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:4px 10px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
+                            <i class="fas fa-external-link-alt" style="color:#444;font-size:11px"></i>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/coimbatore_osfc/" target="_blank" class="social-link" style="border-radius:16px;padding:20px 22px;text-decoration:none">
+                        <div style="display:flex;align-items:center;gap:14px">
+                            <div class="x-icon-badge" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(45deg,#405DE6,#5851DB,#833AB4,#C13584,#E1306C,#FD1D1D)">
+                                <i class="fab fa-instagram" style="color:#fff;font-size:18px"></i>
+                            </div>
+                            <div>
+                                <div style="font-family:'Rajdhani';font-weight:700;color:#ccc;font-size:15px">Instagram</div>
+                                <div style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.08em;color:#444;margin-top:2px">@coimbatore_osfc</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <button onclick="event.preventDefault();copyHandle('@coimbatore_osfc',event)" style="background:rgba(244,185,66,0.08);border:1px solid rgba(244,185,66,0.2);border-radius:6px;padding:4px 10px;color:var(--gold);font-size:10px;cursor:pointer;font-family:'Rajdhani';font-weight:700;letter-spacing:0.08em">COPY</button>
+                            <i class="fas fa-external-link-alt" style="color:#444;font-size:11px"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -2001,6 +2839,155 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- WALL OF FAME -->
+    <section id="fame" class="tab-content">
+        <!-- Agaram Hero Banner -->
+        <div style="position:relative;overflow:hidden;background:linear-gradient(135deg,#0a0a0a 0%,#0f1a0f 50%,#080808 100%);border-bottom:1px solid rgba(100,200,100,0.08)">
+            <!-- Hero image bg -->
+            <div style="position:absolute;inset:0;z-index:0">
+                <img src="https://www.agaram.in/_next/image?url=%2Fassets%2Fimages%2Fslider%2Fagaram_slider_img_1.webp&w=1920&q=75"
+                     alt="Agaram" style="width:100%;height:100%;object-fit:cover;opacity:0.13;filter:saturate(0.4)">
+                <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(8,8,8,0.97) 0%,rgba(8,8,8,0.75) 50%,rgba(8,8,8,0.55) 100%)"></div>
+            </div>
+            <div class="max-w-7xl mx-auto px-6 py-20 relative" style="z-index:1">
+                <div class="grid lg:grid-cols-2 gap-14 items-center">
+                    <!-- Left: Text -->
+                    <div class="reveal">
+                        <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px">
+                            <img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram Foundation"
+                                 style="height:48px;width:auto;object-fit:contain;filter:brightness(1.1)">
+                            <div style="height:40px;width:1px;background:rgba(100,200,100,0.25)"></div>
+                            <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(100,200,100,0.7);font-weight:700">Suriya's Foundation</div>
+                        </div>
+                        <h1 style="font-family:'Bebas Neue';font-size:clamp(3rem,8vw,5.5rem);line-height:0.92;color:#fff;margin-bottom:16px">
+                            Education<br>
+                            <span style="background:linear-gradient(135deg,#6ecf6e,#a8f0a8,#4caf50);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Changes Lives.</span>
+                        </h1>
+                        <p style="font-family:'Inter';color:#666;font-size:0.95rem;line-height:1.75;max-width:480px;margin-bottom:32px">
+                            Founded by actor Suriya, Agaram Foundation has been transforming lives through education since 2008 — empowering underprivileged students to rise, dream, and lead.
+                        </p>
+                        <!-- CTA Buttons -->
+                        <div style="display:flex;flex-wrap:wrap;gap:12px">
+                            <a href="https://www.agaram.in/donate" target="_blank" rel="noopener"
+                               style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:linear-gradient(135deg,#4caf50,#66bb6a);color:#000;font-family:'Rajdhani';font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s;border:none"
+                               onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(76,175,80,0.35)'"
+                               onmouseout="this.style.transform='';this.style.boxShadow=''">
+                                <i class="fas fa-heart" style="font-size:11px"></i> Donate
+                            </a>
+                            <a href="https://www.agaram.in/join-us/volunteers" target="_blank" rel="noopener"
+                               style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:transparent;border:1px solid rgba(76,175,80,0.45);color:#6ecf6e;font-family:'Rajdhani';font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s"
+                               onmouseover="this.style.background='rgba(76,175,80,0.1)';this.style.borderColor='rgba(76,175,80,0.7)'"
+                               onmouseout="this.style.background='transparent';this.style.borderColor='rgba(76,175,80,0.45)'">
+                                <i class="fas fa-hands-helping" style="font-size:11px"></i> Become a Volunteer
+                            </a>
+                            <a href="https://www.agaram.in/" target="_blank" rel="noopener"
+                               style="display:inline-flex;align-items:center;gap:8px;padding:13px 26px;background:transparent;border:1px solid rgba(255,255,255,0.1);color:#888;font-family:'Rajdhani';font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s"
+                               onmouseover="this.style.borderColor='rgba(255,255,255,0.25)';this.style.color='#ccc'"
+                               onmouseout="this.style.borderColor='rgba(255,255,255,0.1)';this.style.color='#888'">
+                                <i class="fas fa-external-link-alt" style="font-size:10px"></i> Visit Site
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Right: Suriya photo -->
+                    <div class="reveal" style="display:flex;justify-content:center;align-items:flex-end;position:relative">
+                        <div style="position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(76,175,80,0.08),transparent 70%);pointer-events:none"></div>
+                        <img src="agaram.jpg"
+                             alt="Suriya - Agaram Foundation"
+                             style="width:100%;max-width:480px;border-radius:20px;object-fit:cover;aspect-ratio:4/3;border:1px solid rgba(76,175,80,0.15);box-shadow:0 24px 80px rgba(0,0,0,0.6)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Founder's Message -->
+        <div class="max-w-7xl mx-auto px-6 py-16">
+            <div class="reveal" style="max-width:860px;margin:0 auto">
+                <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(100,200,100,0.7);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+                    <span style="display:inline-block;width:32px;height:1px;background:rgba(76,175,80,0.4)"></span>
+                    Founder - Suriya's Message
+                    <span style="display:inline-block;width:32px;height:1px;background:rgba(76,175,80,0.4)"></span>
+                </div>
+                <h2 style="font-family:'Bebas Neue';font-size:clamp(2rem,5vw,3rem);color:#fff;line-height:1.05;margin-bottom:28px">A Society Where Everyone<br><span style="background:linear-gradient(135deg,#6ecf6e,#a8f0a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Stands on Equal Ground.</span></h2>
+
+                <!-- Quote card -->
+                <div style="position:relative;background:linear-gradient(135deg,rgba(22,22,22,0.9),rgba(16,22,16,0.9));border:1px solid rgba(76,175,80,0.15);border-radius:20px;padding:36px 40px;margin-bottom:0">
+                    <div style="position:absolute;top:24px;left:30px;font-size:5rem;color:rgba(76,175,80,0.08);font-family:Georgia,serif;line-height:1">&ldquo;</div>
+                    <div style="position:relative;z-index:1">
+                        <p style="font-family:'Inter';color:#a0a0a0;font-size:0.97rem;line-height:1.9;margin-bottom:16px">
+                            Our dream is simple: A society where everyone stands on equal ground. I call it simple because something this fundamental should be, but the reality is far from it. That's why our fight is about more than good intentions; it's about building a world where fairness isn't a privilege.
+                        </p>
+                        <p style="font-family:'Inter';color:#a0a0a0;font-size:0.97rem;line-height:1.9;margin-bottom:16px">
+                            Not because luck favoured them, but because opportunity did. And the surest way we know to get there is through education. Why education? Because it doesn't just change a child's report card, it changes their horizon. It passes on the tools, the values, and the confidence to step into the world on their terms.
+                        </p>
+                        <p style="font-family:'Inter';color:#a0a0a0;font-size:0.97rem;line-height:1.9;margin-bottom:16px">
+                            Give it to one child, and you set in motion a ripple, a butterfly effect that shapes not just their life, but entire generations to come. At Agaram, this is the heartbeat of our work. Not just handing out degrees, but cultivating futures capable of carrying the weight of a fairer tomorrow — for decades, for lifetimes.
+                        </p>
+                        <p style="font-family:'Inter';color:#a0a0a0;font-size:0.97rem;line-height:1.9">
+                            And we are doing it shoulder-to-shoulder with volunteers, well-wishers, and fellow dreamers, each adding their own thread to this fabric of change in society. An equal society isn't a finished portrait; we have added our strokes, but the canvas still calls for many more hands, and that's what we are working to bring together.
+                        </p>
+                        <div style="margin-top:28px;padding-top:20px;border-top:1px solid rgba(76,175,80,0.1);display:flex;align-items:center;gap:14px">
+                            <img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:28px;width:auto;opacity:0.7">
+                            <div>
+                                <div style="font-family:'Bebas Neue';font-size:1.2rem;color:#fff;letter-spacing:0.06em">Suriya</div>
+                                <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(76,175,80,0.6);font-weight:700">Founder, Agaram Foundation</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mt-16 reveal">
+                <div style="background:rgba(16,22,16,0.6);border:1px solid rgba(76,175,80,0.12);border-radius:16px;padding:24px 16px;text-align:center;transition:all 0.3s"
+                     onmouseover="this.style.borderColor='rgba(76,175,80,0.35)';this.style.transform='translateY(-3px)'"
+                     onmouseout="this.style.borderColor='rgba(76,175,80,0.12)';this.style.transform=''">
+                    <div style="font-family:'Bebas Neue';font-size:2.8rem;background:linear-gradient(135deg,#6ecf6e,#a8f0a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">2008</div>
+                    <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700;margin-top:6px">Founded</div>
+                </div>
+                <div style="background:rgba(16,22,16,0.6);border:1px solid rgba(76,175,80,0.12);border-radius:16px;padding:24px 16px;text-align:center;transition:all 0.3s"
+                     onmouseover="this.style.borderColor='rgba(76,175,80,0.35)';this.style.transform='translateY(-3px)'"
+                     onmouseout="this.style.borderColor='rgba(76,175,80,0.12)';this.style.transform=''">
+                    <div style="font-family:'Bebas Neue';font-size:2.8rem;background:linear-gradient(135deg,#6ecf6e,#a8f0a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">25K+</div>
+                    <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700;margin-top:6px">Students Supported</div>
+                </div>
+                <div style="background:rgba(16,22,16,0.6);border:1px solid rgba(76,175,80,0.12);border-radius:16px;padding:24px 16px;text-align:center;transition:all 0.3s"
+                     onmouseover="this.style.borderColor='rgba(76,175,80,0.35)';this.style.transform='translateY(-3px)'"
+                     onmouseout="this.style.borderColor='rgba(76,175,80,0.12)';this.style.transform=''">
+                    <div style="font-family:'Bebas Neue';font-size:2.8rem;background:linear-gradient(135deg,#6ecf6e,#a8f0a8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">17+</div>
+                    <div style="font-family:'Rajdhani';font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#444;font-weight:700;margin-top:6px">Years of Impact</div>
+            </div>
+</div>
+
+            <!-- Bottom CTA -->
+            <div class="reveal" style="text-align:center;margin-top:64px;padding:48px 32px;background:linear-gradient(135deg,rgba(16,22,16,0.8),rgba(10,10,10,0.9));border:1px solid rgba(76,175,80,0.12);border-radius:24px">
+                <img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram Foundation" style="height:40px;width:auto;margin:0 auto 20px;display:block;opacity:0.9">
+                <h3 style="font-family:'Bebas Neue';font-size:2.2rem;color:#fff;margin-bottom:10px">Be Part of the Change</h3>
+                <p style="font-family:'Inter';color:#555;font-size:0.9rem;max-width:400px;margin:0 auto 28px;line-height:1.7">Every contribution, every volunteer hour, every shared story brings us closer to a generation that's ready to lead.</p>
+                <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px">
+                    <a href="https://www.agaram.in/donate" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,#4caf50,#66bb6a);color:#000;font-family:'Rajdhani';font-weight:700;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s"
+                       onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(76,175,80,0.35)'"
+                       onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <i class="fas fa-heart" style="font-size:12px"></i> Donate Now
+                    </a>
+                    <a href="https://www.agaram.in/join-us/volunteers" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:transparent;border:1px solid rgba(76,175,80,0.4);color:#6ecf6e;font-family:'Rajdhani';font-weight:700;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s"
+                       onmouseover="this.style.background='rgba(76,175,80,0.1)'"
+                       onmouseout="this.style.background='transparent'">
+                        <i class="fas fa-hands-helping" style="font-size:12px"></i> Become a Volunteer
+                    </a>
+                    <a href="https://www.agaram.in/" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#666;font-family:'Rajdhani';font-weight:700;font-size:14px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s"
+                       onmouseover="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='#aaa'"
+                       onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.color='#666'">
+                        <i class="fas fa-external-link-alt" style="font-size:11px"></i> Visit Agaram.in
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -3604,7 +4591,37 @@ async function doShare(platform, canvasId, victory) {
     downloadCanvas(canvasId, 'nsfc-score.png');
 }
 
-function downloadScoreCard() { downloadCanvas('scoreCanvas', 'nsfc-score.png'); }
+/* ── FC TIMELINE SCROLL ANIMATION ── */
+(function() {
+    function initTimelineObserver() {
+        const entries = document.querySelectorAll('.fc-tl-entry');
+        if (!entries.length) return;
+        const obs = new IntersectionObserver((records) => {
+            records.forEach((rec, i) => {
+                if (rec.isIntersecting) {
+                    // stagger each card slightly
+                    setTimeout(() => rec.target.classList.add('tl-visible'), i * 60);
+                    obs.unobserve(rec.target);
+                }
+            });
+        }, { threshold: 0.18 });
+        entries.forEach(el => obs.observe(el));
+    }
+    // Run when the About tab becomes active
+    const origSwitch = window.switchTab;
+    window.switchTab = function(tab) {
+        origSwitch && origSwitch(tab);
+        if (tab === 'about') setTimeout(initTimelineObserver, 80);
+    };
+    // Also run on load if about tab is already active
+    document.addEventListener('DOMContentLoaded', () => {
+        if (document.getElementById('about')?.classList.contains('active')) {
+            initTimelineObserver();
+        }
+    });
+})();
+
+
 function downloadCanvas(canvasId, filename) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
@@ -3613,6 +4630,136 @@ function downloadCanvas(canvasId, filename) {
     a.href = canvas.toDataURL('image/png');
     a.click();
 }
+
+/* ══════════════════════════════════════════════
+   WALL OF FAME DATA & RENDERING
+   ══════════════════════════════════════════════ */
+
+const iconicChars = [
+    { rank: '01', name: 'Anbuselvan', film: 'Kaakha Kaakha', year: 2003, icon: 'fa-user-shield', color: 'rgba(100,150,255,0.12)', textColor: '#7aadff', badge: 'Action', badgeColor: 'rgba(100,150,255,0.15)', badgeText: '#7aadff' },
+    { rank: '02', name: 'Duraisingam', film: 'Singam Series', year: '2010–17', icon: 'fa-shield-alt', color: 'rgba(244,185,66,0.12)', textColor: '#F4B942', badge: 'Iconic', badgeColor: 'rgba(244,185,66,0.15)', badgeText: '#F4B942' },
+    { rank: '03', name: 'Maara', film: 'Soorarai Pottru', year: 2020, icon: 'fa-plane', color: 'rgba(80,200,120,0.1)', textColor: '#4ade80', badge: 'National Award', badgeColor: 'rgba(80,200,120,0.12)', badgeText: '#4ade80' },
+    { rank: '04', name: 'K. Chandru', film: 'Jai Bhim', year: 2021, icon: 'fa-balance-scale', color: 'rgba(180,80,255,0.1)', textColor: '#c97aff', badge: 'Critically Acclaimed', badgeColor: 'rgba(180,80,255,0.12)', badgeText: '#c97aff' },
+    { rank: '05', name: 'Bodhidharma', film: '7 Aum Arivu', year: 2011, icon: 'fa-dna', color: 'rgba(239,68,68,0.1)', textColor: '#ef4444', badge: 'Dual Role', badgeColor: 'rgba(239,68,68,0.12)', badgeText: '#ef4444' },
+    { rank: '06', name: 'Athreya / Manikandan', film: '24', year: 2016, icon: 'fa-clock', color: 'rgba(244,185,66,0.1)', textColor: '#F4B942', badge: 'Triple Role', badgeColor: 'rgba(244,185,66,0.12)', badgeText: '#F4B942' },
+    { rank: '07', name: 'Sakthivel', film: 'Pithamagan', year: 2003, icon: 'fa-skull', color: 'rgba(140,140,140,0.1)', textColor: '#888', badge: 'Filmfare Win', badgeColor: 'rgba(140,140,140,0.1)', badgeText: '#666' },
+    { rank: '08', name: 'Rolex', film: 'Vikram', year: 2022, icon: 'fa-mask', color: 'rgba(239,68,68,0.1)', textColor: '#ef4444', badge: 'Cameo Legend', badgeColor: 'rgba(239,68,68,0.1)', badgeText: '#ef4444' },
+    { rank: '09', name: 'Paari', film: 'Retro', year: 2025, icon: 'fa-history', color: 'rgba(100,200,255,0.1)', textColor: '#7dd8ff', badge: 'Latest', badgeColor: 'rgba(100,200,255,0.1)', badgeText: '#7dd8ff' },
+    { rank: '10', name: 'Iniyan', film: 'Thaanaa Serndha Koottam', year: 2018, icon: 'fa-laugh-beam', color: 'rgba(255,180,50,0.1)', textColor: '#ffb432', badge: 'Comedy', badgeColor: 'rgba(255,180,50,0.1)', badgeText: '#ffb432' },
+];
+
+const iconicQuotes = [
+    { text: "ஒரு நாள் என்னோட கனவை நான் நனவாக்குவேன், அதுவரை தூக்கமே வேண்டாம்!", film: "Soorarai Pottru", char: "Maara", eng: "One day I'll make my dream real — till then, no sleep!" },
+    { text: "Singam erumai maadu valikkaathu, aana urumiyadha valikkaathu!", film: "Singam", char: "Duraisingam", eng: "A lion won't harm a cow, but won't forgive one who wrongs him!" },
+    { text: "Eppovum nalla irukkanum nu nenachirukken. Ipo theriyuthu, adhu thappa.", film: "Kaakha Kaakha", char: "Anbuselvan", eng: "I always thought I'd stay good. Now I know that was wrong." },
+    { text: "Justice delayed is justice denied. But justice hurried is justice buried.", film: "Jai Bhim", char: "K. Chandru", eng: "The balance of justice must be perfect — neither rushed nor denied." },
+    { text: "Naan oru thadavai sonna, nooru thadavai sonna maadiri!", film: "Singam II", char: "Duraisingam", eng: "When I say it once, it's as if I've said it a hundred times!" },
+    { text: "Time is not just a number. It's a weapon — and I know how to use it.", film: "24", char: "Athreya / Manikandan", eng: "" },
+];
+
+const clubMilestones = [
+    { year: 2011, title: "Club Founded", desc: "North Coimbatore Suriya Fans Club established with a vision rooted in Suriya Anna's humanitarian values." },
+    { year: 2013, title: "First Mega Blood Camp", desc: "Launched the first large-scale blood donation drive in the region, setting the tone for welfare-first fan culture." },
+    { year: 2016, title: "Digital Expansion", desc: "Coimbatore OSFC (Online SFC) launched as the digital wing, extending our reach to fans worldwide." },
+    { year: 2019, title: "300+ Active Members", desc: "Membership surpassed 300 verified fans across North Coimbatore with structured leadership councils." },
+    { year: 2021, title: "Jai Bhim Celebrations", desc: "Organized city-wide celebrations and awareness events inspired by Jai Bhim's social justice message." },
+    { year: 2024, title: "Retro FDFS Grand Event", desc: "Hosted a grand First Day First Show celebration with fans from across Coimbatore for Suriya Anna's Retro." },
+    { year: 2025, title: "655+ Welfare Activities", desc: "Crossed 655 documented welfare events including medical camps, food distribution, and educational drives." },
+];
+
+const tickerItems = [
+    "National Best Actor — Soorarai Pottru", "Singam Trilogy", "Jai Bhim", "Kaakha Kaakha", "7 Aum Arivu",
+    "2D Entertainment", "Agaram Foundation", "Retro 2025", "FDFS Celebrations", "655+ Welfare Events",
+    "Est. 2011 · North Coimbatore", "#AnbaanaFans", "#SuriyaFans", "Vijay Awards", "Filmfare South",
+    "Tamil Nadu State Award", "National Award Winner", "Vikram Cameo", "24 Triple Role",
+];
+
+function buildWallOfFame() {
+    buildTickerTrack();
+    buildCharGrid();
+    buildQuotesGrid();
+    buildMilestonesGrid();
+}
+
+function buildTickerTrack() {
+    const track = document.getElementById('tickerTrack');
+    if (!track) return;
+    // Duplicate for seamless loop
+    const all = [...tickerItems, ...tickerItems];
+    track.innerHTML = all.map(t => `
+        <span class="ticker-item">
+            <i class="fas fa-star"></i>${t}
+        </span>`).join('');
+}
+
+function buildCharGrid() {
+    const grid = document.getElementById('charGrid');
+    if (!grid) return;
+    grid.innerHTML = iconicChars.map((c, i) => `
+        <div class="char-card mag-card reveal" style="animation-delay:${i * 0.06}s">
+            <div class="char-icon" style="background:${c.color}">
+                <i class="fas ${c.icon}" style="color:${c.textColor}"></i>
+            </div>
+            <div class="char-rank" style="background:linear-gradient(135deg,${c.textColor},#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">${c.rank}</div>
+            <div class="char-name">${c.name}</div>
+            <div class="char-film">${c.film} · ${c.year}</div>
+            <div class="char-badge" style="background:${c.badgeColor};color:${c.badgeText};border:1px solid ${c.badgeText}33">${c.badge}</div>
+        </div>`).join('');
+    initMagneticTilt();
+}
+
+function buildQuotesGrid() {
+    const grid = document.getElementById('quotesGrid');
+    if (!grid) return;
+    grid.innerHTML = iconicQuotes.map((q, i) => `
+        <div class="quote-card mag-card reveal" style="animation-delay:${i * 0.1}s">
+            <div class="quote-text">"${q.text}"</div>
+            ${q.eng ? `<div style="font-family:'Inter';font-size:12px;color:#444;font-style:italic;margin-top:10px;line-height:1.5">${q.eng}</div>` : ''}
+            <div class="quote-film">
+                <i class="fas fa-film" style="font-size:10px;color:#444"></i>
+                <span>${q.film}</span>
+                <div class="quote-film-dot"></div>
+                <span style="color:#555">${q.char}</span>
+            </div>
+        </div>`).join('');
+}
+
+function buildMilestonesGrid() {
+    const grid = document.getElementById('milestonesGrid');
+    if (!grid) return;
+    grid.innerHTML = clubMilestones.map((m, i) => `
+        <div class="milestone-card reveal" style="animation-delay:${i * 0.08}s">
+            <div class="milestone-year">${m.year}</div>
+            <div>
+                <div class="milestone-title">${m.title}</div>
+                <div class="milestone-desc">${m.desc}</div>
+            </div>
+            <div style="flex-shrink:0;width:32px;height:32px;background:rgba(244,185,66,0.07);border-radius:8px;display:flex;align-items:center;justify-content:center">
+                <i class="fas fa-chevron-right" style="color:rgba(244,185,66,0.3);font-size:11px"></i>
+            </div>
+        </div>`).join('');
+}
+
+/* Magnetic 3D tilt on cards */
+function initMagneticTilt() {
+    document.querySelectorAll('.mag-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const r = card.getBoundingClientRect();
+            const x = e.clientX - r.left, y = e.clientY - r.top;
+            const cx = r.width / 2, cy = r.height / 2;
+            const rotX = ((y - cy) / cy) * -6;
+            const rotY = ((x - cx) / cx) * 6;
+            card.style.transform = `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
+            card.style.boxShadow = `${-rotY * 2}px ${rotX * 2}px 30px rgba(244,185,66,0.12)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+        });
+    });
+}
+
+
 </script>
 </body>
 </html>
