@@ -737,6 +737,114 @@
             animation: dot-blink 2s ease-in-out infinite;
         }
 
+        /* ══════════════════════════════════════
+           ENHANCED MOBILE RESPONSIVENESS
+        ══════════════════════════════════════ */
+
+        @media (max-width: 640px) {
+            /* Nav pill scroll on mobile */
+            .nav-pill {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+            .nav-pill::-webkit-scrollbar { display: none; }
+
+            /* Hero text scaling */
+            .hero-text { font-size: clamp(3rem, 14vw, 5rem); }
+
+            /* Cards full width on mobile */
+            .card { border-radius: 14px; }
+
+            /* Stat cards tighter */
+            .stat-card { padding: 18px 10px; }
+            .stat-num { font-size: 2.2rem; }
+
+            /* Contact cards stack properly */
+            .social-link {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .social-link > div:first-child { gap: 8px; }
+
+            /* Membership card mobile padding */
+            #membership .p-12 { padding: 28px 20px !important; }
+
+            /* Section headings */
+            h2[style*="3.5rem"] { font-size: 2.5rem !important; }
+            h2[style*="3rem"]   { font-size: 2.2rem !important; }
+
+            /* Timeline items */
+            .timeline-item { padding-left: 14px; }
+
+            /* Film cards */
+            .film-card { gap: 10px; padding: 12px 14px; }
+            .film-card-year { font-size: 0.95rem; min-width: 36px; }
+            .film-card-title { font-size: 13px; }
+
+            /* Award rows */
+            .award-row { padding: 10px 14px; }
+
+            /* Quote cards */
+            .quote-card { padding: 20px 18px; }
+            .quote-text { font-size: 1rem; }
+
+            /* Char grid single column */
+            #charGrid { grid-template-columns: repeat(2, 1fr) !important; }
+
+            /* Milestones */
+            .milestone-card { padding: 16px 14px; gap: 12px; }
+            .milestone-year { font-size: 1.4rem; }
+
+            /* WhatsApp section mobile */
+            .wa-contact-row { flex-direction: column; align-items: flex-start; }
+
+            /* Back to top button */
+            #backToTop { bottom: 16px; right: 12px; }
+
+            /* Quiz screen */
+            #qCard { padding: 18px 16px; }
+            #qText { font-size: 1rem; }
+
+            /* Filmography tabs wrap */
+            #filmTabs { gap: 6px; }
+            .film-tab-btn { padding: 7px 12px; font-size: 11px; }
+
+            /* Award filter */
+            .award-filter-btn { padding: 6px 12px; font-size: 10px; }
+
+            /* Welfare grid */
+            .welfare-search-wrap { max-width: 100%; }
+
+            /* About section grid */
+            .grid.lg\\:grid-cols-2 { grid-template-columns: 1fr; }
+
+            /* Logo float smaller */
+            .logo-float.logo-pulse { width: 200px !important; height: 200px !important; }
+            .logo-float.logo-pulse img { width: 150px !important; height: 150px !important; }
+
+            /* Ticker */
+            .ticker-item { font-size: 11px; padding: 0 16px; }
+        }
+
+        @media (max-width: 400px) {
+            .hero-text { font-size: clamp(2.5rem, 13vw, 4rem); }
+            #charGrid { grid-template-columns: repeat(2, 1fr) !important; }
+            .stat-num { font-size: 1.9rem; }
+        }
+
+        /* Touch target improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .nav-btn { padding: 10px 16px; min-height: 40px; }
+            .btn-gold, .btn-outline { min-height: 48px; }
+            .social-link { min-height: 52px; }
+            .film-tab-btn { min-height: 40px; padding: 9px 16px; }
+            .mob-nav-btn { min-height: 52px !important; }
+            .award-filter-btn { min-height: 38px; padding: 8px 14px; }
+        }
+
         .welfare-search-wrap { position: relative; max-width: 360px; margin-bottom: 32px; }
         .welfare-search-wrap i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: #444; font-size: 13px; }
         #welfareSearch {
@@ -1831,10 +1939,10 @@
             <button class="nav-btn" onclick="switchTab('about')" data-tab="about">About</button>
             <button class="nav-btn" onclick="switchTab('welfare')" data-tab="welfare">Welfare</button>
             <button class="nav-btn" onclick="switchTab('filmography')" data-tab="filmography">Filmography</button>
-            <button class="nav-btn" onclick="switchTab('fame')" data-tab="fame" style="display:flex;align-items:center;gap:5px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:14px;width:auto;object-fit:contain;opacity:0.85">Agaram</button>
             <button class="nav-btn" onclick="switchTab('osfc')" data-tab="osfc" style="display:flex;align-items:center;gap:5px"><img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w64" alt="OSFC" style="height:14px;width:auto;object-fit:contain;opacity:0.85;border-radius:3px">OSFC</button>
             <button class="nav-btn" onclick="switchTab('contact')" data-tab="contact">Contact</button>
             <button class="nav-btn" onclick="switchTab('quiz')" data-tab="quiz"><i class="fas fa-bolt" style="font-size:9px;margin-right:3px;opacity:0.7"></i>Quiz</button>
+            <button class="nav-btn" onclick="switchTab('fame')" data-tab="fame" style="display:flex;align-items:center;gap:5px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:14px;width:auto;object-fit:contain;opacity:0.85">Agaram</button>
         </div>
         <button class="md:hidden text-white text-xl" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     </div>
@@ -1860,11 +1968,11 @@
         <button onclick="switchTab('about');toggleMenu()" class="mob-nav-btn" data-tab="about" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-info-circle" style="font-size:14px;width:18px;opacity:0.4"></i>About</button>
         <button onclick="switchTab('welfare');toggleMenu()" class="mob-nav-btn" data-tab="welfare" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-hand-holding-heart" style="font-size:14px;width:18px;opacity:0.4"></i>Welfare</button>
         <button onclick="switchTab('filmography');toggleMenu()" class="mob-nav-btn" data-tab="filmography" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-film" style="font-size:14px;width:18px;opacity:0.4"></i>Filmography</button>
-        <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn" data-tab="contact" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-share-alt" style="font-size:14px;width:18px;opacity:0.4"></i>Contact</button>
         <div style="height:1px;background:rgba(244,185,66,0.07);margin:10px 4px"></div>
         <button onclick="switchTab('osfc');toggleMenu()" class="mob-nav-btn" data-tab="osfc" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><img src="https://drive.google.com/thumbnail?id=1cLmJRKWE0i_x5Rr5N-a-WmtkWNwUJD6V&sz=w64" alt="OSFC" style="height:16px;width:auto;object-fit:contain;opacity:0.6;border-radius:3px">OSFC</button>
-        <button onclick="switchTab('fame');toggleMenu()" class="mob-nav-btn" data-tab="fame" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:16px;width:auto;object-fit:contain;opacity:0.6">Agaram</button>
+        <button onclick="switchTab('contact');toggleMenu()" class="mob-nav-btn" data-tab="contact" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-share-alt" style="font-size:14px;width:18px;opacity:0.4"></i>Contact</button>
         <button onclick="switchTab('quiz');toggleMenu()" class="mob-nav-btn" data-tab="quiz" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><i class="fas fa-bolt" style="font-size:14px;width:18px;opacity:0.4"></i>Quiz</button>
+        <button onclick="switchTab('fame');toggleMenu()" class="mob-nav-btn" data-tab="fame" style="width:100%;text-align:left;padding:12px 14px;border-radius:10px;font-family:'Bebas Neue';font-size:1.5rem;letter-spacing:0.04em;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;gap:12px;margin-bottom:2px"><img src="https://www.agaram.in/assets/images/logo/agaram_logo.png" alt="Agaram" style="height:16px;width:auto;object-fit:contain;opacity:0.6">Agaram</button>
     </nav>
     <!-- Footer -->
     <div style="padding:16px 20px;border-top:1px solid rgba(244,185,66,0.06);flex-shrink:0">
@@ -2647,7 +2755,31 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-12">
+            <!-- WhatsApp Contact -->
+            <div class="mt-8 reveal">
+                <div style="background:linear-gradient(135deg,rgba(37,211,102,0.07),rgba(37,211,102,0.02));border:1px solid rgba(37,211,102,0.2);border-radius:20px;padding:28px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;position:relative;overflow:hidden">
+                    <!-- subtle bg glow -->
+                    <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:rgba(37,211,102,0.06);border-radius:50%;pointer-events:none"></div>
+                    <div style="display:flex;align-items:center;gap:16px">
+                        <div style="width:54px;height:54px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                            <i class="fab fa-whatsapp" style="font-size:1.7rem;color:#25D366"></i>
+                        </div>
+                        <div>
+                            <div style="font-family:'Bebas Neue';font-size:1.3rem;color:#fff;letter-spacing:0.04em;line-height:1">WhatsApp</div>
+                            <div style="font-family:'Rajdhani';font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(37,211,102,0.7);margin-top:2px">Direct Message</div>
+                            <div style="font-family:'Inter';font-size:1.05rem;font-weight:600;color:#e8e8e8;margin-top:6px;letter-spacing:0.03em">+91 97513 96080</div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/919751396080" target="_blank" rel="noopener"
+                       style="display:inline-flex;align-items:center;gap:9px;padding:13px 26px;background:linear-gradient(135deg,#25D366,#1da851);color:#fff;font-family:'Rajdhani';font-weight:700;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border-radius:12px;transition:all 0.25s;white-space:nowrap;flex-shrink:0"
+                       onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(37,211,102,0.35)'"
+                       onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <i class="fab fa-whatsapp" style="font-size:1rem"></i> Message Us
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-10">
                 <p style="font-family:'Inter';color:#444;font-size:13px">Stay connected for live coverage of events, welfare activities, and movie celebrations.</p>
             </div>
         </div>
@@ -2848,7 +2980,7 @@
         <div style="position:relative;overflow:hidden;background:linear-gradient(135deg,#0a0a0a 0%,#0f1a0f 50%,#080808 100%);border-bottom:1px solid rgba(100,200,100,0.08)">
             <!-- Hero image bg -->
             <div style="position:absolute;inset:0;z-index:0">
-                <img src="https://www.agaram.in/_next/image?url=%2Fassets%2Fimages%2Fslider%2Fagaram_slider_img_1.webp&w=1920&q=75"
+                <img src="https://media.licdn.com/dms/image/v2/C511BAQFtredudOyEdQ/company-background_10000/company-background_10000/0/1584419923645/agaram_foundation_cover?e=2147483647&v=beta&t=ce2rsTgVCO4mrHHvyQmoumCCiIeEh1lYtOxjqbO5604"
                      alt="Agaram" style="width:100%;height:100%;object-fit:cover;opacity:0.13;filter:saturate(0.4)">
                 <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(8,8,8,0.97) 0%,rgba(8,8,8,0.75) 50%,rgba(8,8,8,0.55) 100%)"></div>
             </div>
