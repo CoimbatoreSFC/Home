@@ -630,7 +630,10 @@
         .fc-tl-entry:nth-child(odd)  .fc-tl-side { text-align: right; }
         .fc-tl-entry:nth-child(even) .fc-tl-side { text-align: left; }
         @media (max-width: 767px) {
-            .fc-tl-side { padding: 0 0 0 44px !important; text-align: left !important; }
+            .fc-tl-side { padding: 0 0 0 16px !important; text-align: left !important; }
+            /* Hide the empty placeholder side so the card fills available width */
+            .fc-tl-side:empty { display: none !important; }
+            .fc-tl-card { max-width: 100%; }
         }
 
         .fc-tl-node {
