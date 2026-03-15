@@ -2135,7 +2135,7 @@
                     <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 36px;display:flex;flex-direction:column;align-items:center;gap:28px;width:100%;max-width:380px">
                         <img src="https://drive.google.com/thumbnail?id=1y4UkGZSwvVEmB3RFAcmBdbBzaJjzZpV6&sz=w500" alt="NCSFC Logo" style="max-width:200px;object-fit:contain">
                         <div style="width:100%;height:1px;background:rgba(244,185,66,0.1)"></div>
-                        <a href="https://github.com/CoimbatoreSFC/Home/raw/main/CBESFC.apk"
+                        <a href="app.suryaprotonx.workers.dev"
                            download
                            style="display:inline-flex;align-items:center;gap:12px;padding:14px 20px;background:rgba(244,185,66,0.06);border:1px solid rgba(244,185,66,0.25);border-radius:14px;text-decoration:none;width:100%;transition:all 0.25s"
                            onmouseover="this.style.borderColor='rgba(244,185,66,0.7)';this.style.background='rgba(244,185,66,0.12)';this.style.transform='translateY(-2px)'"
@@ -4695,35 +4695,45 @@ async function shareVictory(platform) { await doShare(platform, 'victoryCanvas',
 async function doShare(platform, canvasId, victory) {
     const text = getShareText(victory);
     const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const filename = victory ? 'nsfc-victory.png' : 'nsfc-score.png';
 
-    if (platform === 'twitter') {
-        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
+    // Try Web Share API with image (works on mobile Chrome/Safari natively)
+    if (navigator.share && navigator.canShare) {
+        try {
+            const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+            const file = new File([blob], filename, { type: 'image/png' });
+            const shareData = { title: 'NSFC Suriya Trivia', text, files: [file] };
+            if (navigator.canShare(shareData)) {
+                await navigator.share(shareData);
+                return;
+            }
+        } catch(e) { /* fall through */ }
+    }
+
+    // Platform-specific fallback: download image first, then open platform
+    if (platform === 'whatsapp') {
+        downloadCanvas(canvasId, filename);
+        setTimeout(() => {
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + '\n\n(Attach the saved score card image 📸)')}`, '_blank');
+        }, 800);
         return;
     }
-    if (platform === 'whatsapp') {
-        const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-        window.open(url, '_blank');
+    if (platform === 'twitter') {
+        downloadCanvas(canvasId, filename);
+        setTimeout(() => {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+        }, 800);
         return;
     }
     if (platform === 'instagram') {
-        // Instagram doesn't have a web share URL — download + prompt
-        downloadCanvas(canvasId, 'nsfc-score.png');
-        setTimeout(() => alert('Image saved! Now open Instagram and share it as a Story or Post 🎬\n\nRemember to tag #NorthCoimbatoreSFC'), 500);
+        downloadCanvas(canvasId, filename);
+        setTimeout(() => {
+            alert('📸 Score card saved to your device!\n\nOpen Instagram → New Story or Post → Select the image.\n\nTag: #NorthCoimbatoreSFC #AnbaanaFans');
+        }, 600);
         return;
     }
-
-    // Native share API fallback
-    if (navigator.share && canvas) {
-        try {
-            canvas.toBlob(async blob => {
-                const file = new File([blob], 'nsfc-score.png', { type: 'image/png' });
-                await navigator.share({ title: 'Suriya Trivia Score', text, files: [file] });
-            }, 'image/png');
-        } catch { downloadCanvas(canvasId, 'nsfc-score.png'); }
-        return;
-    }
-    downloadCanvas(canvasId, 'nsfc-score.png');
+    downloadCanvas(canvasId, filename);
 }
 
 /* ── FC TIMELINE SCROLL ANIMATION ── */
@@ -4898,49 +4908,15 @@ function initMagneticTilt() {
 </script>
 
 <script>
-  // ── 1. Disable Right Click ──────────────────────────────────────────
-  document.addEventListener('contextmenu', e => e.preventDefault());
-
-  // ── 2. Disable Save / View Source / Print / Select All shortcuts ────
-  document.addEventListener('keydown', function(e) {
-    const blocked = (
-      (e.ctrlKey || e.metaKey) && ['s','u','p','a'].includes(e.key.toLowerCase())
-    );
-    if (blocked || e.key === 'F12') {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  document.addEventListener("keydown", function(e) {
+    const blocked = (e.ctrlKey || e.metaKey) && ["s","u","p"].includes(e.key.toLowerCase());
+    if (blocked || e.key === "F12") { e.preventDefault(); e.stopPropagation(); return false; }
   });
-
-  // ── 3. Disable text selection ───────────────────────────────────────
-  document.addEventListener('selectstart', e => e.preventDefault());
-
-  // ── 4. Disable drag (prevents image saving) ─────────────────────────
-  document.addEventListener('dragstart', e => e.preventDefault());
-
-  // ── 5. DevTools open detection — reload to blank if opened ──────────
-  (function devToolsBlock() {
-    const threshold = 160;
-    let devOpen = false;
-    setInterval(() => {
-      const widthDiff  = window.outerWidth  - window.innerWidth  > threshold;
-      const heightDiff = window.outerHeight - window.innerHeight > threshold;
-      if ((widthDiff || heightDiff) && !devOpen) {
-        devOpen = true;
-        document.body.innerHTML =
-          '<div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#080808;color:#F4B942;font-family:Bebas Neue,sans-serif;font-size:2rem;letter-spacing:0.1em;">🔒 Access Restricted</div>';
-      }
-      if (!widthDiff && !heightDiff && devOpen) {
-        devOpen = false;
-        location.reload();
-      }
-    }, 1000);
-  })();
-
-  // ── 6. Console warning ──────────────────────────────────────────────
-  console.log('%c🔒 STOP!', 'color:#F4B942;font-size:40px;font-weight:bold;');
-  console.log('%cThis site is protected. Unauthorised copying is prohibited.', 'color:#fff;font-size:14px;');
+  document.addEventListener("selectstart", e => e.preventDefault());
+  document.addEventListener("dragstart", e => e.preventDefault());
+  console.log("%c🔒 STOP!", "color:#F4B942;font-size:40px;font-weight:bold;");
+  console.log("%cThis site is protected.", "color:#fff;font-size:14px;");
 </script>
 </body>
 </html>
