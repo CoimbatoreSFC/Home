@@ -1961,13 +1961,13 @@
         }
 
         /* ══════════════════════════════════════
-           ANNOUNCEMENT POPUP
+           ANNOUNCEMENT POPUP — ENHANCED
         ══════════════════════════════════════ */
         #announcementOverlay {
             position: fixed; inset: 0; z-index: 10000;
             background: rgba(0,0,0,0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             display: flex; align-items: center; justify-content: center;
             padding: 16px;
             opacity: 0; pointer-events: none;
@@ -1975,6 +1975,7 @@
         }
         #announcementOverlay.visible { opacity: 1; pointer-events: all; }
 
+        /* ── SLIDE-IN FROM BOTTOM animation ── */
         #annCard {
             position: relative;
             width: min(330px, 90vw);
@@ -1982,11 +1983,17 @@
             border-radius: 22px;
             overflow: hidden;
             background: #0a0a0a;
-            transform: scale(0.86) translateY(28px);
-            transition: transform 0.48s cubic-bezier(0.22,1,0.36,1);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(244,185,66,0.25);
+            transform: translateY(60px) scale(0.94);
+            opacity: 0;
+            transition:
+                transform 0.52s cubic-bezier(0.22,1,0.36,1),
+                opacity   0.42s cubic-bezier(0.22,1,0.36,1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(244,185,66,0.22);
         }
-        #announcementOverlay.visible #annCard { transform: scale(1) translateY(0); }
+        #announcementOverlay.visible #annCard {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
 
         /* Gold shimmer bar */
         #annCard::before {
@@ -1997,7 +2004,7 @@
             animation: shimmer 2.5s linear infinite;
         }
 
-        /* Slider viewport */
+        /* Slider */
         #annSliderWrap { position: absolute; inset: 0; overflow: hidden; }
         #annSlider {
             display: flex; height: 100%;
@@ -2009,17 +2016,14 @@
             position: relative; flex-shrink: 0;
         }
 
-        /* Blurred background — using the SAME img element, no separate div */
+        /* Blurred bg */
         .ann-bg-blur {
-            position: absolute; inset: 0; z-index: 0;
-            overflow: hidden;
+            position: absolute; inset: 0; z-index: 0; overflow: hidden;
         }
         .ann-bg-blur img {
-            width: 100%; height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
             filter: blur(22px) brightness(0.28) saturate(1.5);
-            transform: scale(1.2);
-            display: block;
+            transform: scale(1.2); display: block;
         }
 
         /* Vignette */
@@ -2034,7 +2038,7 @@
             );
         }
 
-        /* Main image — contained in upper 60% */
+        /* Main image */
         .ann-img-area {
             position: absolute;
             top: 42px; left: 10px; right: 10px; bottom: 40%;
@@ -2043,8 +2047,7 @@
         }
         .ann-img {
             max-width: 100%; max-height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
+            object-fit: contain; border-radius: 8px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.65);
             display: block;
         }
@@ -2098,19 +2101,19 @@
         }
         #annCloseBtn:hover { background: rgba(244,185,66,0.3); color: #fff; border-color: rgba(244,185,66,0.6); }
 
-        /* Tab dots */
+        /* Dot tabs */
         #annTabsRow {
-            position: absolute; top: 10px; left: 10px; z-index: 40;
-            display: flex; gap: 4px; flex-wrap: wrap;
-            max-width: calc(100% - 52px);
+            position: absolute; top: 12px; left: 50%; z-index: 40;
+            transform: translateX(-50%);
+            display: flex; gap: 5px;
         }
         .ann-tab {
             width: 7px; height: 7px; border-radius: 50%;
             background: rgba(255,255,255,0.25);
-            cursor: pointer; transition: all 0.2s;
+            cursor: pointer; transition: all 0.25s;
             border: none; padding: 0;
         }
-        .ann-tab.active { background: var(--gold); transform: scale(1.35); }
+        .ann-tab.active { background: var(--gold); transform: scale(1.4); }
         .ann-tab:hover:not(.active) { background: rgba(255,255,255,0.5); }
 
         /* Arrows */
@@ -2130,57 +2133,118 @@
         #annArrNext { right: 7px; }
         .ann-arr.ann-hidden { display: none; }
 
+        /* Auto-progress bar */
+        #annAutoBar {
+            position: absolute; bottom: 0; left: 0; z-index: 40;
+            height: 2px;
+            background: var(--gold);
+            width: 0%;
+            transition: none;
+            opacity: 0.7;
+        }
+        #annAutoBar.running {
+            transition: width linear;
+        }
+
         /* Counter */
         #annCounter {
-            position: absolute; bottom: 7px; right: 10px; z-index: 40;
+            position: absolute; bottom: 8px; right: 10px; z-index: 40;
             font-family: 'Rajdhani', sans-serif;
             font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
             color: rgba(255,255,255,0.22); pointer-events: none;
         }
 
+        /* ── "Don't show again today" footer ── */
+        #annFooter {
+            position: absolute; bottom: -38px; left: 0; right: 0; z-index: 5;
+            display: flex; justify-content: center;
+        }
+        #annDontShowBtn {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            background: none; border: none; cursor: pointer;
+            padding: 6px 12px;
+            transition: color 0.2s;
+        }
+        #annDontShowBtn:hover { color: rgba(255,255,255,0.55); }
+
         /* ══════════════════════════════════════
-           FLOATING ANNOUNCEMENT BELL BUTTON
+           FLOATING PILL BELL BUTTON
         ══════════════════════════════════════ */
         #annBellBtn {
             position: fixed;
-            bottom: 86px; left: 18px;
+            bottom: 88px; left: 14px;
             z-index: 500;
-            width: 44px; height: 44px;
+            display: none;
+            align-items: center; gap: 7px;
+            padding: 0 14px 0 10px;
+            height: 40px;
             background: var(--gold);
-            border: none; border-radius: 13px;
+            border: none; border-radius: 999px;
             cursor: pointer;
-            display: none; /* shown only when announcements exist */
-            align-items: center; justify-content: center;
-            box-shadow: 0 4px 20px rgba(244,185,66,0.38);
-            transition: all 0.25s;
+            box-shadow: 0 4px 18px rgba(244,185,66,0.42);
+            transition: all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+            overflow: hidden;
         }
         #annBellBtn.ann-bell-visible { display: flex; }
-        #annBellBtn:hover { background: #fff; transform: translateY(-3px) scale(1.08); box-shadow: 0 8px 28px rgba(244,185,66,0.45); }
-        #annBellBtn i { color: #000; font-size: 16px; }
-
-        /* Ping badge */
-        #annBellBadge {
-            position: absolute; top: -4px; right: -4px;
-            width: 16px; height: 16px;
-            background: #ef4444;
-            border-radius: 50%;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 9px; font-weight: 700; color: #fff;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid var(--deep);
+        #annBellBtn:hover {
+            background: #fff;
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 8px 28px rgba(244,185,66,0.5);
         }
+        #annBellBtn:hover #annBellLabel { color: #000; }
+        #annBellIcon {
+            width: 20px; height: 20px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        #annBellIcon i { color: #000; font-size: 14px; }
+        #annBellLabel {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 10px; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            color: #000; white-space: nowrap;
+        }
+        /* Count badge on pill */
+        #annBellCount {
+            background: #ef4444;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px; font-weight: 700;
+            min-width: 16px; height: 16px;
+            border-radius: 999px;
+            display: flex; align-items: center; justify-content: center;
+            padding: 0 4px;
+            border: 2px solid var(--gold);
+            margin-left: 2px;
+        }
+        #annBellBtn:hover #annBellCount { border-color: #fff; }
 
         /* Bell ring animation */
         @keyframes bell-ring {
             0%,100% { transform: rotate(0deg); }
-            10%,30%  { transform: rotate(-12deg); }
-            20%,40%  { transform: rotate(12deg); }
-            50%      { transform: rotate(0deg); }
+            8%,32%   { transform: rotate(-14deg); }
+            20%,44%  { transform: rotate(14deg); }
+            56%      { transform: rotate(0deg); }
         }
-        #annBellBtn.ann-bell-visible i {
-            animation: bell-ring 3.5s ease-in-out infinite;
+        #annBellBtn.ann-bell-visible #annBellIcon i {
+            animation: bell-ring 4s ease-in-out infinite;
+            display: inline-block;
         }
-        #annBellBtn:hover i { animation: none; }
+        #annBellBtn:hover #annBellIcon i { animation: none; }
+
+        /* Pulse ring behind pill */
+        @keyframes pill-pulse {
+            0%   { box-shadow: 0 4px 18px rgba(244,185,66,0.42), 0 0 0 0 rgba(244,185,66,0.35); }
+            60%  { box-shadow: 0 4px 18px rgba(244,185,66,0.42), 0 0 0 10px rgba(244,185,66,0); }
+            100% { box-shadow: 0 4px 18px rgba(244,185,66,0.42), 0 0 0 0 rgba(244,185,66,0); }
+        }
+        #annBellBtn.ann-bell-visible {
+            animation: pill-pulse 2.8s ease-out infinite;
+        }
+        #annBellBtn:hover { animation: none; }
     </style>
 </head>
 <body>
@@ -2198,17 +2262,15 @@
     <div id="annCard">
         <!-- Gold shimmer bar via ::before -->
 
-        <!-- Dot tabs (top-left) -->
+        <!-- Centered dot tabs -->
         <div id="annTabsRow"></div>
 
-        <!-- Close button (top-right) -->
+        <!-- Close (top-right) -->
         <button id="annCloseBtn" onclick="closeAnn()" aria-label="Close">&#215;</button>
 
         <!-- Slider -->
         <div id="annSliderWrap">
-            <div id="annSlider">
-                <!-- slides injected by JS -->
-            </div>
+            <div id="annSlider"></div>
         </div>
 
         <!-- Arrows -->
@@ -2219,15 +2281,25 @@
             <i class="fas fa-chevron-right"></i>
         </button>
 
-        <!-- Counter -->
+        <!-- Auto-progress bar (bottom edge) -->
+        <div id="annAutoBar"></div>
+
+        <!-- Slide counter -->
         <div id="annCounter"></div>
+    </div>
+
+    <!-- "Don't show again today" — outside card, below it -->
+    <div id="annFooter">
+        <button id="annDontShowBtn" onclick="annDontShowToday()">
+            <i class="fas fa-eye-slash" style="margin-right:5px;font-size:9px"></i> Don't show again today
+        </button>
     </div>
 </div>
 
-<!-- FLOATING ANNOUNCEMENT BELL -->
-<button id="annBellBtn" onclick="showAnn()" title="Announcements" aria-label="View Announcements">
-    <span id="annBellBadge">!</span>
-    <i class="fas fa-bullhorn"></i>
+<!-- FLOATING PILL BELL -->
+<button id="annBellBtn" onclick="showAnn()" title="View Announcements" aria-label="View Announcements">
+    <span id="annBellIcon"><i class="fas fa-bullhorn"></i></span>
+    <span id="annBellCount">0</span>
 </button>
 
 <div id="scrollProgress"></div>
@@ -5353,17 +5425,40 @@ function initMagneticTilt() {
 
 <script>
 /* ══════════════════════════════════════════════
-   ANNOUNCEMENTS ENGINE
-   — blurred bg, fitted image, tabs, swipe, expiry, floating bell
+   ANNOUNCEMENTS ENGINE — ENHANCED
+   Features: blurred bg, fitted image, centered dots,
+   slide-in-from-bottom, auto-slideshow (4s),
+   swipe-to-dismiss, "don't show today", pill bell w/ count
    ══════════════════════════════════════════════ */
-const ANN_URL = "https://script.google.com/macros/s/AKfycbzTFlGTah_XsiJLwA9dIhkHZguxzDSa8Jl6Kmwjpf69LsEj6cJseryZ5Us538lY7M2mJg/exec";
+const ANN_URL  = "https://script.google.com/macros/s/AKfycbzTFlGTah_XsiJLwA9dIhkHZguxzDSa8Jl6Kmwjpf69LsEj6cJseryZ5Us538lY7M2mJg/exec";
+const ANN_HIDE_KEY = 'nsfc_ann_hide_until';
+const ANN_AUTO_MS  = 4000; // auto-advance interval
 
-let annItems  = [];
-let annIdx    = 0;
-let annDragStartX = 0;
-let annDragging   = false;
+let annItems       = [];
+let annIdx         = 0;
+let annAutoTimer   = null;
+let annDragStartX  = 0;
+let annDragStartY  = 0;
+let annDragging    = false;
 
-/* ── Filter: only show announcements active today ── */
+/* ── Don't show today ── */
+function annIsHiddenToday() {
+    try {
+        const until = localStorage.getItem(ANN_HIDE_KEY);
+        if (!until) return false;
+        return new Date() < new Date(until);
+    } catch { return false; }
+}
+function annDontShowToday() {
+    try {
+        const end = new Date();
+        end.setHours(23,59,59,999);
+        localStorage.setItem(ANN_HIDE_KEY, end.toISOString());
+    } catch {}
+    closeAnn();
+}
+
+/* ── Date filter ── */
 function isAnnActive(item) {
     const now  = new Date();
     const from = item.fromDate ? new Date(item.fromDate) : null;
@@ -5374,13 +5469,10 @@ function isAnnActive(item) {
     return true;
 }
 
-/* ── Convert Drive share URL → direct embeddable img URL ──
-   Key insight: use /thumbnail?id=XXX&sz=w600 which bypasses
-   CORS restrictions and works as a plain <img src> anywhere. */
+/* ── Drive thumbnail URL ── */
 function driveImgUrl(raw, size) {
     if (!raw) return '';
     const sz = size || 'w600';
-    // Extract file ID from any Google Drive URL format
     let id = '';
     const m1 = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
     const m2 = raw.match(/[?&]id=([a-zA-Z0-9_-]+)/);
@@ -5390,11 +5482,11 @@ function driveImgUrl(raw, size) {
     else if (m3) id = m3[1];
     else if (m4) id = m4[1];
     else if (m2) id = m2[1];
-    if (!id) return raw; // not a drive URL, return as-is
+    if (!id) return raw;
     return `https://drive.google.com/thumbnail?id=${id}&sz=${sz}`;
 }
 
-/* ── Build slides into #annSlider ── */
+/* ── Build slides ── */
 function buildSlides() {
     const slider = document.getElementById('annSlider');
     if (!slider) return;
@@ -5402,34 +5494,27 @@ function buildSlides() {
         const imgUrl  = driveImgUrl(item.image, 'w700');
         const blurUrl = driveImgUrl(item.image, 'w400');
         const hasLink = item.link && item.link.trim();
-        return `
-        <div class="ann-slide" data-i="${i}">
-            <!-- Blurred background clone -->
-            <div class="ann-bg-blur">
-                <img src="${blurUrl}" alt="" aria-hidden="true">
-            </div>
+        return `<div class="ann-slide" data-i="${i}">
+            <div class="ann-bg-blur"><img src="${blurUrl}" alt="" aria-hidden="true"></div>
             <div class="ann-vig"></div>
-            <!-- Main fitted image -->
             <div class="ann-img-area">
-                <img class="ann-img"
-                     src="${imgUrl}"
-                     alt="${(item.title || 'Announcement').replace(/"/g,'&quot;')}"
+                <img class="ann-img" src="${imgUrl}"
+                     alt="${(item.title||'Announcement').replace(/"/g,'&quot;')}"
                      onerror="this.closest('.ann-img-area').style.display='none'">
             </div>
-            <!-- Text -->
             <div class="ann-body">
                 <div class="ann-tag-label"><i class="fas fa-bullhorn"></i> Announcement</div>
                 <div class="ann-title">${item.title || ''}</div>
                 ${item.description ? `<div class="ann-desc">${item.description}</div>` : ''}
                 ${hasLink ? `<a class="ann-link-btn" href="${item.link.trim()}" target="_blank" rel="noopener">
-                    <i class="fas fa-external-link-alt" style="font-size:9px"></i> Learn More
+                    <i class="fas fa-external-link-alt" style="font-size:9px"></i> View
                 </a>` : ''}
             </div>
         </div>`;
     }).join('');
 }
 
-/* ── Build dot tabs ── */
+/* ── Build centered dot tabs ── */
 function buildTabs() {
     const row = document.getElementById('annTabsRow');
     if (!row) return;
@@ -5439,42 +5524,83 @@ function buildTabs() {
         const t = document.createElement('button');
         t.className = 'ann-tab' + (i === 0 ? ' active' : '');
         t.setAttribute('aria-label', 'Announcement ' + (i + 1));
-        t.onclick = () => annRender(i);
+        t.onclick = () => { annRender(i); annResetAuto(); };
         row.appendChild(t);
     });
 }
 
-/* ── Update UI for given index ── */
+/* ── Render slide at index ── */
 function annRender(idx) {
     annIdx = Math.max(0, Math.min(idx, annItems.length - 1));
     const slider = document.getElementById('annSlider');
     if (slider) slider.style.transform = `translateX(-${annIdx * 100}%)`;
-    // Tabs
     document.querySelectorAll('.ann-tab').forEach((t, i) => t.classList.toggle('active', i === annIdx));
-    // Arrows
     const prev = document.getElementById('annArrPrev');
     const next = document.getElementById('annArrNext');
     if (prev) prev.classList.toggle('ann-hidden', annItems.length <= 1 || annIdx === 0);
     if (next) next.classList.toggle('ann-hidden', annItems.length <= 1 || annIdx === annItems.length - 1);
-    // Counter
     const counter = document.getElementById('annCounter');
     if (counter) counter.textContent = annItems.length > 1 ? `${annIdx + 1} / ${annItems.length}` : '';
 }
 
-function annGo(dir) { annRender(annIdx + dir); }
-
-function closeAnn() {
-    document.getElementById('announcementOverlay').classList.remove('visible');
-    // Show bell after closing
-    document.getElementById('annBellBtn').classList.add('ann-bell-visible');
+function annGo(dir) {
+    annRender(annIdx + dir);
+    annResetAuto();
 }
 
+/* ── Auto-slideshow ── */
+function annStartAuto() {
+    annStopAuto();
+    if (annItems.length <= 1) return;
+    const bar = document.getElementById('annAutoBar');
+    if (bar) {
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+            bar.classList.add('running');
+            bar.style.transition = `width ${ANN_AUTO_MS}ms linear`;
+            bar.style.width = '100%';
+        });
+    }
+    annAutoTimer = setTimeout(() => {
+        const next = (annIdx + 1) % annItems.length;
+        annRender(next);
+        annStartAuto(); // restart for next slide
+    }, ANN_AUTO_MS);
+}
+
+function annStopAuto() {
+    if (annAutoTimer) { clearTimeout(annAutoTimer); annAutoTimer = null; }
+    const bar = document.getElementById('annAutoBar');
+    if (bar) { bar.classList.remove('running'); bar.style.width = '0%'; bar.style.transition = 'none'; }
+}
+
+function annResetAuto() { annStopAuto(); annStartAuto(); }
+
+/* ── Update bell pill count ── */
+function updateBellCount(n) {
+    const badge = document.getElementById('annBellCount');
+    if (!badge) return;
+    badge.textContent = n;
+    badge.style.display = n > 0 ? 'flex' : 'none';
+}
+
+/* ── Close ── */
+function closeAnn() {
+    annStopAuto();
+    document.getElementById('announcementOverlay').classList.remove('visible');
+    setTimeout(() => {
+        document.getElementById('annBellBtn').classList.add('ann-bell-visible');
+    }, 300);
+}
+
+/* ── Show ── */
 function showAnn() {
     const overlay = document.getElementById('announcementOverlay');
     overlay.classList.add('visible');
-    // Hide bell while popup is open
     document.getElementById('annBellBtn').classList.remove('ann-bell-visible');
-    annRender(annIdx); // refresh nav state
+    annRender(annIdx);
+    annStartAuto();
 
     // Backdrop click
     const onBg = e => {
@@ -5484,21 +5610,38 @@ function showAnn() {
 
     // Keyboard
     const onKey = e => {
-        if (e.key === 'Escape')      { closeAnn(); document.removeEventListener('keydown', onKey); }
-        if (e.key === 'ArrowLeft')   annGo(-1);
-        if (e.key === 'ArrowRight')  annGo(1);
+        if (e.key === 'Escape')     { closeAnn(); document.removeEventListener('keydown', onKey); }
+        if (e.key === 'ArrowLeft')  { annGo(-1); }
+        if (e.key === 'ArrowRight') { annGo(1); }
     };
     document.addEventListener('keydown', onKey);
 
-    // Touch swipe on card
+    // ── SWIPE GESTURES on card ──
+    // Horizontal: change slide  |  Vertical/fast-down: dismiss
     const card = document.getElementById('annCard');
-    const onTS = e => { annDragStartX = e.touches[0].clientX; annDragging = false; };
-    const onTM = e => { if (Math.abs(e.touches[0].clientX - annDragStartX) > 8) annDragging = true; };
+    const onTS = e => {
+        annDragStartX = e.touches[0].clientX;
+        annDragStartY = e.touches[0].clientY;
+        annDragging = false;
+        annStopAuto(); // pause auto while user interacts
+    };
+    const onTM = e => {
+        const dx = Math.abs(e.touches[0].clientX - annDragStartX);
+        const dy = Math.abs(e.touches[0].clientY - annDragStartY);
+        if (dx > 8 || dy > 8) annDragging = true;
+    };
     const onTE = e => {
-        if (!annDragging) return;
+        if (!annDragging) { annStartAuto(); return; }
         const dx = e.changedTouches[0].clientX - annDragStartX;
-        if (dx < -40) annGo(1);
-        else if (dx > 40) annGo(-1);
+        const dy = e.changedTouches[0].clientY - annDragStartY;
+        // Swipe down to dismiss
+        if (dy > 70 && Math.abs(dx) < Math.abs(dy)) {
+            closeAnn(); return;
+        }
+        // Horizontal swipe to change slide
+        if (dx < -40 && Math.abs(dx) > Math.abs(dy)) annGo(1);
+        else if (dx > 40 && Math.abs(dx) > Math.abs(dy)) annGo(-1);
+        annStartAuto();
     };
     card.addEventListener('touchstart', onTS, { passive: true });
     card.addEventListener('touchmove',  onTM, { passive: true });
@@ -5513,19 +5656,23 @@ async function loadAnnouncements() {
         if (!Array.isArray(data)) return;
         annItems = data.filter(isAnnActive);
         if (!annItems.length) return;
+
         buildSlides();
         buildTabs();
         annRender(0);
-        // Show popup after splash screen hides (2.2s + 0.4s buffer)
-        setTimeout(() => {
-            showAnn();
-        }, 2700);
-        // Always show bell button once we have announcements
+        updateBellCount(annItems.length);
+
+        // Show pill bell always (so user can reopen)
         setTimeout(() => {
             document.getElementById('annBellBtn').classList.add('ann-bell-visible');
-        }, 2800);
+        }, 2600);
+
+        // Auto-popup after splash (unless user dismissed today)
+        if (!annIsHiddenToday()) {
+            setTimeout(() => showAnn(), 2800);
+        }
     } catch(e) {
-        console.warn('Announcements load failed:', e);
+        console.warn('Announcements:', e);
     }
 }
 
