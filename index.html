@@ -1959,6 +1959,228 @@
             font-size: 16rem; color: rgba(244,185,66,0.03);
             pointer-events: none; line-height: 1;
         }
+
+        /* ══════════════════════════════════════
+           ANNOUNCEMENT POPUP
+        ══════════════════════════════════════ */
+        #announcementOverlay {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 16px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.22,1,0.36,1);
+        }
+        #announcementOverlay.visible { opacity: 1; pointer-events: all; }
+
+        #annCard {
+            position: relative;
+            width: min(330px, 90vw);
+            aspect-ratio: 3 / 4;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #0a0a0a;
+            transform: scale(0.86) translateY(28px);
+            transition: transform 0.48s cubic-bezier(0.22,1,0.36,1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.85), 0 0 0 1px rgba(244,185,66,0.25);
+        }
+        #announcementOverlay.visible #annCard { transform: scale(1) translateY(0); }
+
+        /* Gold shimmer bar */
+        #annCard::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 3px; z-index: 30;
+            background: linear-gradient(90deg, #C9921A, #F4B942, #FFDE88, #F4B942, #C9921A);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s linear infinite;
+        }
+
+        /* Slider viewport */
+        #annSliderWrap { position: absolute; inset: 0; overflow: hidden; }
+        #annSlider {
+            display: flex; height: 100%;
+            transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);
+            will-change: transform;
+        }
+        .ann-slide {
+            min-width: 100%; height: 100%;
+            position: relative; flex-shrink: 0;
+        }
+
+        /* Blurred background — using the SAME img element, no separate div */
+        .ann-bg-blur {
+            position: absolute; inset: 0; z-index: 0;
+            overflow: hidden;
+        }
+        .ann-bg-blur img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: blur(22px) brightness(0.28) saturate(1.5);
+            transform: scale(1.2);
+            display: block;
+        }
+
+        /* Vignette */
+        .ann-vig {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(
+                180deg,
+                rgba(0,0,0,0.10) 0%,
+                rgba(0,0,0,0.0)  28%,
+                rgba(0,0,0,0.55) 60%,
+                rgba(0,0,0,0.96) 100%
+            );
+        }
+
+        /* Main image — contained in upper 60% */
+        .ann-img-area {
+            position: absolute;
+            top: 42px; left: 10px; right: 10px; bottom: 40%;
+            z-index: 2;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ann-img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.65);
+            display: block;
+        }
+
+        /* Text body */
+        .ann-body {
+            position: absolute;
+            bottom: 0; left: 0; right: 0; z-index: 3;
+            padding: 12px 16px 16px;
+        }
+        .ann-tag-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px; font-weight: 700; letter-spacing: 0.3em;
+            text-transform: uppercase; color: var(--gold);
+            display: flex; align-items: center; gap: 5px; margin-bottom: 5px;
+        }
+        .ann-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.35rem; letter-spacing: 0.04em;
+            color: #fff; line-height: 1.1; margin-bottom: 4px;
+        }
+        .ann-desc {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px; font-weight: 500;
+            color: rgba(255,255,255,0.62);
+            line-height: 1.5; margin-bottom: 10px;
+        }
+        .ann-link-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 16px;
+            background: var(--gold); color: #000;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700; font-size: 10px;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            border-radius: 8px; text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .ann-link-btn:hover { background: #fff; transform: translateY(-2px); }
+
+        /* Close button */
+        #annCloseBtn {
+            position: absolute; top: 10px; right: 10px; z-index: 40;
+            width: 30px; height: 30px;
+            background: rgba(0,0,0,0.65);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; color: rgba(255,255,255,0.65);
+            font-size: 17px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+            transition: all 0.2s; line-height: 1;
+        }
+        #annCloseBtn:hover { background: rgba(244,185,66,0.3); color: #fff; border-color: rgba(244,185,66,0.6); }
+
+        /* Tab dots */
+        #annTabsRow {
+            position: absolute; top: 10px; left: 10px; z-index: 40;
+            display: flex; gap: 4px; flex-wrap: wrap;
+            max-width: calc(100% - 52px);
+        }
+        .ann-tab {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer; transition: all 0.2s;
+            border: none; padding: 0;
+        }
+        .ann-tab.active { background: var(--gold); transform: scale(1.35); }
+        .ann-tab:hover:not(.active) { background: rgba(255,255,255,0.5); }
+
+        /* Arrows */
+        .ann-arr {
+            position: absolute; top: 50%; z-index: 40;
+            transform: translateY(-50%);
+            width: 28px; height: 28px;
+            background: rgba(0,0,0,0.55);
+            border: 1px solid rgba(244,185,66,0.2);
+            border-radius: 7px; color: rgba(255,255,255,0.55); font-size: 10px;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .ann-arr:hover { background: rgba(244,185,66,0.25); color: #fff; border-color: rgba(244,185,66,0.6); }
+        #annArrPrev { left: 7px; }
+        #annArrNext { right: 7px; }
+        .ann-arr.ann-hidden { display: none; }
+
+        /* Counter */
+        #annCounter {
+            position: absolute; bottom: 7px; right: 10px; z-index: 40;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.22); pointer-events: none;
+        }
+
+        /* ══════════════════════════════════════
+           FLOATING ANNOUNCEMENT BELL BUTTON
+        ══════════════════════════════════════ */
+        #annBellBtn {
+            position: fixed;
+            bottom: 86px; left: 18px;
+            z-index: 500;
+            width: 44px; height: 44px;
+            background: var(--gold);
+            border: none; border-radius: 13px;
+            cursor: pointer;
+            display: none; /* shown only when announcements exist */
+            align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(244,185,66,0.38);
+            transition: all 0.25s;
+        }
+        #annBellBtn.ann-bell-visible { display: flex; }
+        #annBellBtn:hover { background: #fff; transform: translateY(-3px) scale(1.08); box-shadow: 0 8px 28px rgba(244,185,66,0.45); }
+        #annBellBtn i { color: #000; font-size: 16px; }
+
+        /* Ping badge */
+        #annBellBadge {
+            position: absolute; top: -4px; right: -4px;
+            width: 16px; height: 16px;
+            background: #ef4444;
+            border-radius: 50%;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 9px; font-weight: 700; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--deep);
+        }
+
+        /* Bell ring animation */
+        @keyframes bell-ring {
+            0%,100% { transform: rotate(0deg); }
+            10%,30%  { transform: rotate(-12deg); }
+            20%,40%  { transform: rotate(12deg); }
+            50%      { transform: rotate(0deg); }
+        }
+        #annBellBtn.ann-bell-visible i {
+            animation: bell-ring 3.5s ease-in-out infinite;
+        }
+        #annBellBtn:hover i { animation: none; }
     </style>
 </head>
 <body>
@@ -1970,6 +2192,43 @@
     <div class="splash-sub">Est. 2011 &nbsp;·&nbsp; Anbaana Fans</div>
     <div class="splash-bar-track"><div class="splash-bar-fill"></div></div>
 </div>
+
+<!-- ANNOUNCEMENT POPUP -->
+<div id="announcementOverlay" role="dialog" aria-modal="true" aria-label="Announcements">
+    <div id="annCard">
+        <!-- Gold shimmer bar via ::before -->
+
+        <!-- Dot tabs (top-left) -->
+        <div id="annTabsRow"></div>
+
+        <!-- Close button (top-right) -->
+        <button id="annCloseBtn" onclick="closeAnn()" aria-label="Close">&#215;</button>
+
+        <!-- Slider -->
+        <div id="annSliderWrap">
+            <div id="annSlider">
+                <!-- slides injected by JS -->
+            </div>
+        </div>
+
+        <!-- Arrows -->
+        <button class="ann-arr ann-hidden" id="annArrPrev" onclick="annGo(-1)" aria-label="Previous">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="ann-arr ann-hidden" id="annArrNext" onclick="annGo(1)" aria-label="Next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Counter -->
+        <div id="annCounter"></div>
+    </div>
+</div>
+
+<!-- FLOATING ANNOUNCEMENT BELL -->
+<button id="annBellBtn" onclick="showAnn()" title="Announcements" aria-label="View Announcements">
+    <span id="annBellBadge">!</span>
+    <i class="fas fa-bullhorn"></i>
+</button>
 
 <div id="scrollProgress"></div>
 
@@ -4172,6 +4431,7 @@ window.onload = function() {
     initCursorTrail();
     initQuizLeaderboard();
     setTimeout(staggerCards, 100);
+    loadAnnouncements();
 };
 
 /* ══════════════════════════════════════════════
@@ -5092,7 +5352,184 @@ function initMagneticTilt() {
 </script>
 
 <script>
-  document.addEventListener("contextmenu", e => e.preventDefault());
+/* ══════════════════════════════════════════════
+   ANNOUNCEMENTS ENGINE
+   — blurred bg, fitted image, tabs, swipe, expiry, floating bell
+   ══════════════════════════════════════════════ */
+const ANN_URL = "https://script.google.com/macros/s/AKfycbzTFlGTah_XsiJLwA9dIhkHZguxzDSa8Jl6Kmwjpf69LsEj6cJseryZ5Us538lY7M2mJg/exec";
+
+let annItems  = [];
+let annIdx    = 0;
+let annDragStartX = 0;
+let annDragging   = false;
+
+/* ── Filter: only show announcements active today ── */
+function isAnnActive(item) {
+    const now  = new Date();
+    const from = item.fromDate ? new Date(item.fromDate) : null;
+    const to   = item.toDate   ? new Date(item.toDate)   : null;
+    if (to) to.setHours(23,59,59,999);
+    if (from && now < from) return false;
+    if (to   && now > to)   return false;
+    return true;
+}
+
+/* ── Convert Drive share URL → direct embeddable img URL ──
+   Key insight: use /thumbnail?id=XXX&sz=w600 which bypasses
+   CORS restrictions and works as a plain <img src> anywhere. */
+function driveImgUrl(raw, size) {
+    if (!raw) return '';
+    const sz = size || 'w600';
+    // Extract file ID from any Google Drive URL format
+    let id = '';
+    const m1 = raw.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    const m2 = raw.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+    const m3 = raw.match(/thumbnail\?id=([a-zA-Z0-9_-]+)/);
+    const m4 = raw.match(/open\?id=([a-zA-Z0-9_-]+)/);
+    if (m1) id = m1[1];
+    else if (m3) id = m3[1];
+    else if (m4) id = m4[1];
+    else if (m2) id = m2[1];
+    if (!id) return raw; // not a drive URL, return as-is
+    return `https://drive.google.com/thumbnail?id=${id}&sz=${sz}`;
+}
+
+/* ── Build slides into #annSlider ── */
+function buildSlides() {
+    const slider = document.getElementById('annSlider');
+    if (!slider) return;
+    slider.innerHTML = annItems.map((item, i) => {
+        const imgUrl  = driveImgUrl(item.image, 'w700');
+        const blurUrl = driveImgUrl(item.image, 'w400');
+        const hasLink = item.link && item.link.trim();
+        return `
+        <div class="ann-slide" data-i="${i}">
+            <!-- Blurred background clone -->
+            <div class="ann-bg-blur">
+                <img src="${blurUrl}" alt="" aria-hidden="true">
+            </div>
+            <div class="ann-vig"></div>
+            <!-- Main fitted image -->
+            <div class="ann-img-area">
+                <img class="ann-img"
+                     src="${imgUrl}"
+                     alt="${(item.title || 'Announcement').replace(/"/g,'&quot;')}"
+                     onerror="this.closest('.ann-img-area').style.display='none'">
+            </div>
+            <!-- Text -->
+            <div class="ann-body">
+                <div class="ann-tag-label"><i class="fas fa-bullhorn"></i> Announcement</div>
+                <div class="ann-title">${item.title || ''}</div>
+                ${item.description ? `<div class="ann-desc">${item.description}</div>` : ''}
+                ${hasLink ? `<a class="ann-link-btn" href="${item.link.trim()}" target="_blank" rel="noopener">
+                    <i class="fas fa-external-link-alt" style="font-size:9px"></i> Learn More
+                </a>` : ''}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+/* ── Build dot tabs ── */
+function buildTabs() {
+    const row = document.getElementById('annTabsRow');
+    if (!row) return;
+    row.innerHTML = '';
+    if (annItems.length <= 1) return;
+    annItems.forEach((_, i) => {
+        const t = document.createElement('button');
+        t.className = 'ann-tab' + (i === 0 ? ' active' : '');
+        t.setAttribute('aria-label', 'Announcement ' + (i + 1));
+        t.onclick = () => annRender(i);
+        row.appendChild(t);
+    });
+}
+
+/* ── Update UI for given index ── */
+function annRender(idx) {
+    annIdx = Math.max(0, Math.min(idx, annItems.length - 1));
+    const slider = document.getElementById('annSlider');
+    if (slider) slider.style.transform = `translateX(-${annIdx * 100}%)`;
+    // Tabs
+    document.querySelectorAll('.ann-tab').forEach((t, i) => t.classList.toggle('active', i === annIdx));
+    // Arrows
+    const prev = document.getElementById('annArrPrev');
+    const next = document.getElementById('annArrNext');
+    if (prev) prev.classList.toggle('ann-hidden', annItems.length <= 1 || annIdx === 0);
+    if (next) next.classList.toggle('ann-hidden', annItems.length <= 1 || annIdx === annItems.length - 1);
+    // Counter
+    const counter = document.getElementById('annCounter');
+    if (counter) counter.textContent = annItems.length > 1 ? `${annIdx + 1} / ${annItems.length}` : '';
+}
+
+function annGo(dir) { annRender(annIdx + dir); }
+
+function closeAnn() {
+    document.getElementById('announcementOverlay').classList.remove('visible');
+    // Show bell after closing
+    document.getElementById('annBellBtn').classList.add('ann-bell-visible');
+}
+
+function showAnn() {
+    const overlay = document.getElementById('announcementOverlay');
+    overlay.classList.add('visible');
+    // Hide bell while popup is open
+    document.getElementById('annBellBtn').classList.remove('ann-bell-visible');
+    annRender(annIdx); // refresh nav state
+
+    // Backdrop click
+    const onBg = e => {
+        if (e.target === overlay) { closeAnn(); overlay.removeEventListener('click', onBg); }
+    };
+    overlay.addEventListener('click', onBg);
+
+    // Keyboard
+    const onKey = e => {
+        if (e.key === 'Escape')      { closeAnn(); document.removeEventListener('keydown', onKey); }
+        if (e.key === 'ArrowLeft')   annGo(-1);
+        if (e.key === 'ArrowRight')  annGo(1);
+    };
+    document.addEventListener('keydown', onKey);
+
+    // Touch swipe on card
+    const card = document.getElementById('annCard');
+    const onTS = e => { annDragStartX = e.touches[0].clientX; annDragging = false; };
+    const onTM = e => { if (Math.abs(e.touches[0].clientX - annDragStartX) > 8) annDragging = true; };
+    const onTE = e => {
+        if (!annDragging) return;
+        const dx = e.changedTouches[0].clientX - annDragStartX;
+        if (dx < -40) annGo(1);
+        else if (dx > 40) annGo(-1);
+    };
+    card.addEventListener('touchstart', onTS, { passive: true });
+    card.addEventListener('touchmove',  onTM, { passive: true });
+    card.addEventListener('touchend',   onTE, { passive: true });
+}
+
+/* ── Main loader ── */
+async function loadAnnouncements() {
+    try {
+        const res  = await fetch(ANN_URL + '?action=list');
+        const data = await res.json();
+        if (!Array.isArray(data)) return;
+        annItems = data.filter(isAnnActive);
+        if (!annItems.length) return;
+        buildSlides();
+        buildTabs();
+        annRender(0);
+        // Show popup after splash screen hides (2.2s + 0.4s buffer)
+        setTimeout(() => {
+            showAnn();
+        }, 2700);
+        // Always show bell button once we have announcements
+        setTimeout(() => {
+            document.getElementById('annBellBtn').classList.add('ann-bell-visible');
+        }, 2800);
+    } catch(e) {
+        console.warn('Announcements load failed:', e);
+    }
+}
+
+
   document.addEventListener("keydown", function(e) {
     const blocked = (e.ctrlKey || e.metaKey) && ["s","u","p"].includes(e.key.toLowerCase());
     if (blocked || e.key === "F12") { e.preventDefault(); e.stopPropagation(); return false; }
