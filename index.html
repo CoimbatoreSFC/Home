@@ -4013,7 +4013,7 @@ function buildActorTable() {
     };
     const isUpcoming = f => {
         const n = (f.notes || '').toLowerCase();
-        return n.includes('upcoming') || n.includes('filming') || f.year === 'TBA' || Number(f.year) >= 2026;
+        return n.includes('upcoming') || n.includes('filming') || f.year === 'TBA';
     };
 
     /* Upcoming */
